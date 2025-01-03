@@ -75,4 +75,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
 
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
+
+    //Navigation with Compose
+    val nav_version = "2.8.4"
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 }
