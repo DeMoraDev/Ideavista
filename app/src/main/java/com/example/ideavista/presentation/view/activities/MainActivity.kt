@@ -1,4 +1,4 @@
-package com.example.ideavista
+package com.example.ideavista.presentation.view.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,37 +11,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.ideavista.ui.theme.IdeavistaTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.ideavista.app.di.appModule
+import com.example.ideavista.app.di.networkModule
+import com.example.ideavista.presentation.view.navigation.NavManager
+import com.example.ideavista.presentation.view.theme.IdeavistaTheme
+import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             IdeavistaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+
+                // Usar el NavManager para gestionar la navegación
+                NavManager(navHostController = navController)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    IdeavistaTheme {
-        Greeting("Android")
     }
 }
