@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 val Amarillo = Color(0xFFE1F56E)     //Color Principal Amarillo Idealista Light/Dark
 val Negro = Color(0xFF141414)        //Fuente e iconos
 val Blanco = Color(0xFFFFFFFF)       //General
-val Violeta = Color(0xFF8C1D64)      //Botones   Light/Dark
+val Violeta = Color(0xFFB72683)      //Botones   Light/Dark
 val Azul = Color(0xFF145BC7)         //Hipervínculos   Light/Dark
 
 //Gama de negros solo Dark Theme

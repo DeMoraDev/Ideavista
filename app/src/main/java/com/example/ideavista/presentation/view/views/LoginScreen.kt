@@ -16,6 +16,6 @@ fun LoginScreen(navHostController: NavHostController){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Pantalla Principal")
+        Text(text = "Pantalla Login")
     }
 }
