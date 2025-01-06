@@ -18,15 +18,15 @@ fun NavManager(navHostController: NavHostController) {
     NavHost(navController = navHostController, startDestination = NavigationRoutes.Splash) {
         // Splash Screen
         composable(NavigationRoutes.Splash) {
-            val splashScreenViewModel: SplashScreenViewModel =
-                koinViewModel() // Asegúrate de que Koin esté proporcionando la instancia correctamente
+            val splashScreenViewModel: SplashScreenViewModel = koinViewModel()
             SplashScreen(navHostController = navHostController, viewModel = splashScreenViewModel)
         }
 
 
         // Onboarding Screen
         composable(NavigationRoutes.Onboarding) {
-            OnboardingScreen(navHostController = navHostController, viewModel = OnboardingViewModel())
+            val onboardingViewModel: OnboardingViewModel = koinViewModel()
+            OnboardingScreen(navHostController = navHostController, viewModel = onboardingViewModel)
         }
 
         // Login Screen
@@ -34,7 +34,7 @@ fun NavManager(navHostController: NavHostController) {
             LoginScreen(navHostController = navHostController)
         }
 
-        // Main Screen (añade más pantallas según sea necesario)
+
         composable(NavigationRoutes.main) {
             MainScreen(navHostController = navHostController)
         }

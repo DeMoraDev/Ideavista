@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -59,9 +60,10 @@ fun LanguageSelectionStep(
                             color = if (isSelected) Violeta else Gris.copy(0.4f),
                             shape = RoundedCornerShape(6.dp)
                         )
-                        .clickable(onClick = {
+                        .clickable {
+                            Log.d("LanguageSelectionStep", "Clicked on language: $language, isSelected: $isSelected")
                             onLanguageSelected(language)
-                        })
+                        }
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

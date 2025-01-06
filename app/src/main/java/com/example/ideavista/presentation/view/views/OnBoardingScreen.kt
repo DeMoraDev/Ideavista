@@ -22,15 +22,15 @@ import com.example.ideavista.presentation.view.navigation.NavigationRoutes
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OnboardingScreen(
     navHostController: NavHostController,
-    viewModel: OnboardingViewModel
+    viewModel: OnboardingViewModel = koinViewModel()
 ) {
-
-    val selectedLanguage = viewModel.selectedLanguage.collectAsState()
-    val selectedCountry = viewModel.selectedCountry.collectAsState()
+    val selectedLanguage by viewModel.selectedLanguage.collectAsState()
+    val selectedCountry by viewModel.selectedCountry.collectAsState()
 
     // Paginas del onboarding
     var onboardingStep by remember { mutableStateOf(1) }
@@ -51,7 +51,7 @@ fun OnboardingScreen(
                 .fillMaxWidth()
                 .fillMaxHeight(0.25f), // Ocupa 1/4 de la pantalla
             contentAlignment = Alignment.Center // Centrar el contenido dentro de este Box
-        ) {
+        ){
             Text(
                 text = "ideavista",
                 fontFamily = basis33Font,
@@ -90,12 +90,12 @@ fun OnboardingScreen(
                 ) {
                     when (onboardingStep) {
                         1 -> LanguageSelectionStep(
-                            selectedLanguage = selectedLanguage.value,
+                            selectedLanguage = selectedLanguage,
                             onLanguageSelected = { viewModel.selectLanguage(it) }
                         )
 
                         2 -> CountrySelectionStep(
-                            selectedCountry = selectedCountry.value,
+                            selectedCountry = selectedCountry,
                             onCountrySelected = { viewModel.selectCountry(it) }
                         )
 
@@ -108,6 +108,7 @@ fun OnboardingScreen(
                         if (onboardingStep < 3) {
                             onboardingStep++  // Cambiar al siguiente paso
                         } else {
+                            viewModel.setUserAsReturning()
                             // Navegar al Login Screen después del Onboarding
                             navHostController.navigate(NavigationRoutes.login) {
                                 popUpTo(NavigationRoutes.Onboarding) { inclusive = true }

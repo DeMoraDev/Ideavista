@@ -2,26 +2,45 @@ package com.example.ideavista.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ideavista.domain.usecase.SaveCountryUseCase
+import com.example.ideavista.domain.usecase.SaveLanguageUseCase
+import com.example.ideavista.domain.usecase.SetUserAsReturningUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class OnboardingViewModel : ViewModel() {
+class OnboardingViewModel(
+    private val saveLanguageUseCase: SaveLanguageUseCase,
+    private val saveCountryUseCase: SaveCountryUseCase,
+    private val setUserAsReturningUseCase: SetUserAsReturningUseCase
+) : ViewModel() {
 
-    // Estados para los pasos del onboarding
+    // Estado para el idioma seleccionado
     private val _selectedLanguage = MutableStateFlow<String?>(null)
     val selectedLanguage: StateFlow<String?> = _selectedLanguage
 
+    // Estado para el país seleccionado
     private val _selectedCountry = MutableStateFlow<String?>(null)
     val selectedCountry: StateFlow<String?> = _selectedCountry
 
-    // Función para seleccionar idioma
     fun selectLanguage(language: String) {
-        _selectedLanguage.value = language
+        viewModelScope.launch {
+            _selectedLanguage.value = language // Actualiza el estado local
+            saveLanguageUseCase.execute(language) // Guarda el estado
+        }
     }
 
-    // Función para seleccionar país
     fun selectCountry(country: String) {
-        _selectedCountry.value = country
+        viewModelScope.launch {
+            _selectedCountry.value = country // Actualiza el estado local
+            saveCountryUseCase.execute(country) // Guarda el estado
+        }
+    }
+
+    //Marca las preferencias como completadas- Usuario no nuevo
+    fun setUserAsReturning() {
+        viewModelScope.launch {
+            setUserAsReturningUseCase.execute()
+        }
     }
 }

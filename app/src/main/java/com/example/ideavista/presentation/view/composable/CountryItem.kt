@@ -1,5 +1,6 @@
 package com.example.ideavista.presentation.view.composable
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,7 +41,10 @@ fun CountryItem(
                 color = if (isSelected) Violeta else Gris.copy(0.4f),
                 shape = RoundedCornerShape(6.dp)
             )
-            .clickable(onClick = onClick)
+            .clickable {
+                Log.d("CountryItem", "Clicked on country: $countryName, isSelected: $isSelected")
+                onClick()
+            }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
