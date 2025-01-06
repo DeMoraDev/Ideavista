@@ -9,6 +9,7 @@ import com.example.ideavista.presentation.view.views.LoginScreen
 import com.example.ideavista.presentation.view.views.MainScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
+import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -25,7 +26,7 @@ fun NavManager(navHostController: NavHostController) {
 
         // Onboarding Screen
         composable(NavigationRoutes.Onboarding) {
-            OnboardingScreen(navHostController = navHostController)
+            OnboardingScreen(navHostController = navHostController, viewModel = OnboardingViewModel())
         }
 
         // Login Screen

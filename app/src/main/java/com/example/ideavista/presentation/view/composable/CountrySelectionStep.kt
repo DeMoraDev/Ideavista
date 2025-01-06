@@ -1,0 +1,69 @@
+package com.example.ideavista.presentation.view.composable
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.ideavista.presentation.view.theme.Gris
+import com.example.ideavista.presentation.view.theme.Violeta
+import com.example.ideavista.R
+
+@Composable
+fun CountrySelectionStep(
+    selectedCountry: String?,
+    onCountrySelected: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
+        val countryData = listOf(
+            "Portugal" to R.drawable.portugal,
+            "España y Andorra" to R.drawable.spain,
+            "Italia" to R.drawable.italy
+        )
+
+        Text(
+            text = "Elige el país donde buscas o donde se encuentra tu inmueble",
+            style = MaterialTheme.typography.bodyLarge,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.padding(bottom = 20.dp)
+        )
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
+        ) {
+            items(countryData) { (country, imageResId) ->
+                val isSelected = country == selectedCountry
+                CountryItem(
+                    countryName = country,
+                    imageResId = imageResId,
+                    isSelected = isSelected,
+                    onClick = { onCountrySelected(country) }
+                )
+            }
+        }
+    }
+}
