@@ -16,14 +16,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
+import com.example.ideavista.presentation.view.composable.CookieMessageContent
 import com.example.ideavista.presentation.view.composable.CountrySelectionStep
 import com.example.ideavista.presentation.view.composable.PermissionsRequestStep
 import com.example.ideavista.presentation.view.navigation.NavigationRoutes
 import com.example.ideavista.presentation.view.theme.Amarillo
+import com.example.ideavista.presentation.view.theme.Gris
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen(
     navHostController: NavHostController,
@@ -40,6 +44,14 @@ fun OnboardingScreen(
         Font(R.font.basis33)
     )
 
+    //Mensaje cookies
+    var showCookiesMessage by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
+    val MessageState =
+        rememberModalBottomSheetState(skipPartiallyExpanded = true) // Esto evita estados intermedios
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -51,7 +63,7 @@ fun OnboardingScreen(
                 .fillMaxWidth()
                 .fillMaxHeight(0.25f), // Ocupa 1/4 de la pantalla
             contentAlignment = Alignment.Center // Centrar el contenido dentro de este Box
-        ){
+        ) {
             Text(
                 text = "ideavista",
                 fontFamily = basis33Font,
@@ -108,11 +120,7 @@ fun OnboardingScreen(
                         if (onboardingStep < 3) {
                             onboardingStep++  // Cambiar al siguiente paso
                         } else {
-                            viewModel.setUserAsReturning()
-                            // Navegar al Login Screen después del Onboarding
-                            navHostController.navigate(NavigationRoutes.login) {
-                                popUpTo(NavigationRoutes.Onboarding) { inclusive = true }
-                            }
+                            showCookiesMessage = true
                         }
                     },
                     modifier = Modifier
@@ -127,6 +135,38 @@ fun OnboardingScreen(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold
                     )
+                }
+
+                if (showCookiesMessage) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showCookiesMessage = false },
+                        sheetState = MessageState
+                    ) {
+                        CookieMessageContent(
+                            onAccept = {
+                                showCookiesMessage = false
+                                viewModel.setUserAsReturning()
+                                // Navegar al Login Screen después del Onboarding
+                                navHostController.navigate(NavigationRoutes.login) {
+                                    popUpTo(NavigationRoutes.Onboarding) { inclusive = true }
+                                }
+                            },
+                            onReject = {
+                                showCookiesMessage = false
+                                // Lógica adicional al rechazar
+                            },
+                            onConfigure = {
+                                // Lógica para configurar cookies
+                            }
+                        )
+                    }
+
+                    // Expande completamente el Bottom Sheet
+                    LaunchedEffect(Unit) {
+                        scope.launch {
+                            MessageState.show()
+                        }
+                    }
                 }
             }
         }
