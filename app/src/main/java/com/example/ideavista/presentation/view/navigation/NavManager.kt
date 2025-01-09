@@ -1,11 +1,10 @@
 package com.example.ideavista.presentation.view.navigation
 
+import LoginScreen
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.ideavista.presentation.view.views.LoginScreen
 import com.example.ideavista.presentation.view.views.MainScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
@@ -31,7 +30,7 @@ fun NavManager(navHostController: NavHostController) {
 
         // Login Screen
         composable(NavigationRoutes.login) {
-            LoginScreen(navHostController = navHostController)
+            LoginScreen()
         }
 
 

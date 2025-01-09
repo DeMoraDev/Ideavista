@@ -16,12 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
-import com.example.ideavista.presentation.view.composable.CookieMessageContent
-import com.example.ideavista.presentation.view.composable.CountrySelectionStep
-import com.example.ideavista.presentation.view.composable.PermissionsRequestStep
+import com.example.ideavista.presentation.view.composable.onboardingComposables.CookieMessageContent
+import com.example.ideavista.presentation.view.composable.onboardingComposables.CountrySelectionStep
+import com.example.ideavista.presentation.view.composable.onboardingComposables.PermissionsRequestStep
 import com.example.ideavista.presentation.view.navigation.NavigationRoutes
 import com.example.ideavista.presentation.view.theme.Amarillo
-import com.example.ideavista.presentation.view.theme.Gris
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import kotlinx.coroutines.launch
@@ -40,8 +39,8 @@ fun OnboardingScreen(
     var onboardingStep by remember { mutableStateOf(1) }
 
     //Fuente pixelada
-    val basis33Font = FontFamily(
-        Font(R.font.basis33)
+    val pixelFont = FontFamily(
+        Font(R.font.ideal_font)
     )
 
     //Mensaje cookies
@@ -66,7 +65,7 @@ fun OnboardingScreen(
         ) {
             Text(
                 text = "ideavista",
-                fontFamily = basis33Font,
+                fontFamily = pixelFont,
                 fontSize = 60.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onBackground
@@ -153,7 +152,7 @@ fun OnboardingScreen(
                             },
                             onReject = {
                                 showCookiesMessage = false
-                                // Lógica adicional al rechazar
+                                // Lógica adicional al rechazar TODO Añadir Loading Spinner encima del botón de continuar y al cargar un textoboton Omitir y al pulsar irá al Login también
                             },
                             onConfigure = {
                                 // Lógica para configurar cookies

@@ -1,4 +1,4 @@
-package com.example.ideavista.presentation.view.composable
+package com.example.ideavista.presentation.view.composable.onboardingComposables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme

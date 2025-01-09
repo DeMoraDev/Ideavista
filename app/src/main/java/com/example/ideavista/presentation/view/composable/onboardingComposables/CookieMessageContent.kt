@@ -1,4 +1,4 @@
-package com.example.ideavista.presentation.view.composable
+package com.example.ideavista.presentation.view.composable.onboardingComposables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

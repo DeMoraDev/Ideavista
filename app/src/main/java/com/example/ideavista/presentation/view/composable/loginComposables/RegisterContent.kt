@@ -1,6 +1,17 @@
+package com.example.ideavista.presentation.view.composable.loginComposables
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,39 +28,32 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
-import com.example.ideavista.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
-
-    //Fuente pixelada
-    val pixelFont = FontFamily(
-        Font(R.font.ideal_font)
-    )
+fun RegisterContent() {
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Inicia sesión o regístrate",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 19.sp
+                        text = "Crear cuenta",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp
                     )
                 },
                 navigationIcon = {
@@ -62,7 +66,7 @@ fun LoginScreen() {
                         Text(
                             text = "Ahora no",
                             color = Violeta,
-                            fontSize = 19.sp,
+                            fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
@@ -78,38 +82,16 @@ fun LoginScreen() {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "ideavista",
-                fontSize = 45.sp,
-                fontFamily = pixelFont,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(top = 30.dp)
-            )
-            Text(
-                text = "España y Andorra",
-                fontSize = 17.sp
-            )
-
-            Text(
-                text = "Inicia sesión o regístrate",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(top = 24.dp)
-            )
-
-            Text(
                 text = "Tu email",
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
                 color = NegroClaro,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(top = 16.dp)
+                    .padding(top = 35.dp)
             )
-
             OutlinedTextField(
                 value = "",
                 onValueChange = { /* No action */ },
@@ -122,12 +104,61 @@ fun LoginScreen() {
                     unfocusedBorderColor = Color.Black
                 )
             )
-
+            Text(
+                text = "Repite tu email",
+                fontWeight = FontWeight.Bold,
+                color = NegroClaro,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 35.dp)
+            )
+            OutlinedTextField(
+                value = "",
+                onValueChange = { /* No action */ },
+                placeholder = { Text(text = "") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black
+                )
+            )
+            Text(
+                text = "Elige una contraseña",
+                fontWeight = FontWeight.Bold,
+                color = NegroClaro,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 35.dp)
+            )
+            OutlinedTextField(
+                value = "",
+                onValueChange = { /* No action */ },
+                placeholder = { Text(text = "") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black
+                )
+            )
+            Text(
+                text = "Incluye al menos 8 caracteres, una mayúscula, una minúscula, un número y un " +
+                        "carácter especial",
+                fontWeight = FontWeight.Medium,
+                fontSize = 17.sp,
+                color = Color.Gray,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 10.dp)
+            )
             Button(
                 onClick = { /* Continuar action */ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp), // Separación superior al botón
+                    .padding(top = 25.dp), // Separación superior al botón
                 colors = ButtonDefaults.buttonColors(Violeta),
                 shape = RoundedCornerShape(4.dp),
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
@@ -137,72 +168,26 @@ fun LoginScreen() {
                     fontSize = 19.sp
                 )
             }
-
-            Text(
-                text = "También puedes",
-                modifier = Modifier.padding(top = 24.dp)
-            )
-
-            OutlinedButton(
-                onClick = { /* Google action */ },
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
-                shape = RoundedCornerShape(4.dp),
-                border = BorderStroke(1.dp, Color.Black),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent
-                )
+                    .padding(top = 40.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                Text(text = "¿Ya tienes cuenta?", fontSize = 18.sp)
+                TextButton(
+                    onClick = {}
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_google),
-                        contentDescription = "Google Icon",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Unspecified //Importante para color del icono
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Continuar con Google",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
+                    Text(text = "Iniciar sesión", color = Violeta,fontSize = 18.sp)
                 }
             }
-
-            Text(
-                text = "Puedes consultar:",
-                modifier = Modifier.padding(top = 24.dp)
-            )
-
-            Text(
-                text = "Política de privacidad",
-                color = Color.Blue,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .clickable(onClick = { /* Política action */ })
-                    .padding(top = 8.dp)
-            )
-
-            Text(
-                text = "Términos y condiciones generales",
-                color = Color.Blue,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .clickable(onClick = { /* Términos action */ })
-                    .padding(top = 8.dp)
-            )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen()
+fun RegisterContentPreview() {
+    RegisterContent()
 }

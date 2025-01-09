@@ -1,4 +1,4 @@
-package com.example.ideavista.presentation.view.composable
+package com.example.ideavista.presentation.view.composable.onboardingComposables
 
 import android.util.Log
 import androidx.compose.foundation.Image
