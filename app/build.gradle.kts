@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -83,4 +85,13 @@ dependencies {
 
     //Data Store
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    //Firebase
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    //Firebase products to use
+    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.android.gms:play-services-auth:21.3.0")
+
+    //TODO añadir coil si hace falta
 }
