@@ -74,6 +74,7 @@ dependencies {
     // Jetpack y ViewModel
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
 
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")

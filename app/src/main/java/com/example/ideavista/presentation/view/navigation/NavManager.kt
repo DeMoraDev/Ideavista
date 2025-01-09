@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.ideavista.presentation.view.views.MainScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
+import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -30,7 +31,8 @@ fun NavManager(navHostController: NavHostController) {
 
         // Login Screen
         composable(NavigationRoutes.login) {
-            LoginScreen()
+            val loginScreenViewModel: LoginScreenViewModel = koinViewModel()
+            LoginScreen(navHostController = navHostController, viewModel = loginScreenViewModel)
         }
 
 
