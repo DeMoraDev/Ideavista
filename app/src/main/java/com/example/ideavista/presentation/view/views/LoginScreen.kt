@@ -33,6 +33,11 @@ import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.R
+import com.example.ideavista.presentation.event.UIEvent
+import com.example.ideavista.presentation.state.LoginStep
+import com.example.ideavista.presentation.view.composable.loginComposables.AlreadyUserContent
+import com.example.ideavista.presentation.view.composable.loginComposables.LoginContent
+import com.example.ideavista.presentation.view.composable.loginComposables.RegisterContent
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -42,167 +47,83 @@ fun LoginScreen(
     viewModel: LoginScreenViewModel = koinViewModel(),
     navHostController: NavHostController
 ) {
+    val state by viewModel.uiState
 
-    //Fuente pixelada
-    val pixelFont = FontFamily(
-        Font(R.font.ideal_font)
-    )
+    val uiEvent by viewModel.uiEvent.collectAsState()
+
+    LaunchedEffect(uiEvent) {
+        when (uiEvent) {
+            is UIEvent.NavigateToHome -> {
+                navHostController.navigate("main") // Navegamos a la vista Home
+                viewModel.resetUiEvent() // Reseteamos el evento
+            }
+
+            is UIEvent.ShowError -> {
+                val message = (uiEvent as UIEvent.ShowError).message
+                viewModel.resetUiEvent() // Reseteamos el evento
+            }
+
+            null -> Unit // No hacer nada si el evento es nulo
+        }
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Inicia sesión o regístrate",
+                        "Inicia sesión o regístrate",
                         fontWeight = FontWeight.Bold,
                         fontSize = 19.sp
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Back action */ }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                    if (state.step != LoginStep.Login) {
+                        IconButton(onClick = { viewModel.resetToLogin() }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        }
                     }
                 },
                 actions = {
-                    TextButton(onClick = { /* Ahora no action */ }) {
+                    TextButton(onClick = { navHostController.navigate("main") }) {
                         Text(
-                            text = "Ahora no",
+                            "Ahora no",
                             color = Violeta,
                             fontSize = 19.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Amarillo
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Amarillo)
             )
         }
     ) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
         ) {
-            Text(
-                text = "ideavista",
-                fontSize = 45.sp,
-                fontFamily = pixelFont,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(top = 30.dp)
-            )
-            Text(
-                text = "España y Andorra",
-                fontSize = 17.sp
-            )
-
-            Text(
-                text = "Inicia sesión o regístrate",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(top = 24.dp)
-            )
-
-            Text(
-                text = "Tu email",
-                fontWeight = FontWeight.SemiBold,
-                color = NegroClaro,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(top = 16.dp)
-            )
-
-            OutlinedTextField(
-                value = "",
-                onValueChange = { /* No action */ },
-                placeholder = { Text(text = "") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Black
+            when (state.step) {
+                LoginStep.Login -> LoginContent(
+                    email = state.email,
+                    onEmailEntered = { viewModel.onEmailChange(it) },
+                    onContinue = { viewModel.onContinueClick() },
+                    onGoogleSignIn = { viewModel.onGoogleSignIn() }
                 )
-            )
 
-            Button(
-                onClick = { /* Continuar action */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp), // Separación superior al botón
-                colors = ButtonDefaults.buttonColors(Violeta),
-                shape = RoundedCornerShape(4.dp),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
-            ) {
-                Text(
-                    text = "Continuar",
-                    fontSize = 19.sp
+                LoginStep.AlreadyUser -> AlreadyUserContent(
+                    email = state.email,
+                    onPasswordEntered = { viewModel.onPasswordEntered(it) },
+                    onForgotPassword = { viewModel.onForgotPassword() },
+                    onLogin = { viewModel.login(state.email, state.password) } // Llamando a `login`
+                )
+
+                LoginStep.Register -> RegisterContent(
+                    email = state.email,
+                    onEmailConfirmed = { viewModel.onEmailConfirmed(it) },
+                    onRegister = { email, password -> viewModel.register(email, password) }
                 )
             }
-
-            Text(
-                text = "También puedes",
-                modifier = Modifier.padding(top = 24.dp)
-            )
-
-            OutlinedButton(
-                onClick = { /* Google action */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                shape = RoundedCornerShape(4.dp),
-                border = BorderStroke(1.dp, Color.Black),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent
-                )
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_google),
-                        contentDescription = "Google Icon",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Unspecified //Importante para color del icono
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Continuar con Google",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                }
-            }
-
-            Text(
-                text = "Puedes consultar:",
-                modifier = Modifier.padding(top = 24.dp)
-            )
-
-            Text(
-                text = "Política de privacidad",
-                color = Color.Blue,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .clickable(onClick = { /* Política action */ })
-                    .padding(top = 8.dp)
-            )
-
-            Text(
-                text = "Términos y condiciones generales",
-                color = Color.Blue,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .clickable(onClick = { /* Términos action */ })
-                    .padding(top = 8.dp)
-            )
         }
     }
 }

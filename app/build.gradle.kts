@@ -94,5 +94,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation ("com.google.android.gms:play-services-auth:21.3.0")
 
+    //FireStore
+    implementation ("com.google.firebase:firebase-core:21.1.1")
+    implementation ("com.google.firebase:firebase-firestore:25.1.1")
+
     //TODO añadir coil si hace falta
 }
