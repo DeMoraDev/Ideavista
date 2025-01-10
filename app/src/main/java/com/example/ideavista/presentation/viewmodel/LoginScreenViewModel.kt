@@ -35,6 +35,9 @@ class LoginScreenViewModel(
     private val _uiEvent = MutableStateFlow<UIEvent?>(null)
     val uiEvent: StateFlow<UIEvent?> = _uiEvent
 
+    private val _passwordError = mutableStateOf<String?>(null)
+    val passwordError: State<String?> get() = _passwordError
+
 
     // Función para manejar el cambio de contraseña
     fun onPasswordChange(newPassword: String) {
@@ -80,7 +83,10 @@ class LoginScreenViewModel(
 
     // Función para manejar el ingreso de contraseña y login
     fun onPasswordEntered(password: String) {
-        _uiState.value = _uiState.value.copy(password = password)
+        if (!validatePassword(password)) {
+            _authState.value = AuthState.Error(_passwordError.value ?: "Error de validación")
+            return
+        }
         login(_uiState.value.email, password)
     }
 
@@ -125,8 +131,44 @@ class LoginScreenViewModel(
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
+    // Validación de la contraseña
+    private fun validatePassword(password: String): Boolean {
+        return when {
+            password.length < 8 -> {
+                _passwordError.value = "La contraseña debe tener al menos 8 caracteres."
+                false
+            }
+            !password.any { it.isDigit() } -> {
+                _passwordError.value = "La contraseña debe contener al menos un número."
+                false
+            }
+            !password.any { it.isUpperCase() } -> {
+                _passwordError.value = "La contraseña debe contener al menos una letra mayúscula."
+                false
+            }
+            !password.any { it.isLowerCase() } -> {
+                _passwordError.value = "La contraseña debe contener al menos una letra minúscula."
+                false
+            }
+            !password.any { "!@#\$%^&*()-_=+<>?".contains(it) } -> {
+                _passwordError.value = "La contraseña debe contener al menos un carácter especial."
+                false
+            }
+            else -> {
+                _passwordError.value = null
+                true
+            }
+        }
+    }
+
     // Sobrecarga de la función de registro para manejar validaciones
     fun register(email: String, password: String) {
+
+        if (!validatePassword(password)) {
+            _authState.value = AuthState.Error(_passwordError.value ?: "Error de validación")
+            return
+        }
+
         viewModelScope.launch {
             _authState.value = AuthState.Loading
 
