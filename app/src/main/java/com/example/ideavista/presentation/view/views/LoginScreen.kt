@@ -72,15 +72,24 @@ fun LoginScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Inicia sesión o regístrate",
+                        when (state.step) {
+                            LoginStep.Login -> "Inicia sesión o regístrate"
+                            LoginStep.AlreadyUser -> "Iniciar sesión"
+                            LoginStep.Register -> "Crear cuenta"
+                        },
                         fontWeight = FontWeight.Bold,
                         fontSize = 19.sp
+
                     )
                 },
                 navigationIcon = {
                     if (state.step != LoginStep.Login) {
                         IconButton(onClick = { viewModel.resetToLogin() }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Violeta
+                            )
                         }
                     }
                 },
@@ -108,7 +117,8 @@ fun LoginScreen(
                     email = state.email,
                     onEmailEntered = { viewModel.onEmailChange(it) },
                     onContinue = { viewModel.onContinueClick() },
-                    onGoogleSignIn = { viewModel.onGoogleSignIn() }
+                    onGoogleSignIn = { viewModel.onGoogleSignIn() },
+                    errorMessage = state.emailError
                 )
 
                 LoginStep.AlreadyUser -> AlreadyUserContent(
@@ -121,7 +131,8 @@ fun LoginScreen(
                 LoginStep.Register -> RegisterContent(
                     email = state.email,
                     onEmailConfirmed = { viewModel.onEmailConfirmed(it) },
-                    onRegister = { email, password -> viewModel.register(email, password) }
+                    onRegister = { email, password -> viewModel.register(email, password) },
+                    goToLoginOnClick = { navHostController.navigate("login") }
                 )
             }
         }

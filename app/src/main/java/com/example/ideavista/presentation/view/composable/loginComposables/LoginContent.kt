@@ -2,16 +2,21 @@ package com.example.ideavista.presentation.view.composable.loginComposables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
@@ -32,6 +38,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ideavista.R
+import com.example.ideavista.presentation.view.theme.Azul
+import com.example.ideavista.presentation.view.theme.Marron
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
 
@@ -42,11 +50,13 @@ fun LoginContent(
     email: String,
     onEmailEntered: (String) -> Unit,
     onContinue: () -> Unit,
-    onGoogleSignIn: () -> Unit
+    onGoogleSignIn: () -> Unit,
+    errorMessage: String?
 ) {
     val pixelFont = FontFamily(
-        Font(R.font.ideal_font)
+        Font(R.font.ideavista)
     )
+
 
     Column(
         modifier = Modifier
@@ -101,6 +111,31 @@ fun LoginContent(
                 unfocusedBorderColor = Color.Black
             )
         )
+        // Muestra el mensaje de error debajo del botón si existe
+        if (errorMessage != null) {
+            Row(
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Error,
+                    contentDescription = "Error Icon",
+                    tint = Marron,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(9.dp))
+                Text(
+                    modifier = Modifier,
+                    text = errorMessage,
+                    fontWeight = FontWeight.Medium,
+                    color = Marron,
+                    fontSize = 16.sp
+                )
+            }
+        }
 
         Button(
             onClick = onContinue,
@@ -152,5 +187,41 @@ fun LoginContent(
                 )
             }
         }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp), // Espaciado externo
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            Text(
+                text = "Puedes consultar:",
+                fontWeight = FontWeight.Medium,
+                fontSize = 15.sp
+            )
+            TextButton(
+                onClick = { },
+                modifier = Modifier.padding(0.dp) // Elimina padding adicional
+            ) {
+                Text(
+                    text = "Política de privacidad",
+                    fontSize = 15.sp,
+                    color = Azul,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            TextButton(
+                onClick = { },
+                modifier = Modifier.padding(0.dp) // Elimina padding adicional
+            ) {
+                Text(
+                    text = "Términos y condiciones generales",
+                    fontSize = 15.sp,
+                    color = Azul,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
+
     }
 }

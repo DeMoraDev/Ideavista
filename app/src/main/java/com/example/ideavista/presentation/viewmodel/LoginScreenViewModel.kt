@@ -57,23 +57,37 @@ class LoginScreenViewModel(
     }
 
 
+    //Boton Continuar del Login
     fun onContinueClick() {
         val email = _uiState.value.email
 
-        if (email.isBlank() || !validateEmail(email)) {
-            _authState.value = AuthState.Error("Por favor, introduce un correo válido.")
+        val errorMessage = when {
+            email.isBlank() -> "El campo de correo no puede estar vacío."
+            !validateEmail(email) -> "Revisa el email, parece que hay un error"
+            else -> null
+        }
+
+        if (errorMessage != null) {
+            _uiState.value = _uiState.value.copy(emailError = errorMessage)
             return
-        } else {
-            isRegisteredUser(email) { isRegistered ->
-                if (isRegistered) {
-                    // Usuario ya registrado, cambiar al paso de iniciar sesión
-                    _uiState.value = _uiState.value.copy(step = LoginStep.AlreadyUser)
-                } else {
-                    // Usuario no registrado, cambiar al paso de registro
-                    _uiState.value = _uiState.value.copy(step = LoginStep.Register)
-                }
+        }
+        //TODO mensaje de registro satisfactirior
+        //TODO hashear contraseña y deshashear
+
+        isRegisteredUser(email) { isRegistered ->
+            if (isRegistered) {
+                // Usuario ya registrado, cambiar al paso de iniciar sesión
+                _uiState.value = _uiState.value.copy(step = LoginStep.AlreadyUser, emailError = null)
+            } else {
+                // Usuario no registrado, cambiar al paso de registro
+                _uiState.value = _uiState.value.copy(step = LoginStep.Register, emailError = null)
             }
         }
+    }
+
+    // Función de validación (opcional)
+    private fun validateEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     // Función para manejar el evento de registro
@@ -126,11 +140,6 @@ class LoginScreenViewModel(
         _uiState.value = LoginScreenState()
     }
 
-    // Función de validación (opcional)
-    private fun validateEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
     // Validación de la contraseña
     private fun validatePassword(password: String): Boolean {
         return when {
@@ -150,7 +159,7 @@ class LoginScreenViewModel(
                 _passwordError.value = "La contraseña debe contener al menos una letra minúscula."
                 false
             }
-            !password.any { "!@#\$%^&*()-_=+<>?".contains(it) } -> {
+            !password.any { "!@#\$%^.&*()-_=+<>?".contains(it) } -> {
                 _passwordError.value = "La contraseña debe contener al menos un carácter especial."
                 false
             }

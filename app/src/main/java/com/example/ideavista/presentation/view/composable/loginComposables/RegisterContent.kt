@@ -1,5 +1,6 @@
 package com.example.ideavista.presentation.view.composable.loginComposables
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,23 +12,32 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Marron
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
@@ -37,12 +47,14 @@ import com.example.ideavista.presentation.view.theme.Violeta
 fun RegisterContent(
     email: String,
     onEmailConfirmed: (String) -> Unit,
-    onRegister: (String, String) -> Unit
+    onRegister: (String, String) -> Unit,
+    goToLoginOnClick: () -> Unit
 ) {
     var confirmEmail by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showEmailError by remember { mutableStateOf(false) }
-    var showPasswordError by remember {mutableStateOf(false)}
+    var showPasswordError by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     //TODO Hay que migrar esta logica fuera del composable
     val passwordConditions = listOf(
@@ -64,7 +76,7 @@ fun RegisterContent(
             text = "Tu email",
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
-            modifier = Modifier.padding(top = 35.dp)
+            modifier = Modifier.padding(top = 30.dp)
         )
         OutlinedTextField(
             value = email,
@@ -87,7 +99,7 @@ fun RegisterContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Info, // Puedes usar otro icono si lo prefieres
+                    imageVector = Icons.Default.Error,
                     contentDescription = "Error Icon",
                     tint = Marron,
                     modifier = Modifier.size(20.dp)
@@ -106,7 +118,7 @@ fun RegisterContent(
             text = "Repite tu email",
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
-            modifier = Modifier.padding(top = 35.dp)
+            modifier = Modifier.padding(top = 20.dp)
         )
         OutlinedTextField(
             value = confirmEmail,
@@ -131,10 +143,10 @@ fun RegisterContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Info, // Puedes usar otro icono si lo prefieres
+                    imageVector = Icons.Default.Error,
                     contentDescription = "Error Icon",
                     tint = Marron,
-                    modifier = Modifier.size(21.dp)
+                    modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el icono y el texto
                 Text(
@@ -150,7 +162,7 @@ fun RegisterContent(
             text = "Elige una contraseña",
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
-            modifier = Modifier.padding(top = 35.dp)
+            modifier = Modifier.padding(top = 20.dp)
         )
         OutlinedTextField(
             value = password,
@@ -162,7 +174,22 @@ fun RegisterContent(
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Black
             ),
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val image = if (passwordVisible) {
+                    Icons.Outlined.Visibility // Ícono para mostrar la contraseña
+                } else {
+                    Icons.Default.Visibility // Ícono para ocultar la contraseña
+                }
+
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        imageVector = image,
+                        contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                    )
+                }
+            },
             isError = showPasswordError
         )
         val unmetConditions = passwordConditions.filter { !it.second() }.map { it.first }
@@ -173,34 +200,56 @@ fun RegisterContent(
                     .padding(start = 8.dp, top = 4.dp)
                     .fillMaxWidth()
             ) {
-                Text(
-                    text = "La contraseña no cumple con los siguientes requisitos:",
-                    color = Marron,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.Top // Alinea respecto a la parte superior del texto
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Error,
+                        contentDescription = "Error Icon",
+                        tint = Marron,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .alignBy(FirstBaseline) // Alinea con la línea base del texto
+                    )
+                    Spacer(modifier = Modifier.width(9.dp))
+                    Text(
+                        text = "Tu contraseña debe incluir:",
+                        color = Marron,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(bottom = 2.dp)
+                            .alignBy(FirstBaseline) // Alinea con la línea base del ícono
+                    )
+                }
                 unmetConditions.forEach { condition ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = 4.dp)
+                        modifier = Modifier.padding(
+                            start = 40.dp,
+                            bottom = 1.dp
+                        ) // Sangría y espacio entre líneas
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = "Error Icon",
-                            tint = Marron,
-                            modifier = Modifier.size(20.dp)
+                        Text(
+                            text = "·",
+                            color = Marron,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            modifier = Modifier.padding(end = 8.dp) // Espacio después del "·"
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = condition,
                             color = Marron,
-                            fontSize = 14.sp
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Medium,
                         )
                     }
                 }
             }
-        }else{
+        } else {
             Text(
                 text = "Incluye al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter" +
                         " especial"
@@ -211,6 +260,7 @@ fun RegisterContent(
             onClick = {
                 showEmailError = email != confirmEmail
                 showPasswordError = unmetConditions.isNotEmpty()
+
                 if (!showEmailError && !showPasswordError) {
                     onRegister(email, password)
                 }
@@ -226,6 +276,29 @@ fun RegisterContent(
                 text = "Continuar",
                 fontSize = 19.sp
             )
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "¿Ya tienes cuenta?",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium
+            )
+            TextButton(
+                onClick = goToLoginOnClick
+            ) {
+                Text(
+                    text = "Iniciar sesión",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Violeta
+                )
+            }
         }
     }
 }

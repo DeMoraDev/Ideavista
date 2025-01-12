@@ -5,5 +5,6 @@ package com.example.ideavista.presentation.state
 data class LoginScreenState(
     val step: LoginStep = LoginStep.Login,
     val email: String = "",
-    val password: String = ""
+    val password: String = "",
+    val emailError: String? = null //Estado para los errores de correo
 )

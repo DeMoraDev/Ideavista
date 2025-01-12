@@ -98,5 +98,9 @@ dependencies {
     implementation ("com.google.firebase:firebase-core:21.1.1")
     implementation ("com.google.firebase:firebase-firestore:25.1.1")
 
+    //Iconos extras
+    implementation ("androidx.compose.material:material-icons-core:1.7.6")
+    implementation ("androidx.compose.material:material-icons-extended:1.5.1")
+
     //TODO añadir coil si hace falta
 }
