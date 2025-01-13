@@ -11,13 +11,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
@@ -28,6 +31,7 @@ import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.presentation.view.theme.Azul
 import com.example.ideavista.presentation.view.theme.Gris
 import com.example.ideavista.presentation.view.theme.Marron
 import com.example.ideavista.presentation.view.theme.NegroClaro
@@ -38,14 +42,18 @@ import com.example.ideavista.presentation.view.theme.Violeta
 @Composable
 fun NameContent(
     email: String,
-    confirmEmail : String,
+    confirmEmail: String,
     password: String,
     name: String,
     onNameEntered: (String) -> Unit,
-    onRegister: (String, String, String) -> Unit
+    onRegister: (String, String, String) -> Unit,
+    onCheckedPrivacy: (Boolean) -> Unit
 ) {
     var currentName by remember { mutableStateOf(name) }
     var showNameError by remember { mutableStateOf(false) }
+
+    var checkedPrivacy by remember { mutableStateOf(false) }
+    var checkedNews by remember { mutableStateOf(false) }
 
     // Condiciones para validar el nombre
     val nameConditions = listOf(
@@ -88,9 +96,20 @@ fun NameContent(
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Black
             ),
-            isError = showNameError
+            isError = showNameError,
+            trailingIcon = {
+                if (currentName.isNotEmpty()) {
+                    IconButton(onClick = { currentName = "" }) {
+                        Icon(
+                            imageVector = Icons.Default.Dangerous,
+                            contentDescription = "Clear text",
+                            tint = Color.Black
+                        )
+                    }
+                }
+            }
         )
-
+        //TODO CheckBoxes no están alineados, enlaces de privacidad, cookies tampoco y añadir que sea necesario checkear privacidad para registrarse
         val unmetConditions = nameConditions.filter { !it.second() }.map { it.first }
 
         if (showNameError && unmetConditions.isNotEmpty()) {
@@ -155,6 +174,51 @@ fun NameContent(
             fontWeight = FontWeight.Medium,
             color = Gris,
             modifier = Modifier.padding(top = 4.dp)
+        )
+        CheckboxWithText(
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .fillMaxWidth(),
+            checked = checkedPrivacy,
+            onCheckedChange = { checkedPrivacy = it },
+            text = "Aceptar la política de privacidad y los términos y condiciones generales",
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(alignment = Alignment.CenterHorizontally)
+        ) {
+            TextButton(
+                onClick = { },
+                modifier = Modifier.padding(0.dp) // Elimina padding adicional
+            ) {
+                Text(
+                    text = "Política de privacidad",
+                    fontSize = 15.sp,
+                    color = Azul,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            TextButton(
+                onClick = { },
+                modifier = Modifier.padding(0.dp) // Elimina padding adicional
+            ) {
+                Text(
+                    text = "Términos y condiciones generales",
+                    fontSize = 15.sp,
+                    color = Azul,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
+        CheckboxWithText(
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .fillMaxWidth(),
+            checked = checkedNews,
+            onCheckedChange = { checkedNews = it },
+            text = "Recibir información comercial de inmuebles, noticias y ofertas de servicios desde " +
+                    "ideavista, id/hipotecas; id/seguros; Avaibook; BDMI; Rentalia.",
         )
         Button(
             onClick = {

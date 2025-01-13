@@ -40,6 +40,16 @@ class LoginScreenViewModel(
     val emailError: State<String?> get() = _emailError
 
 
+    //Checkboxes de Privacidad y Cookies
+    private val _isCheckedPrivacy = mutableStateOf(false)
+    val isCheckedPrivacy: State<Boolean> get() = _isCheckedPrivacy
+
+    fun onCheckedPrivacy(isChecked: Boolean) {
+        _isCheckedPrivacy.value = isChecked
+    }
+
+
+
     // Función para manejar el cambio de contraseña
     fun onPasswordChange(newPassword: String) {
         _uiState.value = _uiState.value.copy(password = newPassword)

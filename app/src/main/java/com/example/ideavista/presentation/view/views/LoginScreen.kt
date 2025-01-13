@@ -137,14 +137,15 @@ fun LoginScreen(
                     goToLoginOnClick = { navHostController.navigate("login") },
                     onPasswordRegister = { viewModel.onPasswordRegister(it) }
                 )
-                //TODO no se está pasando al método ningún parámetro
+
                 LoginStep.Name -> NameContent(
                     email = state.email,
                     password = state.password,
                     confirmEmail = state.confirmEmail,
                     name = state.name, // Usar el nombre del estado actual
                     onNameEntered = { viewModel.onNameEntered(it) }, // Llamada a la función del ViewModel
-                    onRegister = { email, password, confirmEmail -> viewModel.register(email, password,confirmEmail)}
+                    onRegister = { email, password, confirmEmail -> viewModel.register(email, password,confirmEmail)},
+                    onCheckedPrivacy = {viewModel.onCheckedPrivacy(it) }
                 )
             }
         }

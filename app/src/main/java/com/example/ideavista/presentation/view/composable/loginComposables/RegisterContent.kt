@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Visibility
@@ -135,7 +137,18 @@ fun RegisterContent(
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Black
             ),
-            isError = showEmailError
+            isError = showEmailError,
+            trailingIcon = {
+                if (confirmEmail.isNotEmpty()) {
+                    IconButton(onClick = { confirmEmail = "" }) {
+                        Icon(
+                            imageVector = Icons.Default.Dangerous,
+                            contentDescription = "Clear text",
+                            tint = Color.Black
+                        )
+                    }
+                }
+            }
         )
         if (showEmailError && email != confirmEmail) {
             Row(
