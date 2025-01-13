@@ -47,7 +47,8 @@ import com.example.ideavista.presentation.view.theme.Violeta
 fun RegisterContent(
     email: String,
     onEmailConfirmed: (String) -> Unit,
-    onRegister: (String, String) -> Unit,
+    onPasswordRegister: (String) -> Unit,
+    onContinue: () -> Unit,
     goToLoginOnClick: () -> Unit
 ) {
     var confirmEmail by remember { mutableStateOf("") }
@@ -125,6 +126,7 @@ fun RegisterContent(
             onValueChange = {
                 confirmEmail = it
                 showEmailError = false
+                onEmailConfirmed(it)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -166,7 +168,10 @@ fun RegisterContent(
         )
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                onPasswordRegister(it)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
@@ -262,7 +267,7 @@ fun RegisterContent(
                 showPasswordError = unmetConditions.isNotEmpty()
 
                 if (!showEmailError && !showPasswordError) {
-                    onRegister(email, password)
+                    onContinue()
                 }
             },
             modifier = Modifier

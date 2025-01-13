@@ -5,5 +5,6 @@ package com.example.ideavista.presentation.state
 enum class LoginStep {
     Login,
     AlreadyUser,
-    Register
+    Register,
+    Name
 }

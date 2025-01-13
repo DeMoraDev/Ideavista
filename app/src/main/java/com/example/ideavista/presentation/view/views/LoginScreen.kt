@@ -37,6 +37,7 @@ import com.example.ideavista.presentation.event.UIEvent
 import com.example.ideavista.presentation.state.LoginStep
 import com.example.ideavista.presentation.view.composable.loginComposables.AlreadyUserContent
 import com.example.ideavista.presentation.view.composable.loginComposables.LoginContent
+import com.example.ideavista.presentation.view.composable.loginComposables.NameContent
 import com.example.ideavista.presentation.view.composable.loginComposables.RegisterContent
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -66,7 +67,7 @@ fun LoginScreen(
             null -> Unit // No hacer nada si el evento es nulo
         }
     }
-
+//TODO añadir Step4 Nombre, habrá que cambiar continuar de register, en e
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,6 +77,7 @@ fun LoginScreen(
                             LoginStep.Login -> "Inicia sesión o regístrate"
                             LoginStep.AlreadyUser -> "Iniciar sesión"
                             LoginStep.Register -> "Crear cuenta"
+                            LoginStep.Name -> "Crear cuenta"
                         },
                         fontWeight = FontWeight.Bold,
                         fontSize = 19.sp
@@ -131,8 +133,18 @@ fun LoginScreen(
                 LoginStep.Register -> RegisterContent(
                     email = state.email,
                     onEmailConfirmed = { viewModel.onEmailConfirmed(it) },
-                    onRegister = { email, password -> viewModel.register(email, password) },
-                    goToLoginOnClick = { navHostController.navigate("login") }
+                    onContinue = { viewModel.onContinueClick() },
+                    goToLoginOnClick = { navHostController.navigate("login") },
+                    onPasswordRegister = { viewModel.onPasswordRegister(it) }
+                )
+                //TODO no se está pasando al método ningún parámetro
+                LoginStep.Name -> NameContent(
+                    email = state.email,
+                    password = state.password,
+                    confirmEmail = state.confirmEmail,
+                    name = state.name, // Usar el nombre del estado actual
+                    onNameEntered = { viewModel.onNameEntered(it) }, // Llamada a la función del ViewModel
+                    onRegister = { email, password, confirmEmail -> viewModel.register(email, password,confirmEmail)}
                 )
             }
         }
