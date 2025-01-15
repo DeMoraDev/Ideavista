@@ -7,5 +7,12 @@ object NavigationRoutes {
     const val Onboarding = "onboarding"
 
     const val login = "login"
-    const val main = "main"
+
+
+    //Main Screens
+    const val main = "main" //Home
+    const val Search = "search"
+    const val Favorites = "favorites"
+    const val Chat = "chat"
+    const val Menu = "menu"
 }

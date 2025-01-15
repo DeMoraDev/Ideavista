@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.ideavista.presentation.view.views.MainScreen
+import com.example.ideavista.presentation.view.composable.home.HomeScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
@@ -35,9 +35,10 @@ fun NavManager(navHostController: NavHostController) {
             LoginScreen(navHostController = navHostController, viewModel = loginScreenViewModel)
         }
 
-
+        // Home Screen
         composable(NavigationRoutes.main) {
-            MainScreen(navHostController = navHostController)
+            HomeScreen(navHostController = navHostController)
         }
+
     }
 }

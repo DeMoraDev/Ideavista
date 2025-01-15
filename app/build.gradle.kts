@@ -80,9 +80,8 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
 
     //Navigation with Compose
-    val nav_version = "2.8.4"
 
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:2.8.5")
 
     //Data Store
     implementation("androidx.datastore:datastore-preferences:1.1.1")
