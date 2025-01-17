@@ -267,8 +267,6 @@ class LoginScreenViewModel(
         }
     }
 
-    // TODO: 4ºStep para el nombre en el register
-
     fun login(email: String, password: String) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading

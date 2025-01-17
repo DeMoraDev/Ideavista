@@ -12,6 +12,7 @@ import com.example.ideavista.domain.usecase.SaveLanguageUseCase
 import com.example.ideavista.domain.usecase.SetUserAsReturningUseCase
 import com.example.ideavista.domain.usecase.auth.LoginUseCase
 import com.example.ideavista.domain.usecase.auth.RegisterUseCase
+import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
@@ -43,4 +44,5 @@ val appModule = module {
     factory { RegisterUseCase(get()) } // UseCase
     factory { LoginUseCase(get()) }  //UseCase
     viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
+    viewModel { HomeScreenViewModel() }
 }
