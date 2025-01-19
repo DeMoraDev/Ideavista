@@ -1,6 +1,8 @@
 package com.example.ideavista.presentation.view.composable.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -23,6 +25,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuItemColors
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -72,8 +75,10 @@ fun MainDropdown() {
                 }
             },
             modifier = Modifier
-                .menuAnchor() // Necesario para posicionar el menú
                 .fillMaxWidth()
+                .menuAnchor() // Necesario para posicionar el menú
+                .border(BorderStroke(1.dp, color = Color.Gray))
+                .background(Blanco)
         )
 
         // Dropdown Menu
@@ -98,6 +103,6 @@ fun MainDropdown() {
 
 @Preview
 @Composable
-fun MainDropdownContent(){
+fun MainDropdownContent() {
     MainDropdown()
 }

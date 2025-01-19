@@ -67,7 +67,7 @@ fun OnboardingScreen(
                 text = "ideavista",
                 fontFamily = pixelFont,
                 fontSize = 60.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onBackground
             )
         }

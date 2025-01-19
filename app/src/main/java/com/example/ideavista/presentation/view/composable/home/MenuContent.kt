@@ -1,7 +1,5 @@
 package com.example.ideavista.presentation.view.composable.home
 
-import android.R.attr.onClick
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,27 +22,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
 
 @Composable
-fun MenuContent() {
+fun MenuContent(
+    onClickLogInMenu: () -> Unit,
+) {
 
     //TODO Refactorizar todo esto con composables reutilizables + Mejorar la apariencia(No exactamente como la original)
 
@@ -81,7 +73,7 @@ fun MenuContent() {
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     Button(
-                        onClick = { },
+                        onClick = { onClickLogInMenu() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(4.dp),

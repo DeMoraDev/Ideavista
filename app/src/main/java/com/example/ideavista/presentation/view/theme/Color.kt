@@ -9,6 +9,7 @@ val Violeta = Color(0xFFB72683)      //Botones   Light/Dark
 val Azul = Color(0xFF145BC7)         //Hipervínculos   Light/Dark
 
 val Marron = Color(0xFFAC5C07)  //Error general email/password
+val BottomBarColor = Color(0xFFFAFAFA)
 
 //Gama de negros solo Dark Theme
 val NegroClaro = Color(0xFF3F3E3E)
