@@ -101,5 +101,6 @@ dependencies {
     implementation ("androidx.compose.material:material-icons-core:1.7.6")
     implementation ("androidx.compose.material:material-icons-extended:1.5.1")
 
-    //TODO añadir coil si hace falta
+    //Coil para Imágenes
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
 }
