@@ -29,17 +29,17 @@ fun FiltroBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            //.padding(8.dp)
             .shadow(elevation = 4.dp)
             .background(MaterialTheme.colorScheme.surface),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         // Box 1
         Box(
             modifier = Modifier
                 .weight(1f)
                 .clickable { /* Acción al hacer clic */ }
-                .padding(8.dp),
+                .padding(10.dp),
             contentAlignment = Alignment.Center
         ) {
             Row(

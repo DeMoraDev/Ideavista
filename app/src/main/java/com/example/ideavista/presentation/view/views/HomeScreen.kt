@@ -1,5 +1,6 @@
 package com.example.ideavista.presentation.view.views
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -49,6 +50,7 @@ fun HomeScreen(
     val isSelected = state.value.step
 
     val buyRentState = viewModel.buyRentState.collectAsState()
+
 
     // Aquí se maneja la lógica del Scaffold
     Scaffold(
@@ -142,8 +144,12 @@ fun HomeScreen(
                     buyOnClick = { viewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.COMPRAR) },
                     rentOnClick = { viewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.ALQUILAR) },
                     shareOnClick = { viewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.COMPARTIR) },
-                    buttonState = buyRentState.value.selectedOption
+                    buttonState = buyRentState.value.selectedOption,
+                    onSearchClick = {
+                        navHostController.navigate("property")
+                    }
                 )
+
                 HomeContentStep.Search -> SearchContent()
                 HomeContentStep.Favorites -> FavoriteContent()
                 HomeContentStep.Chat -> ChatContent()

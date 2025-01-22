@@ -1,19 +1,17 @@
 package com.example.ideavista.presentation.view.views
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,23 +21,41 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.ideavista.presentation.view.composable.propertyComposables.FiltroBar
+import com.example.ideavista.presentation.view.composable.propertyComposables.PropertyCard
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.Negro
 import com.example.ideavista.presentation.view.theme.Violeta
+import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
+import org.koin.androidx.compose.koinViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.Color
+import com.example.ideavista.presentation.view.theme.NegroClaro
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun PropertyListScreen() {
+fun PropertyListScreen(
+    navHostController: NavHostController,
+    homeScreenViewModel: HomeScreenViewModel = koinViewModel()
+) {
+
+    val properties by homeScreenViewModel.properties.collectAsState()
+    Log.d("PropertyListScreen", "Properties: $properties")
+    LaunchedEffect(Unit) {
+        homeScreenViewModel.fetchProperties()
+    }
+    Log.d("PropertyListScreen", "Properties: $properties")
 
     Scaffold(
         topBar = {
@@ -104,22 +120,53 @@ fun PropertyListScreen() {
         }
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(color = Color.LightGray.copy(alpha = 0.2f))
         ) {
+            Log.d("PropertyListScreen", "Data: $properties")
             // FiltroBar como header fijo
             stickyHeader {
                 FiltroBar()
             }
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                        .background(Color.Transparent),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Viendo ${properties.size} viviendas de ${properties.size}",
+                        fontSize = 16.sp,
+                        color = NegroClaro
+                    )
+                }
+            }
 
-            // Resto del contenido aquí
-            items(10) { index ->
-                Text("Elemento $index")
+            items(properties) { property ->
+                PropertyCard(
+                    user_id = property.user_id ?: "Usuario desconocido", // Manejo de nulo
+                    titulo = property.titulo ?: "Título no disponible",
+                    ciudad = property.ciudad ?: "Ciudad no especificada",
+                    codigo_postal = property.codigo_postal ?: 0, // Valor por defecto para números
+                    direccion = property.direccion ?: "Dirección no disponible",
+                    estado = property.estado ?: "Estado no especificado",
+                    numero_baños = property.numero_baños ?: 0,
+                    distancia = property.distancia
+                        ?: 0, // Campo no presente en el modelo, asigna un valor fijo o ignora
+                    numero_habitaciones = property.numero_habitaciones ?: 0,
+                    planta = property.planta ?: "Planta no especificada",
+                    precio = property.precio?.toString()
+                        ?: "Precio no disponible", // Convierte Long a String
+                    tamaño = property.tamaño ?: 0,
+                    tipo_anuncio = property.tipo_anuncio ?: "Tipo de anuncio no especificado",
+                    tipo_propiedad = property.tipo_propiedad ?: "Tipo de propiedad no especificado",
+                    descripcion = property.descripcion ?: "Descripción no disponible",
+                    additionalInfo = property.additionalInfo ?: "Sin información adicional"
+                )
             }
         }
     }
-}
-@Preview
-@Composable
-fun PropertyListScreenPreview() {
-    PropertyListScreen()
 }

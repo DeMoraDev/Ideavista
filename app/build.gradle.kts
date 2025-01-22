@@ -88,19 +88,22 @@ dependencies {
 
     //Firebase
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
     //Firebase products to use
     implementation("com.google.firebase:firebase-auth")
-    implementation ("com.google.android.gms:play-services-auth:21.3.0")
+    //implementation ("com.google.android.gms:play-services-auth")
 
     //FireStore
-    implementation ("com.google.firebase:firebase-core:21.1.1")
-    implementation ("com.google.firebase:firebase-firestore:25.1.1")
+    //implementation ("com.google.firebase:firebase-core")
+    implementation ("com.google.firebase:firebase-firestore")
+    implementation ("com.google.firebase:firebase-database")
+
 
     //Iconos extras
     implementation ("androidx.compose.material:material-icons-core:1.7.6")
-    implementation ("androidx.compose.material:material-icons-extended:1.5.1")
+    implementation ("androidx.compose.material:material-icons-extended:1.7.6")
 
     //Coil para Imágenes
     implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+
 }

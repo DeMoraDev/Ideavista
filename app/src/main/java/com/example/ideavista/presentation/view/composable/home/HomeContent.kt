@@ -37,7 +37,8 @@ fun HomeContent(
     buyOnClick: () -> Unit,
     rentOnClick: () -> Unit,
     shareOnClick: () -> Unit,
-    buttonState: BuyRentShareButtonOptions?
+    buttonState: BuyRentShareButtonOptions?,
+    onSearchClick: () -> Unit
 
 ) {
 
@@ -112,7 +113,7 @@ fun HomeContent(
                 }
 
                 Button(
-                    onClick = { },
+                    onClick = { onSearchClick() },
                     shape = RoundedCornerShape(4.dp),  // Define los bordes redondeados
                     modifier = Modifier
                         .fillMaxWidth()
@@ -161,6 +162,7 @@ fun HomeContentPreview() {
         buyOnClick = TODO(),
         rentOnClick = TODO(),
         shareOnClick = TODO(),
-        buttonState = TODO()
+        buttonState = TODO(),
+        onSearchClick = TODO()
     )
 }

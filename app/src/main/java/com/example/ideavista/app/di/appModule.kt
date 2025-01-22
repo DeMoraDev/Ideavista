@@ -37,12 +37,13 @@ val appModule = module {
     // ViewModels
     viewModel { SplashScreenViewModel(get()) }
     viewModel { OnboardingViewModel(get(), get(), get()) }
+    viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
+    viewModel { HomeScreenViewModel() }
 
     //Auth di
     single { FirebaseAuth.getInstance() } //Instancia de Firebase
     single<AuthRepository> { AuthRepositoryImpl(get()) } // Repositorio
     factory { RegisterUseCase(get()) } // UseCase
     factory { LoginUseCase(get()) }  //UseCase
-    viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
-    viewModel { HomeScreenViewModel() }
+
 }

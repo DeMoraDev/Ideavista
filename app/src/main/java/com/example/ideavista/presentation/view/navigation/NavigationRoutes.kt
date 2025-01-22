@@ -15,4 +15,7 @@ object NavigationRoutes {
     const val Favorites = "favorites"
     const val Chat = "chat"
     const val Menu = "menu"
+
+    //Property
+    const val Property = "property"
 }
