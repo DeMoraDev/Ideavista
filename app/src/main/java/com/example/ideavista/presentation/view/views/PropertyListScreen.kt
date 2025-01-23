@@ -40,6 +40,7 @@ import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
+import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.NegroClaro
 
 
@@ -51,6 +52,10 @@ fun PropertyListScreen(
 ) {
 
     val properties by homeScreenViewModel.properties.collectAsState()
+
+    //Barra de carga TODO- En el futuro, manejar el estado isLoading mejor
+    val isLoading = properties.isEmpty()
+
     Log.d("PropertyListScreen", "Properties: $properties")
     LaunchedEffect(Unit) {
         homeScreenViewModel.fetchProperties()
@@ -129,19 +134,27 @@ fun PropertyListScreen(
             stickyHeader {
                 FiltroBar()
             }
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp)
-                        .background(Color.Transparent),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Viendo ${properties.size} viviendas de ${properties.size}",
-                        fontSize = 18.sp,
-                        color = NegroClaro
-                    )
+            if (isLoading) {
+                item {
+                    LoadingBar()
+                }
+            }
+
+            if (properties.isNotEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp)
+                            .background(Color.Transparent),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Viendo ${properties.size} viviendas de ${properties.size}",
+                            fontSize = 18.sp,
+                            color = NegroClaro
+                        )
+                    }
                 }
             }
 
