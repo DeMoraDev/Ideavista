@@ -139,7 +139,7 @@ fun PropertyListScreen(
                 ) {
                     Text(
                         text = "Viendo ${properties.size} viviendas de ${properties.size}",
-                        fontSize = 16.sp,
+                        fontSize = 18.sp,
                         color = NegroClaro
                     )
                 }
@@ -154,17 +154,16 @@ fun PropertyListScreen(
                     direccion = property.direccion ?: "Dirección no disponible",
                     estado = property.estado ?: "Estado no especificado",
                     numero_baños = property.numero_baños ?: 0,
-                    distancia = property.distancia
-                        ?: 0, // Campo no presente en el modelo, asigna un valor fijo o ignora
+                    distancia = property.distancia ?: 0,
                     numero_habitaciones = property.numero_habitaciones ?: 0,
                     planta = property.planta ?: "Planta no especificada",
-                    precio = property.precio?.toString()
-                        ?: "Precio no disponible", // Convierte Long a String
+                    precio = property.precio?.toString() ?: "Precio no disponible",
                     tamaño = property.tamaño ?: 0,
                     tipo_anuncio = property.tipo_anuncio ?: "Tipo de anuncio no especificado",
                     tipo_propiedad = property.tipo_propiedad ?: "Tipo de propiedad no especificado",
                     descripcion = property.descripcion ?: "Descripción no disponible",
-                    additionalInfo = property.additionalInfo ?: "Sin información adicional"
+                    additionalInfo = property.additionalInfo ?: "Sin información adicional",
+                    images = property.images
                 )
             }
         }

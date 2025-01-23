@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Favorite
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.ChatBubble
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import com.example.ideavista.R
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
@@ -25,6 +27,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
@@ -36,6 +40,7 @@ import com.example.ideavista.presentation.view.composable.home.HomeContent
 import com.example.ideavista.presentation.view.composable.home.MenuContent
 import com.example.ideavista.presentation.view.composable.home.SearchContent
 import com.example.ideavista.presentation.view.theme.BottomBarColor
+import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -71,9 +76,19 @@ fun HomeScreen(
                 NavigationBarItem(
                     icon = {
                         if (isSelected == HomeContentStep.Home) {
-                            Icon(Icons.Default.Home, contentDescription = "Home Filled")
+                            Icon(
+                                painter = painterResource(id = R.drawable.home_filled_icon), // Reemplaza con el nombre de tu recurso
+                                contentDescription = "Custom Icon",
+                                tint = Violeta,
+                                modifier = Modifier.size(22.dp)
+                            )
                         } else {
-                            Icon(Icons.Outlined.Home, contentDescription = "Home Outlined")
+                            Icon(
+                                painter = painterResource(id = R.drawable.home_outlined_icon), // Reemplaza con el nombre de tu recurso
+                                contentDescription = "Custom Icon",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.size(22.dp)
+                            )
                         }
                     },
                     label = { Text("Home") },
@@ -83,9 +98,19 @@ fun HomeScreen(
                 NavigationBarItem(
                     icon = {
                         if (isSelected == HomeContentStep.Search) {
-                            Icon(Icons.Default.Search, contentDescription = "Search Filled")
+                            Icon(
+                                painter = painterResource(id = R.drawable.bell_filled_icon), // Reemplaza con el nombre de tu recurso
+                                contentDescription = "Search filled Icon",
+                                tint = Violeta,
+                                modifier = Modifier.size(22.dp)
+                            )
                         } else {
-                            Icon(Icons.Outlined.Search, contentDescription = "Search Outlined")
+                            Icon(
+                                painter = painterResource(id = R.drawable.bell_outlined_icon), // Reemplaza con el nombre de tu recurso
+                                contentDescription = "Search outlined Icon",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.size(22.dp)
+                            )
                         }
                     },
                     label = { Text("Search") },
@@ -95,11 +120,16 @@ fun HomeScreen(
                 NavigationBarItem(
                     icon = {
                         if (isSelected == HomeContentStep.Favorites) {
-                            Icon(Icons.Default.Favorite, contentDescription = "Favorites Filled")
+                            Icon(
+                                Icons.Default.Favorite,
+                                contentDescription = "Favorites Filled",
+                                tint = Violeta,
+                            )
                         } else {
                             Icon(
                                 Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Favorites Outlined"
+                                contentDescription = "Favorites Outlined",
+                                tint = Color.Unspecified,
                             )
                         }
                     },
@@ -110,9 +140,19 @@ fun HomeScreen(
                 NavigationBarItem(
                     icon = {
                         if (isSelected == HomeContentStep.Chat) {
-                            Icon(Icons.Default.Chat, contentDescription = "Chat Filled")
+                            Icon(
+                                painter = painterResource(id = R.drawable.message_filled_icon),
+                                contentDescription = "Message Icon",
+                                tint = Violeta,
+                                modifier = Modifier.size(22.dp)
+                            )
                         } else {
-                            Icon(Icons.Outlined.ChatBubble, contentDescription = "Chat Outlined")
+                            Icon(
+                                painter = painterResource(id = R.drawable.message_outlined_icon),
+                                contentDescription = "Message Icon",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.size(25.dp)
+                            )
                         }
                     },
                     label = { Text("Chat") },
@@ -122,12 +162,21 @@ fun HomeScreen(
                 NavigationBarItem(
                     icon = {
                         if (isSelected == HomeContentStep.Menu) {
-                            Icon(Icons.Default.Person, contentDescription = "Menu Filled")
+                            Icon(
+                                Icons.Default.Person,
+                                contentDescription = "Menu Filled",
+                                tint = Violeta,
+                                modifier = Modifier.size(28.dp)
+                            )
                         } else {
-                            Icon(Icons.Outlined.Person, contentDescription = "Menu Outlined")
+                            Icon(
+                                Icons.Outlined.Person,
+                                contentDescription = "Menu Outlined",
+                                modifier = Modifier.size(28.dp)
+                                )
                         }
                     },
-                    label = { Text("Home") },
+                    label = { Text("Menu") },
                     selected = state.value.step == HomeContentStep.Menu,
                     onClick = { viewModel.updateStep(HomeContentStep.Menu) }
                 )

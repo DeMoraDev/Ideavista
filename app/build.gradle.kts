@@ -103,7 +103,10 @@ dependencies {
     implementation ("androidx.compose.material:material-icons-core:1.7.6")
     implementation ("androidx.compose.material:material-icons-extended:1.7.6")
 
-    //Coil para Imágenes
-    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
 
+    //Glide para imágenes
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+    //Accompanist Pager para imágenes
+    implementation ("com.google.accompanist:accompanist-pager:0.30.1")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
 }
