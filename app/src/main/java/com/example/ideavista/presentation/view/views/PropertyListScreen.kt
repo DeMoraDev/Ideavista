@@ -109,7 +109,7 @@ fun PropertyListScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción para retroceder */ }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Atrás")
                     }
                 },
@@ -127,9 +127,9 @@ fun PropertyListScreen(
         LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
-                .background(color = Color.LightGray.copy(alpha = 0.2f))
+                .background(color = Color.LightGray.copy(alpha = 0.2f)),
         ) {
-            Log.d("PropertyListScreen", "Data: $properties")
+
             // FiltroBar como header fijo
             stickyHeader {
                 FiltroBar()
@@ -145,9 +145,9 @@ fun PropertyListScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(12.dp)
+                            //.padding(6.dp)
                             .background(Color.Transparent),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.TopCenter
                     ) {
                         Text(
                             text = "Viendo ${properties.size} viviendas de ${properties.size}",
@@ -160,10 +160,10 @@ fun PropertyListScreen(
 
             items(properties) { property ->
                 PropertyCard(
-                    user_id = property.user_id ?: "Usuario desconocido", // Manejo de nulo
+                    user_id = property.user_id ?: "Usuario desconocido",
                     titulo = property.titulo ?: "Título no disponible",
                     ciudad = property.ciudad ?: "Ciudad no especificada",
-                    codigo_postal = property.codigo_postal ?: 0, // Valor por defecto para números
+                    codigo_postal = property.codigo_postal ?: 0,
                     direccion = property.direccion ?: "Dirección no disponible",
                     estado = property.estado ?: "Estado no especificado",
                     numero_baños = property.numero_baños ?: 0,
@@ -176,8 +176,12 @@ fun PropertyListScreen(
                     tipo_propiedad = property.tipo_propiedad ?: "Tipo de propiedad no especificado",
                     descripcion = property.descripcion ?: "Descripción no disponible",
                     additionalInfo = property.additionalInfo ?: "Sin información adicional",
-                    images = property.images
+                    images = property.images,
+                    planos = property.planos,
+                    garaje = property.garaje,
+                    onPropertyClick = { }
                 )
+                Spacer(modifier = Modifier.height(30.dp))
             }
         }
     }

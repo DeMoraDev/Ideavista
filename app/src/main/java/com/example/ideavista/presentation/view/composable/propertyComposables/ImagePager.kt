@@ -26,20 +26,21 @@ import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ImagePager(images: List<String>) {
-    val pagerState = rememberPagerState()
+fun ImagePager(images: List<String>, planos: List<String>) {
 
+    val pagerState = rememberPagerState()
+    val combinedImages = images + planos
 
     Box {
         HorizontalPager(
             state = pagerState,
-            count = images.size,
+            count = combinedImages.size,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp) // Ajusta la altura de la imagen
+                .height(300.dp)
         ) { page ->
             GlideImage(
-                model = images[page], // Muestra la imagen correspondiente al índice actual
+                model = combinedImages[page],
                 contentDescription = "Property Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()

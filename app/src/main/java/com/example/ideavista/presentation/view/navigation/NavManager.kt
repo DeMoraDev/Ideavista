@@ -2,10 +2,12 @@ package com.example.ideavista.presentation.view.navigation
 
 import LoginScreen
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.ideavista.presentation.view.views.DetailScreen
 import com.example.ideavista.presentation.view.views.HomeScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.PropertyListScreen
@@ -52,6 +54,11 @@ fun NavManager(navHostController: NavHostController) {
             PropertyListScreen(
                 navHostController = navHostController,
                 homeScreenViewModel = homeScreenViewModel
+            )
+        }
+        composable(NavigationRoutes.DetailScreen){
+            DetailScreen(
+                navHostController = TODO()
             )
         }
     }

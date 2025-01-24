@@ -40,6 +40,7 @@ val appModule = module {
     viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
     viewModel { HomeScreenViewModel() }
 
+
     //Auth di
     single { FirebaseAuth.getInstance() } //Instancia de Firebase
     single<AuthRepository> { AuthRepositoryImpl(get()) } // Repositorio

@@ -18,4 +18,5 @@ object NavigationRoutes {
 
     //Property
     const val Property = "property"
+    const val DetailScreen = "detail"
 }

@@ -1,6 +1,7 @@
 package com.example.ideavista.presentation.view.composable.propertyComposables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.filled.RestoreFromTrash
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -33,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +59,7 @@ fun PropertyCard(
     titulo: String,
     ciudad: String,
     images: List<String>,
+    planos: List<String>,
     codigo_postal: Int,
     direccion: String,
     estado: String,
@@ -65,8 +69,10 @@ fun PropertyCard(
     planta: String,
     precio: String,
     tamaño: Int,
+    garaje: Boolean,
     tipo_anuncio: String,
     tipo_propiedad: String,
+    onPropertyClick: () -> Unit,
     descripcion: String,
     additionalInfo: String
 ) {
@@ -74,14 +80,13 @@ fun PropertyCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
-            .clickable { },
-        // elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            .clickable { onPropertyClick() },
         shape = RoundedCornerShape(4.dp)
     ) {
         Column {
             // Slider de imágenes
             if (images.isNotEmpty()) {
-                ImagePager(images)
+                ImagePager(images, planos)
             } else {
                 Text(
                     text = "No hay imágenes disponibles",
@@ -124,15 +129,86 @@ fun PropertyCard(
                         )
                     }
             ) {  // Row con Iconos
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .padding(horizontal = 8.dp, vertical = 2.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(Icons.Default.Favorite, contentDescription = "Favorite")
-                    Icon(Icons.Default.Share, contentDescription = "Share")
-                    Icon(Icons.Default.Info, contentDescription = "Info")
+
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(42.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Transparent)
+                            .border(1.dp, color = Color.Black, shape = RoundedCornerShape(4.dp))
+                            .clickable(onClick = {}),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.image_icon),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .size(38.dp)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(42.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Transparent)
+                            .border(1.dp, color = Color.Black, shape = RoundedCornerShape(4.dp))
+                            .clickable(onClick = {}),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.blueprint_icon),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .background(Color.Transparent)
+                                .size(22.dp)
+
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(42.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Transparent)
+                            .border(1.dp, color = Color.Black, shape = RoundedCornerShape(4.dp))
+                            .clickable(onClick = {}),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "360",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(42.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Transparent)
+                            .border(1.dp, color = Color.Black, shape = RoundedCornerShape(4.dp))
+                            .clickable(onClick = {}),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.location_map_iconf),
+                            contentDescription = "Location",
+                            modifier = Modifier
+                                .size(28.dp)
+                        )
+                    }
+
+
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -182,15 +258,33 @@ fun PropertyCard(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Texto del precio
-                Text(
-                    text = "$precio€",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 26.sp,
-                    color = Negro,
+                Row(
                     modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                )
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "$precio€",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 30.sp,
+                        color = Negro,
+                        modifier = Modifier
+
+                    )
+
+                    if (garaje) {
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Garaje incluido",
+                            fontSize = 18.sp,
+                            color = NegroClaro,
+                            modifier = Modifier
+
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 

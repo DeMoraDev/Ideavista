@@ -71,6 +71,7 @@ class HomeScreenViewModel : ViewModel() {
                         try {
                             val property = document.toObject(Property::class.java)
                             Log.d("FetchProperties", "Documento mapeado correctamente: $property")
+                            property.id = document.id
                             property
                         } catch (e: Exception) {
                             Log.e("FetchProperties", "Error mapeando documento: ${e.message}")
