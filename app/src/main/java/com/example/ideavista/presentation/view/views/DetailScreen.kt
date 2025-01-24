@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,14 +37,22 @@ import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.BottomBarColor
 import com.example.ideavista.presentation.view.theme.Violeta
+import com.example.ideavista.presentation.viewmodel.PropertyViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DetailScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    propertyId: String,
+    propertyViewModel: PropertyViewModel = koinViewModel()
 ) {
+    val propertyDetails = propertyViewModel.propertyDetails.collectAsState()
 
+    LaunchedEffect(propertyId) {
+        propertyViewModel.fetchPropertyDetails(propertyId)
+    }
 
     Scaffold(
         topBar = {
@@ -59,7 +69,7 @@ fun DetailScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción para retroceder */ }) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Atrás")
                     }
                 },
@@ -154,9 +164,36 @@ fun DetailScreen(
                 .padding(innerPadding)
                 .background(color = Color.LightGray.copy(alpha = 0.2f)),
         ) {
+            if (propertyDetails.value != null) {
+                val property = propertyDetails.value
+                item {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Título: ${property?.titulo ?: "No disponible"}",
+                            fontSize = 20.sp
+                        )
+                        Text(
+                            text = "Ciudad: ${property?.ciudad ?: "No disponible"}",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "Precio: ${property?.precio ?: "No disponible"}",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "Descripción: ${property?.descripcion ?: "No disponible"}",
+                            fontSize = 16.sp
+                        )
 
-
+                    }
+                }
+            } else {
+                item {
+                    Text(text = "Cargando detalles...", fontSize = 18.sp)
+                }
+            }
         }
     }
 }
-

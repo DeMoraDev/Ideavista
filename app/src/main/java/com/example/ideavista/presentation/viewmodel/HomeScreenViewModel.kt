@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ideavista.domain.usecase.properties.FetchPropertiesUseCase
 import com.example.ideavista.presentation.state.BuyRentButtonState
 import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
 import com.example.ideavista.presentation.state.HomeContentStep
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class HomeScreenViewModel : ViewModel() {
+class HomeScreenViewModel(private val fetchPropertiesUseCase: FetchPropertiesUseCase) : ViewModel() {
 
     private val _uiState = mutableStateOf(HomeScreenState())
     val uiState: State<HomeScreenState> get() = _uiState
@@ -46,65 +47,10 @@ class HomeScreenViewModel : ViewModel() {
     val properties: StateFlow<List<Property>> = _properties
 
 
-    fun fetchProperties() {
-        val selectedOption = _buyRentState.value.selectedOption ?: return
-        val tipoPropiedadString = when (selectedOption) {
-            BuyRentShareButtonOptions.COMPRAR -> "comprar"
-            BuyRentShareButtonOptions.ALQUILAR -> "alquilar"
-            BuyRentShareButtonOptions.COMPARTIR -> "compartir"
+    fun fetchProperties(tipoPropiedad: String) {
+        viewModelScope.launch {
+            _properties.value = fetchPropertiesUseCase(tipoPropiedad)
         }
-
-        val db = FirebaseFirestore.getInstance()
-        db.collection("property")
-            .whereEqualTo("tipo_propiedad", tipoPropiedadString)
-            .get()
-            .addOnSuccessListener { documents ->
-                if (documents.isEmpty) {
-                    Log.d(
-                        "FetchProperties",
-                        "No se encontraron propiedades para el tipo $tipoPropiedadString"
-                    )
-                    _properties.value = emptyList()
-                } else {
-                    Log.d("FetchProperties", "Se obtuvieron ${documents.size()} documentos")
-                    val result = documents.mapNotNull { document ->
-                        try {
-                            val property = document.toObject(Property::class.java)
-                            Log.d("FetchProperties", "Documento mapeado correctamente: $property")
-                            property.id = document.id
-                            property
-                        } catch (e: Exception) {
-                            Log.e("FetchProperties", "Error mapeando documento: ${e.message}")
-                            null
-                        }
-                    }
-                    _properties.value = result
-                    Log.d("HomeScreenViewModel", "Properties actualizados: $result")
-                    Log.d(
-                        "FetchProperties",
-                        "Propiedades asignadas a _properties.value: ${_properties.value}"
-                    )
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("FetchProperties", "Fallo al obtener propiedades: ${e.message}")
-                e.printStackTrace()
-            }
     }
 }
 
-/* //Estado de tipo de propiedad
- private val _propertyType = MutableStateFlow("")
- val propertyType: StateFlow<String> get() = _propertyType
- //Función para cambiar el estado del tipo de propiedad
- fun onPropertyTypeSelected(type: String) {
-     _propertyType.value = type
- }
-
- //Estado de la dirección de la propiedad
- private val _address = MutableStateFlow("")
- val address: StateFlow<String> get() = _address
- //Su función para cambiar dirección
- fun onAddressChanged(newAddress: String) {
-     _address.value = newAddress
- } */

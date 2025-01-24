@@ -40,6 +40,7 @@ import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
+import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
 import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.NegroClaro
 
@@ -56,11 +57,23 @@ fun PropertyListScreen(
     //Barra de carga TODO- En el futuro, manejar el estado isLoading mejor
     val isLoading = properties.isEmpty()
 
-    Log.d("PropertyListScreen", "Properties: $properties")
-    LaunchedEffect(Unit) {
-        homeScreenViewModel.fetchProperties()
+    //Observar el estado del tipo de propiedad elegida
+    val buyRentShareState by homeScreenViewModel.buyRentState.collectAsState()
+
+    //convertimos para el tipo de valor de la base de datos
+    val tipoPropiedad = when (buyRentShareState.selectedOption) {
+        BuyRentShareButtonOptions.COMPRAR -> "comprar"
+        BuyRentShareButtonOptions.ALQUILAR -> "alquilar"
+        BuyRentShareButtonOptions.COMPARTIR -> "compartir"
+        null -> ""
     }
-    Log.d("PropertyListScreen", "Properties: $properties")
+
+    // TODO- Puede que sea conveniente que PropertyListScreen y DetailScreen compartan viewmodel
+    // TODO- y que homeviewmodel solo pase por argumentos los filtros para llamar al fetch
+    LaunchedEffect(Unit) {
+        homeScreenViewModel.fetchProperties(tipoPropiedad)
+    }
+
 
     Scaffold(
         topBar = {
@@ -179,7 +192,7 @@ fun PropertyListScreen(
                     images = property.images,
                     planos = property.planos,
                     garaje = property.garaje,
-                    onPropertyClick = { }
+                    onPropertyClick = { navHostController.navigate("propertyDetail/${property.id}") }
                 )
                 Spacer(modifier = Modifier.height(30.dp))
             }

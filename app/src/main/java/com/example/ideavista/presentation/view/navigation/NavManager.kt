@@ -56,10 +56,14 @@ fun NavManager(navHostController: NavHostController) {
                 homeScreenViewModel = homeScreenViewModel
             )
         }
-        composable(NavigationRoutes.DetailScreen){
-            DetailScreen(
-                navHostController = TODO()
-            )
+        composable("propertyDetail/{propertyId}") { backStackEntry ->
+            val propertyId = backStackEntry.arguments?.getString("propertyId")
+            propertyId?.let {
+                DetailScreen(
+                    propertyId = it,
+                    navHostController = navHostController
+                )
+            }
         }
     }
 }
