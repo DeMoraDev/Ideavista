@@ -10,6 +10,7 @@ data class Property(
     val images: List<String> = emptyList(),
     val planos: List<String> = emptyList(),
     val codigo_postal: Int? = 0,
+    val comentario: String? = "",
     val direccion: String? = "",
     val estado: String? = "",
     val garaje: Boolean = false,

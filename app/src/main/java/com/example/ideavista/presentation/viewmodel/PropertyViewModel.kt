@@ -1,5 +1,7 @@
 package com.example.ideavista.presentation.viewmodel
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ideavista.domain.repository.PropertyRepository
@@ -21,5 +23,15 @@ class PropertyViewModel(private val propertyRepository: PropertyRepository) : Vi
             val details = propertyRepository.getPropertyById(propertyId)
             _propertyDetails.value = details
         }
+    }
+
+    //Hipoteca
+    private var _value: Float = 250000f
+    val value: Float
+        get() = _value  // Exponer el valor como un Float, sin MutableState
+
+    // Función para actualizar el valor
+    fun updateValue(newValue: Float) {
+        _value = newValue
     }
 }

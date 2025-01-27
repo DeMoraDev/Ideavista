@@ -106,7 +106,12 @@ dependencies {
 
     //Glide para imágenes
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
     //Accompanist Pager para imágenes
     implementation ("com.google.accompanist:accompanist-pager:0.30.1")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
+
+    //Barras de desplazamiento de Accompanist
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 }

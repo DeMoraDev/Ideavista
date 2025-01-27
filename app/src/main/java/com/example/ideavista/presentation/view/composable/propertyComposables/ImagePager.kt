@@ -26,7 +26,7 @@ import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ImagePager(images: List<String>, planos: List<String>) {
+fun ImagePager(images: List<String>, planos: List<String>, showInmobiliaria: Boolean) {
 
     val pagerState = rememberPagerState()
     val combinedImages = images + planos
@@ -70,20 +70,22 @@ fun ImagePager(images: List<String>, planos: List<String>) {
             )
         }
         //Logo inmobiliaria TODO- Hacer condicion para logo inmobiliaria y hacer algun mapeo para convertir el nombre de las inmobiliarias -> logo
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd) // Posiciona en la esquina superior derecha
-                .padding(vertical = 6.dp)
-        ) {
-            GlideImage(
-                model = "https://github.com/user-attachments/assets/5d50714c-ac46-4d86-826b-2d561ed3b6e1",
-                contentDescription = "Inmobiliaria Image",
-                contentScale = ContentScale.Crop,
+        if (showInmobiliaria){
+            Box(
                 modifier = Modifier
-                    .width(70.dp)
-                    .height(40.dp)
-                    .clip(RoundedCornerShape(4.dp))
-            )
+                    .align(Alignment.TopEnd) // Posiciona en la esquina superior derecha
+                    .padding(vertical = 6.dp)
+            ) {
+                GlideImage(
+                    model = "https://github.com/user-attachments/assets/5d50714c-ac46-4d86-826b-2d561ed3b6e1",
+                    contentDescription = "Inmobiliaria Image",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(70.dp)
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                )
+            }
         }
         //Marca de agua TODO- Condición para la marca de agua y pasar variable del nombre inmobiliaria
         Box(

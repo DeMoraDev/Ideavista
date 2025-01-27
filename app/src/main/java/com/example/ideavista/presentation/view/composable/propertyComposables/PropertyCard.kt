@@ -86,7 +86,7 @@ fun PropertyCard(
         Column {
             // Slider de imágenes
             if (images.isNotEmpty()) {
-                ImagePager(images, planos)
+                ImagePager(images, planos, showInmobiliaria = true)
             } else {
                 Text(
                     text = "No hay imágenes disponibles",
@@ -129,7 +129,7 @@ fun PropertyCard(
                         )
                     }
             ) {  // Row con Iconos
-
+                //TODO Hacer composable de esto
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
