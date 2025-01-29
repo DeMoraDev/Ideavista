@@ -52,10 +52,11 @@ fun PropertyListScreen(
     homeScreenViewModel: HomeScreenViewModel = koinViewModel()
 ) {
 
-    val properties by homeScreenViewModel.properties.collectAsState()
+   // val properties by homeScreenViewModel.properties.collectAsState()
+    val propertiesPreview by homeScreenViewModel.properties_Preview.collectAsState()
 
     //Barra de carga TODO- En el futuro, manejar el estado isLoading mejor
-    val isLoading = properties.isEmpty()
+    val isLoading = propertiesPreview.isEmpty()
 
     //Observar el estado del tipo de propiedad elegida
     val buyRentShareState by homeScreenViewModel.buyRentState.collectAsState()
@@ -71,7 +72,7 @@ fun PropertyListScreen(
     // TODO- Puede que sea conveniente que PropertyListScreen y DetailScreen compartan viewmodel
     // TODO- y que homeviewmodel solo pase por argumentos los filtros para llamar al fetch
     LaunchedEffect(Unit) {
-        homeScreenViewModel.fetchProperties(tipoPropiedad)
+        homeScreenViewModel.fetchPropertiesPreview(tipoPropiedad)
     }
 
 
@@ -153,7 +154,7 @@ fun PropertyListScreen(
                 }
             }
 
-            if (properties.isNotEmpty()) {
+            if (propertiesPreview.isNotEmpty()) {
                 item {
                     Box(
                         modifier = Modifier
@@ -163,7 +164,7 @@ fun PropertyListScreen(
                         contentAlignment = Alignment.TopCenter
                     ) {
                         Text(
-                            text = "Viendo ${properties.size} viviendas de ${properties.size}",
+                            text = "Viendo ${propertiesPreview.size} viviendas de ${propertiesPreview.size}",
                             fontSize = 18.sp,
                             color = NegroClaro
                         )
@@ -171,22 +172,18 @@ fun PropertyListScreen(
                 }
             }
 
-            items(properties) { property ->
+            items(propertiesPreview) { property ->
                 PropertyCard(
                     user_id = property.user_id ?: "Usuario desconocido",
                     titulo = property.titulo ?: "Título no disponible",
                     ciudad = property.ciudad ?: "Ciudad no especificada",
-                    codigo_postal = property.codigo_postal ?: 0,
                     direccion = property.direccion ?: "Dirección no disponible",
                     estado = property.estado ?: "Estado no especificado",
-                    numero_baños = property.numero_baños ?: 0,
                     distancia = property.distancia ?: 0,
                     numero_habitaciones = property.numero_habitaciones ?: 0,
                     planta = property.planta ?: "Planta no especificada",
                     precio = property.precio?.toString() ?: "Precio no disponible",
                     tamaño = property.tamaño ?: 0,
-                    tipo_anuncio = property.tipo_anuncio ?: "Tipo de anuncio no especificado",
-                    tipo_propiedad = property.tipo_propiedad ?: "Tipo de propiedad no especificado",
                     descripcion = property.descripcion ?: "Descripción no disponible",
                     additionalInfo = property.additionalInfo ?: "Sin información adicional",
                     images = property.images,

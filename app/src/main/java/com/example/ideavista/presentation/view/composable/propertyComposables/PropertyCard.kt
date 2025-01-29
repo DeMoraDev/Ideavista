@@ -60,18 +60,14 @@ fun PropertyCard(
     ciudad: String,
     images: List<String>,
     planos: List<String>,
-    codigo_postal: Int,
     direccion: String,
     estado: String,
-    numero_baños: Int,
     distancia: Int,
     numero_habitaciones: Int,
     planta: String,
     precio: String,
     tamaño: Int,
     garaje: Boolean,
-    tipo_anuncio: String,
-    tipo_propiedad: String,
     onPropertyClick: () -> Unit,
     descripcion: String,
     additionalInfo: String
@@ -247,14 +243,26 @@ fun PropertyCard(
                         )
                     }
                 }
-                Text(
-                    text = ciudad,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 18.sp,
-                    color = Negro,
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                )
+                Row {
+                    Text(
+                        text = "$direccion,",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 18.sp,
+                        color = Negro,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                    )
+                    Text(
+                        text = ciudad,
+                        maxLines = 2,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 18.sp,
+                        color = Negro,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.height(8.dp))
 

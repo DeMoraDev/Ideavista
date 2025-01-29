@@ -4,11 +4,15 @@ import android.content.Context
 import com.example.ideavista.data.local.DataStore.UserPreferences
 import com.example.ideavista.data.repository.AuthRepositoryImpl
 import com.example.ideavista.data.repository.PreferencesRepositoryImpl
+import com.example.ideavista.data.repository.PropertyPreviewRepositoryImpl
 import com.example.ideavista.data.repository.PropertyRepositoryImpl
 import com.example.ideavista.data.sources.PropertyDataSource
 import com.example.ideavista.data.sources.PropertyDataSourceImpl
+import com.example.ideavista.data.sources.PropertyPreviewDataSource
+import com.example.ideavista.data.sources.PropertyPreviewDataSourceImpl
 import com.example.ideavista.domain.repository.AuthRepository
 import com.example.ideavista.domain.repository.PreferencesRepository
+import com.example.ideavista.domain.repository.PropertyPreviewRepository
 import com.example.ideavista.domain.repository.PropertyRepository
 import com.example.ideavista.domain.usecase.CheckUserStatusUseCase
 import com.example.ideavista.domain.usecase.SaveCountryUseCase
@@ -16,6 +20,7 @@ import com.example.ideavista.domain.usecase.SaveLanguageUseCase
 import com.example.ideavista.domain.usecase.SetUserAsReturningUseCase
 import com.example.ideavista.domain.usecase.auth.LoginUseCase
 import com.example.ideavista.domain.usecase.auth.RegisterUseCase
+import com.example.ideavista.domain.usecase.properties.FetchPropertiesPreviewUseCase
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesUseCase
 import com.example.ideavista.domain.usecase.properties.GetPropertyDetailsUseCase
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
@@ -46,7 +51,7 @@ val appModule = module {
     viewModel { SplashScreenViewModel(get()) }
     viewModel { OnboardingViewModel(get(), get(), get()) }
     viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
-    viewModel { HomeScreenViewModel(get()) }
+    viewModel { HomeScreenViewModel(get(), get()) }
     viewModel { PropertyViewModel(get()) }
 
 
@@ -71,5 +76,20 @@ val appModule = module {
     single {
         GetPropertyDetailsUseCase(get())
     }
+
+    //PropertyPreview di
+    single<PropertyPreviewDataSource>{
+        PropertyPreviewDataSourceImpl(FirebaseFirestore.getInstance())
+    }
+    single<PropertyPreviewRepository> {
+        PropertyPreviewRepositoryImpl(get())
+    }
+    single {
+        FetchPropertiesPreviewUseCase(get())
+    }
+
+    /*single {
+        GetPropertyPreviewDetailsUseCase(get())
+    } */
 
 }

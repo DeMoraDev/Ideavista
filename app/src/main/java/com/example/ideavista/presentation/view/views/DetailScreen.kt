@@ -120,11 +120,22 @@ fun DetailScreen(
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold
                             )
-                            Text(
-                                text = "$price €",
-                                fontSize = 17.sp,
-                                fontWeight = FontWeight.Normal
-                            )
+                            Row {
+                                Text(
+                                    text = "$price €",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Normal
+                                )
+                                if (propertyDetails.value?.garaje ?: false) {
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(
+                                        text = "Tiene garaje",
+                                        fontSize = 17.sp,
+                                        fontWeight = FontWeight.Normal
+                                    )
+                                }
+                            }
+
                         }
                     } else {
                         // Mostrar un `Row` al principio
