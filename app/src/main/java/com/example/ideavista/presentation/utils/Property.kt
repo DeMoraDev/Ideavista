@@ -36,6 +36,7 @@ data class Property(
     val chimenea: Boolean? = false,
     val estado_propiedad: String? = "", //nuevo,reformar,bueno
     val orientacion: String? = "", //Norte, sur, este, oeste
+    val ano: Int = 0,
 
     //Edificio
     val ascensor: Boolean? = false,

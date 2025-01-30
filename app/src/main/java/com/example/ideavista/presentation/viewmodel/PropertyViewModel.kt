@@ -26,7 +26,7 @@ class PropertyViewModel(private val propertyRepository: PropertyRepository) : Vi
             _isLoading.value = true  // 🔹 Activa shimmer antes de la consulta
 
             try {
-                delay(2000)
+                delay(1500)
                 // Llamamos al repositorio para obtener los detalles de la propiedad
                 val details = propertyRepository.getPropertyById(propertyId)
                 _propertyDetails.value = details

@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,8 +47,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.ideavista.R
 import com.example.ideavista.data.local.Cache
+import com.example.ideavista.presentation.utils.Property
 import com.example.ideavista.presentation.view.composable.detailComposables.InputWithSlider
 import com.example.ideavista.presentation.view.composable.detailComposables.ShimmerListItem
 import com.example.ideavista.presentation.view.composable.propertyComposables.ImagePager
@@ -69,6 +73,49 @@ fun DetailScreen(
     val propertyDetails = propertyViewModel.propertyDetails.collectAsState()
     val propertyPreview = Cache.getPropertyById(propertyId)
     val isLoading by propertyViewModel.isLoading.collectAsState()
+
+    //Características básicas
+    val basicFeatures = listOfNotNull(
+        propertyDetails.value?.terraza?.let { "Terraza" },
+        propertyDetails.value?.armarios_empotrados?.let { "Armarios empotrados" },
+        propertyDetails.value?.calefaccion?.let { "Con calefacción" },
+        propertyDetails.value?.chimenea?.let { "Chimenea" },
+        propertyDetails.value?.orientacion?.let { "Orientación ${propertyDetails.value?.orientacion}" },
+        propertyDetails.value?.estado_propiedad?.let {
+            when (it) {
+                "nuevo" -> "Nuevo"
+                "reformar" -> "Segunda mano / a reformar"
+                "bueno" -> "Segunda mano / buen estado"
+                else -> "Estado desconocido"
+            }
+        },
+        propertyDetails.value?.ano?.let { "Construído en ${propertyDetails.value?.ano.toString()} " },
+        propertyDetails.value?.numero_baños?.let { "${propertyDetails.value?.numero_baños.toString()} baños " },
+        propertyPreview?.numero_habitaciones?.let { "${propertyPreview?.numero_habitaciones} habitaciones" }
+    )
+
+
+    //Edificio
+    val buildingFeatures = listOfNotNull(
+        propertyDetails.value?.ascensor?.let { "Con ascensor" }
+    )
+
+    //Equipamiento
+    val equipmentFeatures = listOfNotNull(
+        propertyDetails.value?.aire_acondicionado?.let { "Aire acondicionado" },
+        propertyDetails.value?.jardin?.let { "Piscina" },
+        propertyDetails.value?.piscina?.let { "Jardín" }
+
+    )
+
+    //Certificados
+    val certificadoConsumo = propertyDetails.value?.certificado_consumo?.takeIf { it.isNotEmpty() }
+        ?.let { "Certificado consumo: $it" }
+    val certificadoEmisiones =
+        propertyDetails.value?.certificado_emisiones?.takeIf { it.isNotEmpty() }
+            ?.let { "Certificado emisiones: $it" }
+
+    val certificados = listOfNotNull(certificadoConsumo, certificadoEmisiones)
 
 
     //Hipoteca composable
@@ -259,7 +306,7 @@ fun DetailScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Contactar",
+                                text = "Chat",
                                 color = Color.White,
                                 fontSize = 20.sp,
                                 modifier = Modifier
@@ -308,7 +355,7 @@ fun DetailScreen(
                     .background(color = Color.LightGray.copy(alpha = 0.2f))
             ) {
                 if (propertyPreview != null) {
-                    val property = propertyDetails.value
+                    //val property = propertyDetails.value
                     item {
                         Column(  //Columna de Cache
 
@@ -561,31 +608,34 @@ fun DetailScreen(
                                                         fontSize = 16.sp
                                                     )
                                                     VerticalDivider(thickness = 2.dp, color = Negro)
-                                                    TextButton(
-                                                        onClick = {}
-                                                    ) {
-                                                        Text(
-                                                            text = "Traducciones",
-                                                            fontWeight = FontWeight.SemiBold,
-                                                            fontSize = 18.sp, color = Violeta
-                                                        )
-                                                    }
+
+                                                    Text(
+                                                        text = "Traducciones",
+                                                        fontWeight = FontWeight.SemiBold,
+                                                        fontSize = 18.sp, color = Violeta,
+                                                        modifier = Modifier
+                                                            .clickable(onClick = { })
+                                                    )
+
                                                 }
                                                 Text(
-                                                    text = property?.comentario ?: "Sin comentario",
+                                                    text = propertyDetails.value?.comentario
+                                                        ?: "Sin comentario",
                                                     fontSize = 18.sp,
                                                     maxLines = 5,
                                                     overflow = TextOverflow.Visible
                                                 )
-                                                TextButton(
-                                                    onClick = {},
+                                                Row(
                                                     modifier = Modifier
+                                                        .fillMaxWidth(),
+                                                    horizontalArrangement = Arrangement.Start
                                                 ) {
                                                     Text(
                                                         text = "Ir al comentario completo",
-                                                        fontSize = 18.sp,
                                                         fontWeight = FontWeight.SemiBold,
-                                                        color = Violeta
+                                                        fontSize = 18.sp,
+                                                        color = Violeta,
+                                                        modifier = Modifier.clickable(onClick = {})
                                                     )
                                                 }
                                             }
@@ -629,22 +679,68 @@ fun DetailScreen(
                                                 verticalArrangement = Arrangement.Center,
                                                 horizontalAlignment = Alignment.Start
                                             ) {
-                                                Text(
-                                                    text = "Características básicas",
-                                                    fontSize = 24.sp,
-                                                    fontWeight = FontWeight.Bold,
-                                                )
-                                                Spacer(modifier = Modifier.height(8.dp))
-                                                Text(
-                                                    text = "· Casa independiente",
-                                                    fontSize = 18.sp,
-                                                    fontWeight = FontWeight.Normal,
-                                                )
-                                                Text(
-                                                    text = "Equipamiento",
-                                                    fontSize = 24.sp,
-                                                    fontWeight = FontWeight.Bold,
-                                                )
+                                                if (basicFeatures.isNotEmpty()) {
+                                                    Text(
+                                                        text = "Características básicas",
+                                                        fontSize = 22.sp,
+                                                        fontWeight = FontWeight.Bold,
+                                                    )
+                                                    Spacer(modifier = Modifier.height(8.dp))
+                                                    basicFeatures.forEach { feature ->
+                                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                                            Text(
+                                                                text = "·",
+                                                                fontSize = 26.sp,
+                                                                fontWeight = FontWeight.Bold
+                                                            )
+                                                            Spacer(modifier = Modifier.width(8.dp))
+                                                            Text(text = feature, fontSize = 18.sp)
+                                                        }
+                                                    }
+                                                    Spacer(modifier = Modifier.height(20.dp))
+                                                }
+
+                                                if (buildingFeatures.isNotEmpty()) {
+                                                    Text(
+                                                        text = "Edificio",
+                                                        fontSize = 22.sp,
+                                                        fontWeight = FontWeight.Bold,
+                                                    )
+                                                    Spacer(modifier = Modifier.height(8.dp))
+                                                    buildingFeatures.forEach { feature ->
+                                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                                            Text(
+                                                                text = "·",
+                                                                fontSize = 26.sp,
+                                                                fontWeight = FontWeight.Bold
+                                                            )
+                                                            Spacer(modifier = Modifier.width(8.dp))
+                                                            Text(text = feature, fontSize = 18.sp)
+                                                        }
+                                                    }
+                                                    Spacer(modifier = Modifier.height(20.dp))
+                                                }
+
+                                                if (equipmentFeatures.isNotEmpty()) {
+                                                    Text(
+                                                        text = "Equipamiento",
+                                                        fontSize = 22.sp,
+                                                        fontWeight = FontWeight.Bold,
+                                                    )
+                                                    Spacer(modifier = Modifier.height(8.dp))
+                                                    equipmentFeatures.forEach { feature ->
+                                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                                            Text(
+                                                                text = "·",
+                                                                fontSize = 26.sp,
+                                                                fontWeight = FontWeight.Bold
+                                                            )
+                                                            Spacer(modifier = Modifier.width(8.dp))
+                                                            Text(text = feature, fontSize = 18.sp)
+                                                        }
+                                                    }
+                                                    Spacer(modifier = Modifier.height(20.dp))
+                                                }
                                                 Spacer(modifier = Modifier.height(8.dp))
                                                 Text(
                                                     text = "Certificado energético",
@@ -652,6 +748,22 @@ fun DetailScreen(
                                                     fontWeight = FontWeight.Bold,
                                                 )
                                                 Spacer(modifier = Modifier.height(8.dp))
+                                                Column {
+                                                    if (certificados.isNotEmpty()) {
+                                                        Text(
+                                                            text = "Certificado energético:",
+                                                            fontSize = 16.sp
+                                                        )
+                                                        certificados.forEach {
+                                                            Text(text = it, fontSize = 14.sp)
+                                                        }
+                                                    } else {
+                                                        Text(
+                                                            text = "Certificado en trámite",
+                                                            fontSize = 16.sp
+                                                        )
+                                                    }
+                                                }
                                             }
                                             Spacer(modifier = Modifier.height(6.dp))
 
@@ -740,14 +852,17 @@ fun DetailScreen(
                                                     fontWeight = FontWeight.Normal,
                                                 )
                                                 Spacer(modifier = Modifier.height(14.dp))
-                                                TextButton(
-                                                    onClick = {}
+                                                Row(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth(),
+                                                    horizontalArrangement = Arrangement.Start
                                                 ) {
                                                     Text(
                                                         text = "Solicitar visita guiada virtual",
                                                         fontWeight = FontWeight.SemiBold,
                                                         fontSize = 18.sp,
-                                                        color = Violeta
+                                                        color = Violeta,
+                                                        modifier = Modifier.clickable(onClick = {})
                                                     )
                                                 }
                                             }
@@ -786,14 +901,17 @@ fun DetailScreen(
                                                     fontWeight = FontWeight.Normal,
                                                 )
                                                 Spacer(modifier = Modifier.height(14.dp))
-                                                TextButton(
-                                                    onClick = {}
+                                                Row(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth(),
+                                                    horizontalArrangement = Arrangement.Start
                                                 ) {
                                                     Text(
                                                         text = "Ver fotos con decoración virtual",
                                                         fontWeight = FontWeight.SemiBold,
                                                         fontSize = 18.sp,
-                                                        color = Violeta
+                                                        color = Violeta,
+                                                        modifier = Modifier.clickable(onClick = {})
                                                     )
                                                 }
                                             }
@@ -824,14 +942,17 @@ fun DetailScreen(
                                                     fontSize = 18.sp,
                                                 )
                                                 Spacer(modifier = Modifier.height(10.dp))
-                                                TextButton(
-                                                    onClick = {}
+                                                Row(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth(),
+                                                    horizontalArrangement = Arrangement.Start
                                                 ) {
                                                     Text(
                                                         text = "Hacer una contraoferta",
                                                         fontWeight = FontWeight.SemiBold,
                                                         fontSize = 18.sp,
-                                                        color = Violeta
+                                                        color = Violeta,
+                                                        modifier = Modifier.clickable(onClick = {})
                                                     )
                                                 }
                                             }
@@ -857,6 +978,7 @@ fun DetailScreen(
                                                     step = 10000f
                                                 )
                                             }
+                                            Spacer(modifier = Modifier.height(6.dp))
                                             //TODO Apartado dirección y estadísticas
                                             Column(
                                                 modifier = Modifier
@@ -866,8 +988,100 @@ fun DetailScreen(
                                                 verticalArrangement = Arrangement.Center,
                                                 horizontalAlignment = Alignment.Start
                                             ) {
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(vertical = 8.dp),
+                                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                                ) {
+                                                    Text(
+                                                        text = "Dirección",
+                                                        fontSize = 22.sp,
+                                                        fontWeight = FontWeight.Bold
+                                                    )
+                                                    Text(
+                                                        text = "${propertyPreview.direccion}",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                    Text(
+                                                        text = "${propertyPreview.ciudad}",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                }
+
+                                                //TODO GoogleMaps ubicación
+
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(vertical = 8.dp),
+                                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                                ) {
+                                                    Text(
+                                                        text = "Estadísticas",
+                                                        fontSize = 22.sp,
+                                                        fontWeight = FontWeight.Bold
+                                                    )
+                                                    Text(
+                                                        text = "--- visitas",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                    Text(
+                                                        text = "--- veces guardado como favorito",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                    Text(
+                                                        text = "--- contactos por email",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                    Text(
+                                                        text = "--- envíos a amigos",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                    Spacer(modifier = Modifier.height(4.dp))
+                                                    Text(
+                                                        text = "Iniciar sesión para ver estadísticas",
+                                                        fontSize = 17.sp,
+                                                        color = Violeta,
+                                                        modifier = Modifier
+                                                            .clickable(onClick = { })
+                                                    )
+                                                }
 
                                             }
+                                            Spacer(modifier = Modifier.height(6.dp))
+
+                                            //TODO Reportar error
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .background(Blanco)
+                                                    .padding(18.dp, vertical = 22.dp),
+                                                verticalArrangement = Arrangement.Center,
+                                                horizontalAlignment = Alignment.Start
+                                            ) {
+                                                Text(
+                                                    text = "¿Has encontrado algún error en este anuncio?",
+                                                    fontSize = 17.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                                Spacer(modifier = Modifier.height(4.dp))
+                                                Text(
+                                                    text = "Infórmanos para que podamos intervenir y ayudar a otras personas.",
+                                                    fontSize = 16.sp,
+                                                )
+                                                Spacer(modifier = Modifier.height(6.dp))
+                                                Text(
+                                                    text = "Reportar error",
+                                                    fontSize = 17.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = Violeta,
+                                                    modifier = Modifier
+                                                        .clickable(onClick = { })
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.height(6.dp))
+
                                             //TODO Apartado anunciante
                                             Column(
                                                 modifier = Modifier
@@ -877,7 +1091,44 @@ fun DetailScreen(
                                                 verticalArrangement = Arrangement.Center,
                                                 horizontalAlignment = Alignment.Start
                                             ) {
-
+                                                Text(
+                                                    text = "Anunciante",
+                                                    fontSize = 22.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(vertical = 8.dp),
+                                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                                ) {
+                                                    Text(
+                                                        text = "Referencia del anuncio",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                    Text(
+                                                        text = "HU1733",
+                                                        fontSize = 16.sp,
+                                                    )
+                                                }
+                                                Spacer(modifier = Modifier.height(6.dp))
+                                                Row {
+                                                    Column(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
+                                                            .padding(vertical = 8.dp),
+                                                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                                                    ) {
+                                                        Text(
+                                                            text = "Profesional",
+                                                            fontSize = 16.sp,
+                                                        )
+                                                        Text(
+                                                            text = "INMOBILIARIA PACO",
+                                                            fontSize = 16.sp,
+                                                        )
+                                                    }
+                                                }
                                             }
                                         }
                                     }
