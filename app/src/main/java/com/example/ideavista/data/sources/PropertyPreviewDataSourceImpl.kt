@@ -1,7 +1,7 @@
 package com.example.ideavista.data.sources
 
 import android.util.Log
-import com.example.ideavista.presentation.utils.Property
+import com.example.ideavista.data.local.Cache
 import com.example.ideavista.presentation.utils.PropertyPreview
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -14,11 +14,7 @@ class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : Propert
             .get()
             .await()
 
-        for (document in snapshot.documents) {
-            Log.d("Firestore", "Documento: ${document.data}")
-        }
-
-        return snapshot.documents.mapNotNull { document ->
+        val propertiesPreview = snapshot.documents.mapNotNull { document ->
             try {
                 PropertyPreview(
                     id = document.id,
@@ -43,5 +39,12 @@ class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : Propert
                 null
             }
         }
+
+        //Guardar en caché
+        Cache.listaDePropiedades = propertiesPreview
+
+        Log.d("Firestore", "Datos guardados en companion object: ${Cache.listaDePropiedades}")
+
+        return propertiesPreview
     }
 }

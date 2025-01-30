@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class PropertyViewModel(private val propertyRepository: PropertyRepository) : ViewModel() {
 
+    //Datos del cache
 
     private val _propertyDetails = MutableStateFlow<Property?>(null)
     val propertyDetails: StateFlow<Property?> = _propertyDetails

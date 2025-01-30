@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
+import com.example.ideavista.data.local.Cache
 import com.example.ideavista.presentation.view.composable.detailComposables.InputWithSlider
 import com.example.ideavista.presentation.view.composable.propertyComposables.ImagePager
 import com.example.ideavista.presentation.view.theme.Amarillo
@@ -65,7 +66,10 @@ fun DetailScreen(
     propertyViewModel: PropertyViewModel = koinViewModel()
 ) {
     val propertyDetails = propertyViewModel.propertyDetails.collectAsState()
+    val propertyPreview = Cache.getPropertyById(propertyId)
 
+
+    //Hipoteca composable
     var sliderValue by remember { mutableFloatStateOf(0f) }
     var value by remember { mutableStateOf(propertyViewModel.value) }
 
@@ -113,8 +117,8 @@ fun DetailScreen(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.Start
                         ) {
-                            val title = propertyDetails.value?.titulo ?: "Cargando..."
-                            val price = propertyDetails.value?.precio ?: "Sin precio"
+                            val title = propertyPreview?.titulo ?: "Cargando..."
+                            val price = propertyPreview?.precio ?: "Sin precio"
                             Text(
                                 text = title,
                                 fontSize = 18.sp,
@@ -126,7 +130,7 @@ fun DetailScreen(
                                     fontSize = 17.sp,
                                     fontWeight = FontWeight.Normal
                                 )
-                                if (propertyDetails.value?.garaje ?: false) {
+                                if (propertyPreview?.garaje ?: false) {
                                     Spacer(modifier = Modifier.width(6.dp))
                                     Text(
                                         text = "Tiene garaje",
@@ -145,7 +149,7 @@ fun DetailScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            val title = propertyDetails.value?.titulo ?: "Cargando..."
+                            val title = propertyPreview?.titulo ?: "Cargando..."
                             Text(
                                 text = title,
                                 fontSize = 18.sp,
@@ -301,15 +305,15 @@ fun DetailScreen(
                     .padding(innerPadding)
                     .background(color = Color.LightGray.copy(alpha = 0.2f))
             ) {
-                if (propertyDetails.value != null) {
+                if (propertyPreview != null) {
                     val property = propertyDetails.value
                     item {
-                        Column(
+                        Column(  //Columna de Cache
 
                         ) {
-                            if (property?.images?.isNotEmpty() == true) {
-                                val images = property.images
-                                val planos = property.planos
+                            if (propertyPreview.images.isNotEmpty() == true) {
+                                val images = propertyPreview.images
+                                val planos = propertyPreview.planos
                                 ImagePager(images, planos, showInmobiliaria = false)
                             } else {
                                 Text(
@@ -423,25 +427,23 @@ fun DetailScreen(
                                                     .size(28.dp)
                                             )
                                         }
-
-
                                     }
                                     Text(
-                                        text = "${property?.titulo},",
+                                        text = "${propertyPreview.titulo},",
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 18.sp,
                                         color = Negro,
                                         maxLines = Int.MAX_VALUE
                                     )
                                     Text(
-                                        text = "${property?.direccion}, ${property?.ciudad}",
+                                        text = "${propertyPreview.direccion}, ${propertyPreview.ciudad}",
                                         fontWeight = FontWeight.Normal,
                                         fontSize = 18.sp,
                                         color = Negro
                                     )
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(
-                                        text = "${property?.precio}€",
+                                        text = "${propertyPreview.precio}€",
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 28.sp,
                                         color = Negro
@@ -455,411 +457,413 @@ fun DetailScreen(
                                         horizontalArrangement = Arrangement.Start
                                     ) {
                                         Text(
-                                            text = "${property?.numero_habitaciones} hab.",
+                                            text = "${propertyPreview.numero_habitaciones} hab.",
                                             fontSize = 18.sp,
                                         )
                                         Spacer(modifier = Modifier.width(24.dp))
                                         Text(
-                                            text = "${property?.tamaño} m²",
+                                            text = "${propertyPreview.tamaño} m²",
                                             fontSize = 18.sp,
                                         )
                                         Spacer(modifier = Modifier.width(24.dp))
                                         Text(
-                                            text = property?.planta ?: "",
+                                            text = propertyPreview.planta ?: "",
                                             fontSize = 18.sp,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis,
                                             modifier = Modifier.fillMaxWidth()
                                         )
                                     }
-                                    //TODO hacer composable reutilizable
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 20.dp),
-                                        horizontalArrangement = Arrangement.SpaceEvenly
-                                    ) {
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                    Column {
+                                        //TODO hacer composable reutilizable
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 20.dp),
+                                            horizontalArrangement = Arrangement.SpaceEvenly
                                         ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.heart_outlined_icon),
-                                                contentDescription = "Location",
-                                                tint = Violeta,
-                                                modifier = Modifier
-                                                    .size(28.dp)
-                                            )
-                                            Text(
-                                                text = "Guardar",
-                                                fontWeight = FontWeight.Bold,
-                                                color = Violeta
-                                            )
+                                            Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.heart_outlined_icon),
+                                                    contentDescription = "Location",
+                                                    tint = Violeta,
+                                                    modifier = Modifier
+                                                        .size(28.dp)
+                                                )
+                                                Text(
+                                                    text = "Guardar",
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = Violeta
+                                                )
+                                            }
+                                            Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.trashcan_icon),
+                                                    contentDescription = "Location",
+                                                    tint = Violeta,
+                                                    modifier = Modifier
+                                                        .size(24.dp)
+                                                )
+                                                Text(
+                                                    text = "Guardar",
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = Violeta
+                                                )
+                                            }
+                                            Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.share_icon),
+                                                    contentDescription = "Location",
+                                                    tint = Violeta,
+                                                    modifier = Modifier
+                                                        .size(28.dp)
+                                                )
+                                                Text(
+                                                    text = "Guardar",
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = Violeta
+                                                )
+                                            }
                                         }
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        Text(
+                                            text = "Comentario del anunciante",
+                                            fontSize = 22.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Start
                                         ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.trashcan_icon),
-                                                contentDescription = "Location",
-                                                tint = Violeta,
-                                                modifier = Modifier
-                                                    .size(24.dp)
-                                            )
                                             Text(
-                                                text = "Guardar",
-                                                fontWeight = FontWeight.Bold,
-                                                color = Violeta
+                                                text = "Ver: ",
+                                                fontSize = 16.sp
                                             )
+                                            VerticalDivider(thickness = 2.dp, color = Negro)
+                                            TextButton(
+                                                onClick = {}
+                                            ) {
+                                                Text(
+                                                    text = "Traducciones",
+                                                    fontWeight = FontWeight.SemiBold,
+                                                    fontSize = 18.sp, color = Violeta
+                                                )
+                                            }
                                         }
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        Text(
+                                            text = property?.comentario ?: "Sin comentario",
+                                            fontSize = 18.sp,
+                                            maxLines = 5,
+                                            overflow = TextOverflow.Visible
+                                        )
+                                        TextButton(
+                                            onClick = {},
+                                            modifier = Modifier
                                         ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.share_icon),
-                                                contentDescription = "Location",
-                                                tint = Violeta,
-                                                modifier = Modifier
-                                                    .size(28.dp)
-                                            )
                                             Text(
-                                                text = "Guardar",
-                                                fontWeight = FontWeight.Bold,
+                                                text = "Ir al comentario completo",
+                                                fontSize = 18.sp,
+                                                fontWeight = FontWeight.SemiBold,
                                                 color = Violeta
                                             )
                                         }
                                     }
-                                    Text(
-                                        text = "Comentario del anunciante",
-                                        fontSize = 22.sp,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Start
+
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    //TODO Apartado mensaje hablar con anunciante
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(horizontal = 14.dp),
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Start,
+                                            modifier = Modifier.padding(vertical = 20.dp)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.message_outlined_icon),
+                                                contentDescription = "",
+                                                modifier = Modifier.size(24.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(10.dp))
+                                            Text(
+                                                text = "Si tienes alguna duda recuerda que puedes hablar con el anunciante por chat",
+                                                fontSize = 18.sp,
+                                            )
+                                        }
+                                    }
+
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    //TODO Apartado Especificaciones
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(14.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
                                     ) {
                                         Text(
-                                            text = "Ver: ",
-                                            fontSize = 16.sp
+                                            text = "Características básicas",
+                                            fontSize = 24.sp,
+                                            fontWeight = FontWeight.Bold,
                                         )
-                                        VerticalDivider(thickness = 2.dp, color = Negro)
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Text(
+                                            text = "· Casa independiente",
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Normal,
+                                        )
+                                        Text(
+                                            text = "Equipamiento",
+                                            fontSize = 24.sp,
+                                            fontWeight = FontWeight.Bold,
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Text(
+                                            text = "Certificado energético",
+                                            fontSize = 24.sp,
+                                            fontWeight = FontWeight.Bold,
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                    }
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    //TODO Apartado Actualización de anuncio
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(14.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
+                                    ) {
+                                        Row {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.info_icon),
+                                                contentDescription = "",
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .size(24.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(6.dp))
+                                            Text(
+                                                text = "Anuncio actualizado hace 30 días",
+                                                fontSize = 18.sp,
+
+                                                )
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    //TODO Apartado multimedia ideavista
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(14.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
+                                    ) {
+                                        Text(
+                                            text = "Este anuncio tiene multimedia realizado por ideavista",
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.SemiBold,
+                                        )
+                                        Spacer(modifier = Modifier.height(14.dp))
+                                        Text(
+                                            text = "Un fotógrafo profesional ha visitado el inmueble y realizó " +
+                                                    "el multimedia. No se han aplicado filtros ni modificaciones.",
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Normal,
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    //TODO Apartado visita inmueble
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(14.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
+                                    ) {
+                                        Row {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.screen_icon),
+                                                contentDescription = "",
+                                                modifier = Modifier
+                                                    .size(24.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Visita este inmueble sin moverte de casa",
+                                                fontSize = 18.sp,
+                                                fontWeight = FontWeight.SemiBold
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(14.dp))
+
+                                        Text(
+                                            text = "Ya puedes solicitar una primera visita guiada virtual de " +
+                                                    "este inmueble. Un profesional te guiará con la información con " +
+                                                    "la información que necesitas.",
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Normal,
+                                        )
+                                        Spacer(modifier = Modifier.height(14.dp))
                                         TextButton(
                                             onClick = {}
                                         ) {
                                             Text(
-                                                text = "Traducciones",
+                                                text = "Solicitar visita guiada virtual",
                                                 fontWeight = FontWeight.SemiBold,
-                                                fontSize = 18.sp, color = Violeta
+                                                fontSize = 18.sp,
+                                                color = Violeta
                                             )
                                         }
                                     }
-                                    Text(
-                                        text = property?.comentario ?: "Sin comentario",
-                                        fontSize = 18.sp,
-                                        maxLines = 5,
-                                        overflow = TextOverflow.Visible
-                                    )
-                                    TextButton(
-                                        onClick = {},
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    //TODO Apartado decoración virtual
+                                    Column(
                                         modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(14.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
                                     ) {
-                                        Text(
-                                            text = "Ir al comentario completo",
-                                            fontSize = 18.sp,
-                                            fontWeight = FontWeight.SemiBold,
-                                            color = Violeta
-                                        )
-                                    }
-                                }
-
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                //TODO Apartado mensaje hablar con anunciante
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(horizontal = 14.dp),
-                                    verticalArrangement = Arrangement.Center
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Start,
-                                        modifier = Modifier.padding(vertical = 20.dp)
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.message_outlined_icon),
-                                            contentDescription = "",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(10.dp))
-                                        Text(
-                                            text = "Si tienes alguna duda recuerda que puedes hablar con el anunciante por chat",
-                                            fontSize = 18.sp,
-                                        )
-                                    }
-                                }
-
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                //TODO Apartado Especificaciones
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(14.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Text(
-                                        text = "Características básicas",
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(
-                                        text = "· Casa independiente",
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Normal,
-                                    )
-                                    Text(
-                                        text = "Equipamiento",
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(
-                                        text = "Certificado energético",
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                }
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                //TODO Apartado Actualización de anuncio
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(14.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Row {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.info_icon),
-                                            contentDescription = "",
-                                            modifier = Modifier
-                                                .clip(RoundedCornerShape(8.dp))
-                                                .size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(6.dp))
-                                        Text(
-                                            text = "Anuncio actualizado hace 30 días",
-                                            fontSize = 18.sp,
-
+                                        Row {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.lamp_icon),
+                                                contentDescription = "",
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .size(24.dp)
                                             )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(6.dp))
+                                            Spacer(modifier = Modifier.width(6.dp))
+                                            Text(
+                                                text = "Decoración virtual",
+                                                fontSize = 18.sp,
+                                                fontWeight = FontWeight.SemiBold
+                                            )
+                                        }
 
-                                //TODO Apartado multimedia ideavista
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(14.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Text(
-                                        text = "Este anuncio tiene multimedia realizado por ideavista",
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.SemiBold,
-                                    )
-                                    Spacer(modifier = Modifier.height(14.dp))
-                                    Text(
-                                        text = "Un fotógrafo profesional ha visitado el inmueble y realizó " +
-                                                "el multimedia. No se han aplicado filtros ni modificaciones.",
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Normal,
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(6.dp))
+                                        Spacer(modifier = Modifier.height(14.dp))
 
-                                //TODO Apartado visita inmueble
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(14.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Row {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.screen_icon),
-                                            contentDescription = "",
-                                            modifier = Modifier
-                                                .size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
                                         Text(
-                                            text = "Visita este inmueble sin moverte de casa",
+                                            text = "Descubre cómo se ve esta casa decorada por profesionales.",
                                             fontSize = 18.sp,
-                                            fontWeight = FontWeight.SemiBold
+                                            fontWeight = FontWeight.Normal,
                                         )
+                                        Spacer(modifier = Modifier.height(14.dp))
+                                        TextButton(
+                                            onClick = {}
+                                        ) {
+                                            Text(
+                                                text = "Ver fotos con decoración virtual",
+                                                fontWeight = FontWeight.SemiBold,
+                                                fontSize = 18.sp,
+                                                color = Violeta
+                                            )
+                                        }
                                     }
+                                    Spacer(modifier = Modifier.height(6.dp))
 
-                                    Spacer(modifier = Modifier.height(14.dp))
-
-                                    Text(
-                                        text = "Ya puedes solicitar una primera visita guiada virtual de " +
-                                                "este inmueble. Un profesional te guiará con la información con " +
-                                                "la información que necesitas.",
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Normal,
-                                    )
-                                    Spacer(modifier = Modifier.height(14.dp))
-                                    TextButton(
-                                        onClick = {}
+                                    //TODO Apartado Precio
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(18.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
                                     ) {
                                         Text(
-                                            text = "Solicitar visita guiada virtual",
-                                            fontWeight = FontWeight.SemiBold,
-                                            fontSize = 18.sp,
-                                            color = Violeta
+                                            text = "Precio",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 22.sp
                                         )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                //TODO Apartado decoración virtual
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(14.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Row {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.lamp_icon),
-                                            contentDescription = "",
-                                            modifier = Modifier
-                                                .clip(RoundedCornerShape(8.dp))
-                                                .size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(6.dp))
+                                        Spacer(modifier = Modifier.height(10.dp))
                                         Text(
-                                            text = "Decoración virtual",
+                                            text = "${propertyPreview?.precio} €",
                                             fontSize = 18.sp,
-                                            fontWeight = FontWeight.SemiBold
                                         )
+                                        Spacer(modifier = Modifier.height(10.dp))
+                                        Text(
+                                            text = "${propertyPreview?.tamaño} €/m2", //TODO calcular precio m2
+                                            fontSize = 18.sp,
+                                        )
+                                        Spacer(modifier = Modifier.height(10.dp))
+                                        TextButton(
+                                            onClick = {}
+                                        ) {
+                                            Text(
+                                                text = "Hacer una contraoferta",
+                                                fontWeight = FontWeight.SemiBold,
+                                                fontSize = 18.sp,
+                                                color = Violeta
+                                            )
+                                        }
                                     }
 
-                                    Spacer(modifier = Modifier.height(14.dp))
+                                    Spacer(modifier = Modifier.height(6.dp))
 
-                                    Text(
-                                        text = "Descubre cómo se ve esta casa decorada por profesionales.",
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Normal,
-                                    )
-                                    Spacer(modifier = Modifier.height(14.dp))
-                                    TextButton(
-                                        onClick = {}
+                                    //TODO Apartado hipotecas
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(18.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
                                     ) {
-                                        Text(
-                                            text = "Ver fotos con decoración virtual",
-                                            fontWeight = FontWeight.SemiBold,
-                                            fontSize = 18.sp,
-                                            color = Violeta
+                                        //Hipoteca Composable
+                                        InputWithSlider(
+                                            value = value,  // Usamos el valor reactivo aquí
+                                            onValueChange = { newValue ->
+                                                onValueChange(newValue)  // Actualizamos el valor en el Composable y en el ViewModel
+                                            },
+                                            range = 0f..2_000_000f,
+                                            step = 10000f
                                         )
                                     }
-                                }
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                //TODO Apartado Precio
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(18.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    Text(
-                                        text = "Precio",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 22.sp
-                                    )
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    Text(
-                                        text = "${property?.precio} €",
-                                        fontSize = 18.sp,
-                                    )
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    Text(
-                                        text = "${property?.tamaño} €/m2", //TODO calcular precio m2
-                                        fontSize = 18.sp,
-                                    )
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    TextButton(
-                                        onClick = {}
+                                    //TODO Apartado dirección y estadísticas
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(18.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
                                     ) {
-                                        Text(
-                                            text = "Hacer una contraoferta",
-                                            fontWeight = FontWeight.SemiBold,
-                                            fontSize = 18.sp,
-                                            color = Violeta
-                                        )
+
                                     }
-                                }
+                                    //TODO Apartado anunciante
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Blanco)
+                                            .padding(18.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
+                                    ) {
 
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                //TODO Apartado hipotecas
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(18.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-                                    //Hipoteca Composable
-                                    InputWithSlider(
-                                        value = value,  // Usamos el valor reactivo aquí
-                                        onValueChange = { newValue ->
-                                            onValueChange(newValue)  // Actualizamos el valor en el Composable y en el ViewModel
-                                        },
-                                        range = 0f..2_000_000f,
-                                        step = 10000f
-                                    )
-                                }
-                                //TODO Apartado dirección y estadísticas
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(18.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-
-                                }
-                                //TODO Apartado anunciante
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Blanco)
-                                        .padding(18.dp),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
-                                ) {
-
+                                    }
                                 }
                             }
                         }
