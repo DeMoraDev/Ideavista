@@ -74,6 +74,22 @@ fun DetailScreen(
     val propertyPreview = Cache.getPropertyById(propertyId)
     val isLoading by propertyViewModel.isLoading.collectAsState()
 
+
+//Manejo de la navegación de Siguiente/Anterior propiedad de la lista
+    LaunchedEffect(propertyId) {
+        propertyViewModel.fetchPropertyDetails(propertyId)
+    }
+
+    val currentProperty = Cache.getPropertyById(propertyId)
+
+    if (currentProperty == null) {
+        Text("Propiedad no encontrada")
+        return
+    }
+
+    val currentIndex = Cache.listaDePropiedades.indexOfFirst { it.id == propertyId }
+
+
     //Características básicas
     val basicFeatures = listOfNotNull(
         propertyDetails.value?.terraza?.let { "Terraza" },
@@ -151,10 +167,6 @@ fun DetailScreen(
         }
     }
 
-    LaunchedEffect(propertyId) {
-        propertyViewModel.fetchPropertyDetails(propertyId)
-    }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -218,10 +230,7 @@ fun DetailScreen(
                 ),
                 actions = {
                     if (firstVisibleIndex.value > 0 || scrollOffset.value > 1840) {
-                        IconButton(onClick = {
-                            // Por ejemplo, podrías pasar el ID de la propiedad siguiente a través de los parámetros del NavController
-
-                        }) {
+                        IconButton(onClick = {}) {
                             Icon(
                                 painter = painterResource(id = R.drawable.heart_outlined_icon),
                                 contentDescription = "Atrás",
@@ -230,9 +239,7 @@ fun DetailScreen(
                             )
                         }
 
-                        IconButton(onClick = {
-                            // Acción adicional si la necesitas
-                        }) {
+                        IconButton(onClick = {}) {
                             Icon(
                                 painter = painterResource(id = R.drawable.trashcan_icon),
                                 contentDescription = "Adelante",
@@ -242,10 +249,17 @@ fun DetailScreen(
                             )
                         }
                     } else {
-                        IconButton(onClick = {
-                            // Por ejemplo, podrías pasar el ID de la propiedad siguiente a través de los parámetros del NavController
-
-                        }) {
+                        IconButton(
+                            onClick = {
+                                if (currentIndex > 0) {
+                                    val previousId = Cache.listaDePropiedades[currentIndex - 1].id
+                                    navHostController.navigate("propertyDetail/$previousId") {
+                                        popUpTo("propertyDetail/$propertyId") { inclusive = true }
+                                    }
+                                }
+                            },
+                            enabled = currentIndex > 0
+                        ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.arrow_left_icon),
                                 contentDescription = "Atrás",
@@ -254,9 +268,17 @@ fun DetailScreen(
                             )
                         }
 
-                        IconButton(onClick = {
-                            // Acción adicional si la necesitas
-                        }) {
+                        IconButton(
+                            onClick = {
+                                if (currentIndex < Cache.listaDePropiedades.size - 1) {
+                                    val nextId = Cache.listaDePropiedades[currentIndex + 1].id
+                                    navHostController.navigate("propertyDetail/$nextId") {
+                                        popUpTo("propertyDetail/$propertyId") { inclusive = true }
+                                    }
+                                }
+                            },
+                            enabled = currentIndex < Cache.listaDePropiedades.size - 1
+                        ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.arrow_right_icon),
                                 contentDescription = "Adelante",
