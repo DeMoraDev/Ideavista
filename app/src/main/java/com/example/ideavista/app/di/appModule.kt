@@ -23,6 +23,7 @@ import com.example.ideavista.domain.usecase.auth.RegisterUseCase
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesPreviewUseCase
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesUseCase
 import com.example.ideavista.domain.usecase.properties.GetPropertyDetailsUseCase
+import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
@@ -53,6 +54,8 @@ val appModule = module {
     viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
     viewModel { HomeScreenViewModel(get(), get()) }
     viewModel { PropertyViewModel(get()) }
+    viewModel { FilterViewModel() }
+
 
 
 

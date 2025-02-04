@@ -22,10 +22,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.composables.core.VerticalSeparator
 import com.example.ideavista.presentation.view.theme.Negro
 
 @Composable
-fun FiltroBar() {
+fun FiltroBar(
+    onFilterClick: () -> Unit,
+    onOrderbyClick: () -> Unit,
+    onMapsClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,7 +43,7 @@ fun FiltroBar() {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .clickable { /* Acción al hacer clic */ }
+                .clickable { onFilterClick() }
                 .padding(10.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -59,12 +64,16 @@ fun FiltroBar() {
                 )
             }
         }
-        Spacer(modifier = Modifier.width(1.dp).background(Color.Gray))
+        VerticalSeparator(
+            color = Color.LightGray,
+            thickness = 1.dp,
+            modifier = Modifier.height(30.dp),
+        )
         // Box 2
         Box(
             modifier = Modifier
                 .weight(1f)
-                .clickable { /* Acción al hacer clic */ }
+                .clickable { onOrderbyClick() }
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -85,12 +94,16 @@ fun FiltroBar() {
                 )
             }
         }
-        Spacer(modifier = Modifier.width(1.dp).background(Color.Gray))
+        VerticalSeparator(
+            color = Color.LightGray,
+            thickness = 1.dp,
+            modifier = Modifier.height(30.dp),
+        )
         // Box 3
         Box(
             modifier = Modifier
                 .weight(1f)
-                .clickable { /* Acción al hacer clic */ }
+                .clickable { onMapsClick() }
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -112,10 +125,4 @@ fun FiltroBar() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun FiltroBarPreview(){
-    FiltroBar()
 }

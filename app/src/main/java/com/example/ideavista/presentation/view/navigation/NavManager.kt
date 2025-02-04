@@ -8,10 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.ideavista.presentation.view.views.DetailScreen
+import com.example.ideavista.presentation.view.views.FilterScreen
 import com.example.ideavista.presentation.view.views.HomeScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.PropertyListScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
+import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
@@ -64,6 +66,13 @@ fun NavManager(navHostController: NavHostController) {
                     navHostController = navHostController
                 )
             }
+        }
+        composable(NavigationRoutes.FilterScreen) {
+            val filterViewModel: FilterViewModel = koinViewModel()
+            FilterScreen(
+                navHostController = navHostController,
+                filterViewModel = filterViewModel
+            )
         }
     }
 }

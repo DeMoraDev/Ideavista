@@ -114,4 +114,7 @@ dependencies {
 
     //Barras de desplazamiento de Accompanist
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
+
+    //Separators composables
+    implementation("com.composables:core:1.20.0")
 }

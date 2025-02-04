@@ -8,9 +8,10 @@ import kotlinx.coroutines.tasks.await
 
 class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : PropertyPreviewDataSource {
 
-    override suspend fun fetchPropertiesPreview(tipoPropiedad: String): List<PropertyPreview> {
+    override suspend fun fetchPropertiesPreview(modoPropiedad: String,dropdownDbValue: String): List<PropertyPreview> {
         val snapshot = db.collection("property")
-            .whereEqualTo("tipo_propiedad", tipoPropiedad)
+            .whereEqualTo("modo_propiedad", modoPropiedad)
+            .whereEqualTo("tipo_propiedad", dropdownDbValue)
             .get()
             .await()
 

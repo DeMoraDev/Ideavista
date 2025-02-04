@@ -47,16 +47,6 @@ fun ImagePager(images: List<String>, planos: List<String>, showInmobiliaria: Boo
             )
         }
 
-        // Indicadores de las páginas- puntitos tipicos
-        /*  HorizontalPagerIndicator(
-              pagerState = pagerState,
-              modifier = Modifier
-                  .align(Alignment.BottomCenter)
-                  .padding(16.dp),
-              activeColor = Color.White,
-              inactiveColor = Color.Gray
-          ) */
-
         Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)

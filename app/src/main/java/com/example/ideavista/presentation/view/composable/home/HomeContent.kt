@@ -4,18 +4,18 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
-import com.example.ideavista.R
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,10 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
+import com.example.ideavista.presentation.state.PropertyType
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.Violeta
@@ -34,11 +35,11 @@ import com.example.ideavista.presentation.view.theme.Violeta
 
 @Composable
 fun HomeContent(
-    buyOnClick: () -> Unit,
-    rentOnClick: () -> Unit,
-    shareOnClick: () -> Unit,
-    buttonState: BuyRentShareButtonOptions?,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    selectedOption: BuyRentShareButtonOptions,
+    onOptionSelected: (BuyRentShareButtonOptions) -> Unit,
+    selectedDropdownOption: PropertyType,
+    onDropdownOptionSelected: (PropertyType) -> Unit
 
 ) {
 
@@ -56,7 +57,8 @@ fun HomeContent(
             Image(
                 painter = painterResource(id = R.drawable.livingroom1),
                 contentDescription = "Imagen Home",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
+                    .height(200.dp),
                 contentScale = ContentScale.Crop
             )
         }
@@ -73,14 +75,15 @@ fun HomeContent(
                     .padding(top = 18.dp, start = 10.dp, end = 10.dp, bottom = 12.dp)
             ) {
                 BuyRentShareButtons(
-                    buyOnClick = { buyOnClick() },
-                    rentOnClick = { rentOnClick() },
-                    shareOnClick = { shareOnClick() },
-                    buttonState = buttonState
+                    selectedOption = selectedOption,
+                    onOptionSelected = onOptionSelected
                 )
                 Spacer(modifier = Modifier.height(15.dp))
                 // Dropdown y botones
-                MainDropdown()
+                MainDropdown(
+                    selectedOption = selectedDropdownOption,
+                    onOptionSelected = onDropdownOptionSelected
+                )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
                     modifier = Modifier
@@ -153,16 +156,4 @@ fun HomeContent(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HomeContentPreview() {
-    HomeContent(
-        buyOnClick = TODO(),
-        rentOnClick = TODO(),
-        shareOnClick = TODO(),
-        buttonState = TODO(),
-        onSearchClick = TODO()
-    )
 }

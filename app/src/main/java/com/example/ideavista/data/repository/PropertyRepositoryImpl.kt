@@ -6,8 +6,8 @@ import com.example.ideavista.presentation.utils.Property
 
 class PropertyRepositoryImpl(private val dataSource: PropertyDataSource) : PropertyRepository {
 
-    override suspend fun fetchProperties(tipoPropiedad: String): List<Property> {
-        return dataSource.fetchProperties(tipoPropiedad)
+    override suspend fun fetchProperties(modoPropiedad: String): List<Property> {
+        return dataSource.fetchProperties(modoPropiedad)
     }
 
     override suspend fun getPropertyById(propertyId: String): Property? {

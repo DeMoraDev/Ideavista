@@ -1,6 +1,5 @@
 package com.example.ideavista.presentation.view.views
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -40,7 +39,7 @@ import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
-import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
+import com.example.ideavista.data.local.SearchPreferences
 import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.NegroClaro
 
@@ -52,29 +51,21 @@ fun PropertyListScreen(
     homeScreenViewModel: HomeScreenViewModel = koinViewModel()
 ) {
 
-   // val properties by homeScreenViewModel.properties.collectAsState()
+
     val propertiesPreview by homeScreenViewModel.properties_Preview.collectAsState()
 
     //Barra de carga TODO- En el futuro, manejar el estado isLoading mejor
     val isLoading = propertiesPreview.isEmpty()
 
-    //Observar el estado del tipo de propiedad elegida
-    val buyRentShareState by homeScreenViewModel.buyRentState.collectAsState()
+    //Valor de las preferencias de búsqueda
+    val tipoPropiedad = SearchPreferences.getModoPropiedad()
 
-    //convertimos para el tipo de valor de la base de datos
-    val tipoPropiedad = when (buyRentShareState.selectedOption) {
-        BuyRentShareButtonOptions.COMPRAR -> "comprar"
-        BuyRentShareButtonOptions.ALQUILAR -> "alquilar"
-        BuyRentShareButtonOptions.COMPARTIR -> "compartir"
-        null -> ""
-    }
+    val dropdownDbValue = SearchPreferences.getDropdownDbValue()
 
-    // TODO- Puede que sea conveniente que PropertyListScreen y DetailScreen compartan viewmodel
-    // TODO- y que homeviewmodel solo pase por argumentos los filtros para llamar al fetch
+
     LaunchedEffect(Unit) {
-        homeScreenViewModel.fetchPropertiesPreview(tipoPropiedad)
+        homeScreenViewModel.fetchPropertiesPreview(tipoPropiedad,dropdownDbValue)
     }
-
 
     Scaffold(
         topBar = {
@@ -146,7 +137,11 @@ fun PropertyListScreen(
 
             // FiltroBar como header fijo
             stickyHeader {
-                FiltroBar()
+                FiltroBar(
+                    onFilterClick = {navHostController.navigate("filter")},
+                    onOrderbyClick = {},
+                    onMapsClick = {}
+                )
             }
             if (isLoading) {
                 item {

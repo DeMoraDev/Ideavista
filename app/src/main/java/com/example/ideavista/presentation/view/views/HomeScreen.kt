@@ -1,22 +1,14 @@
 package com.example.ideavista.presentation.view.views
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.ChatBubble
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import com.example.ideavista.R
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -24,15 +16,21 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.ideavista.R
+import com.example.ideavista.data.local.SearchPreferences
 import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
 import com.example.ideavista.presentation.state.HomeContentStep
+import com.example.ideavista.presentation.state.PropertyType
 import com.example.ideavista.presentation.view.composable.home.ChatContent
 import com.example.ideavista.presentation.view.composable.home.CustomTopBar
 import com.example.ideavista.presentation.view.composable.home.FavoriteContent
@@ -51,10 +49,11 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
 
+    var modoPropiedadselectedOption by remember { mutableStateOf(BuyRentShareButtonOptions.COMPRAR) }
+    var selectedDropdownOption by remember { mutableStateOf(PropertyType.VIVIENDAS) }
+
     val state = viewModel.uiState
     val isSelected = state.value.step
-
-    val buyRentState = viewModel.buyRentState.collectAsState()
 
 
     // Aquí se maneja la lógica del Scaffold
@@ -173,7 +172,7 @@ fun HomeScreen(
                                 Icons.Outlined.Person,
                                 contentDescription = "Menu Outlined",
                                 modifier = Modifier.size(28.dp)
-                                )
+                            )
                         }
                     },
                     label = { Text("Menu") },
@@ -190,13 +189,17 @@ fun HomeScreen(
         ) {
             when (state.value.step) {
                 HomeContentStep.Home -> HomeContent(
-                    buyOnClick = { viewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.COMPRAR) },
-                    rentOnClick = { viewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.ALQUILAR) },
-                    shareOnClick = { viewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.COMPARTIR) },
-                    buttonState = buyRentState.value.selectedOption,
                     onSearchClick = {
+                        SearchPreferences.setSelectedOption(modoPropiedadselectedOption)
+                        SearchPreferences.setSelectedDropdownOption(selectedDropdownOption)
                         navHostController.navigate("property")
-                    }
+                    },
+                    selectedOption = modoPropiedadselectedOption,
+                    onOptionSelected = { newOption ->
+                        modoPropiedadselectedOption = newOption
+                    },
+                    selectedDropdownOption = selectedDropdownOption,
+                    onDropdownOptionSelected = { newOption -> selectedDropdownOption = newOption }
                 )
 
                 HomeContentStep.Search -> SearchContent()

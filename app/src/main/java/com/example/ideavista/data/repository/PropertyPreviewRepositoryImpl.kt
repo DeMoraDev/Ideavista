@@ -8,8 +8,8 @@ class PropertyPreviewRepositoryImpl(
     val dataSource: PropertyPreviewDataSource,
 ) : PropertyPreviewRepository {
 
-    override suspend fun fetchPropertiesPreview(tipoPropiedad: String): List<PropertyPreview> {
-        return dataSource.fetchPropertiesPreview(tipoPropiedad)
+    override suspend fun fetchPropertiesPreview(modoPropiedad: String, dropdownDbValue: String): List<PropertyPreview> {
+        return dataSource.fetchPropertiesPreview(modoPropiedad, dropdownDbValue)
     }
 
 }

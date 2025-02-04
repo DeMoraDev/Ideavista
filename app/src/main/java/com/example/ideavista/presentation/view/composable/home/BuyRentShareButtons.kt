@@ -1,5 +1,6 @@
 package com.example.ideavista.presentation.view.composable.home
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +15,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -26,11 +30,11 @@ import com.example.ideavista.presentation.view.theme.Violeta
 
 @Composable
 fun BuyRentShareButtons(
-    buyOnClick: () -> Unit,
-    rentOnClick: () -> Unit,
-    shareOnClick: () -> Unit,
-    buttonState: BuyRentShareButtonOptions?
+    selectedOption: BuyRentShareButtonOptions,
+    onOptionSelected: (BuyRentShareButtonOptions) -> Unit
 ) {
+    Log.d("BuyRentUI", "Estado actual en la UI: $selectedOption")
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,84 +43,82 @@ fun BuyRentShareButtons(
             .background(color = Color.White)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Botón 1
+            // Botón 1 - Comprar
             Button(
-                onClick = { buyOnClick() },
+                onClick = { onOptionSelected(BuyRentShareButtonOptions.COMPRAR) },
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),
-                shape = RoundedCornerShape(
-                    topStart = 4.dp,
-                    topEnd = 0.dp,
-                    bottomStart = 4.dp,
-                    bottomEnd = 0.dp
+                shape = RoundedCornerShape(topStart = 4.dp, bottomStart = 4.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedOption == BuyRentShareButtonOptions.COMPRAR)
+                        Violeta.copy(alpha = 0.1f) else Color.White
                 ),
-                colors = ButtonDefaults.buttonColors(containerColor = if (buttonState== BuyRentShareButtonOptions.COMPRAR) Violeta.copy(alpha = 0.1f) else Color.White),
                 border = BorderStroke(
                     2.dp,
-                    if (buttonState == BuyRentShareButtonOptions.COMPRAR) Violeta else Color.Gray,
+                    if (selectedOption == BuyRentShareButtonOptions.COMPRAR) Violeta else Color.Gray
                 ),
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
                     text = "Comprar",
-                    color = if (buttonState == BuyRentShareButtonOptions.COMPRAR) Violeta else  Color.DarkGray,
+                    color = if (selectedOption == BuyRentShareButtonOptions.COMPRAR) Violeta else Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
             }
 
-            // Botón 2
+            // Botón 2 - Alquilar
             Button(
-                onClick = { rentOnClick() },
+                onClick = { onOptionSelected(BuyRentShareButtonOptions.ALQUILAR) },
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),
                 shape = RectangleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = if (buttonState== BuyRentShareButtonOptions.ALQUILAR) Violeta.copy(alpha = 0.1f) else Color.White),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedOption == BuyRentShareButtonOptions.ALQUILAR)
+                        Violeta.copy(alpha = 0.1f) else Color.White
+                ),
                 border = BorderStroke(
                     2.dp,
-                    if (buttonState == BuyRentShareButtonOptions.ALQUILAR) Violeta else Color.Gray,
+                    if (selectedOption == BuyRentShareButtonOptions.ALQUILAR) Violeta else Color.Gray
                 ),
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
                     text = "Alquilar",
-                    color = if (buttonState == BuyRentShareButtonOptions.ALQUILAR) Violeta else  Color.DarkGray,
+                    color = if (selectedOption == BuyRentShareButtonOptions.ALQUILAR) Violeta else Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
             }
 
-            // Botón 3
+            // Botón 3 - Compartir
             Button(
-                onClick = { shareOnClick() },
+                onClick = { onOptionSelected(BuyRentShareButtonOptions.COMPARTIR) },
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),
-                shape = RoundedCornerShape(
-                    topStart = 0.dp,
-                    topEnd = 4.dp,
-                    bottomStart = 0.dp,
-                    bottomEnd = 4.dp
+                shape = RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selectedOption == BuyRentShareButtonOptions.COMPARTIR)
+                        Violeta.copy(alpha = 0.1f) else Color.White
                 ),
-                colors = ButtonDefaults.buttonColors(containerColor = if (buttonState== BuyRentShareButtonOptions.COMPARTIR) Violeta.copy(alpha = 0.1f) else Color.White),
                 border = BorderStroke(
                     2.dp,
-                    if (buttonState == BuyRentShareButtonOptions.COMPARTIR) Violeta else Color.Gray,
+                    if (selectedOption == BuyRentShareButtonOptions.COMPARTIR) Violeta else Color.Gray
                 ),
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
                     text = "Compartir",
-                    color = if (buttonState == BuyRentShareButtonOptions.COMPARTIR) Violeta else  Color.DarkGray,
+                    color = if (selectedOption == BuyRentShareButtonOptions.COMPARTIR) Violeta else Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
