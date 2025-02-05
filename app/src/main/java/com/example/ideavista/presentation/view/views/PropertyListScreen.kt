@@ -59,22 +59,20 @@ fun PropertyListScreen(
     homeScreenViewModel: HomeScreenViewModel = koinViewModel()
 ) {
 
-
     val propertiesPreview by homeScreenViewModel.properties_Preview.collectAsState()
+
+    val modoPropiedad = SearchPreferences.getModoPropiedad()
+    val dropdownDbValue = SearchPreferences.getDropdownDbValue()
+
 
     //Estados de carga y emptyCall
     val isLoading by homeScreenViewModel.isLoading.collectAsState()
     val isEmpty by homeScreenViewModel.isEmpty.collectAsState()
 
 
-    //Valor de las preferencias de búsqueda
-    val tipoPropiedad = SearchPreferences.getModoPropiedad()
-
-    val dropdownDbValue = SearchPreferences.getDropdownDbValue()
-
 
     LaunchedEffect(Unit) {
-        homeScreenViewModel.fetchPropertiesPreview(tipoPropiedad, dropdownDbValue)
+        homeScreenViewModel.fetchPropertiesPreview(modoPropiedad, dropdownDbValue)
     }
 
     Scaffold(
@@ -94,14 +92,14 @@ fun PropertyListScreen(
                             verticalArrangement = Arrangement.spacedBy((-8).dp)
                         ) {
                             Text(
-                                text = "9 viviendas, comprar",
+                                text = "${propertiesPreview.size} $dropdownDbValue, $modoPropiedad",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp,
                                 color = Negro,
                                 maxLines = 1,
                             )
                             Text(
-                                text = "Beniparrell, Valencia",
+                                text = "Valencia, Valencia",
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 14.sp,
                                 color = Violeta,
