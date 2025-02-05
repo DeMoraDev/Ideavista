@@ -44,6 +44,7 @@ import com.example.ideavista.presentation.view.composable.propertyComposables.In
 import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.BottomBarColor
+import com.example.ideavista.presentation.view.theme.Gris
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -120,14 +121,21 @@ fun FilterScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Violeta),
+                        enabled = propertyCount != 0,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (propertyCount != 0) Violeta else Color.LightGray,
+                            contentColor = if (propertyCount != 0) Color.White else Color.Gray
+                        ),
                         elevation = ButtonDefaults.buttonElevation(0.dp),
                         contentPadding = PaddingValues(8.dp)
                     ) {
 
                         Text(
-                            text = "Ver $propertyCount resultados",
-                            color = Color.White,
+                            text = if (propertyCount != 0) {
+                                "Ver $propertyCount resultados"
+                            } else {
+                                "No hay $dropdownDbValue"
+                            },
                             fontSize = 20.sp,
                             modifier = Modifier.padding(start = 4.dp)
                         )

@@ -1,7 +1,9 @@
 package com.example.ideavista.presentation.view.views
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -12,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,7 +41,12 @@ import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import com.example.ideavista.R
 import com.example.ideavista.data.local.SearchPreferences
 import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.NegroClaro
@@ -54,8 +62,10 @@ fun PropertyListScreen(
 
     val propertiesPreview by homeScreenViewModel.properties_Preview.collectAsState()
 
-    //Barra de carga TODO- En el futuro, manejar el estado isLoading mejor
-    val isLoading = propertiesPreview.isEmpty()
+    //Estados de carga y emptyCall
+    val isLoading by homeScreenViewModel.isLoading.collectAsState()
+    val isEmpty by homeScreenViewModel.isEmpty.collectAsState()
+
 
     //Valor de las preferencias de búsqueda
     val tipoPropiedad = SearchPreferences.getModoPropiedad()
@@ -64,7 +74,7 @@ fun PropertyListScreen(
 
 
     LaunchedEffect(Unit) {
-        homeScreenViewModel.fetchPropertiesPreview(tipoPropiedad,dropdownDbValue)
+        homeScreenViewModel.fetchPropertiesPreview(tipoPropiedad, dropdownDbValue)
     }
 
     Scaffold(
@@ -138,35 +148,102 @@ fun PropertyListScreen(
             // FiltroBar como header fijo
             stickyHeader {
                 FiltroBar(
-                    onFilterClick = {navHostController.navigate("filter")},
+                    onFilterClick = { navHostController.navigate("filter") },
                     onOrderbyClick = {},
                     onMapsClick = {}
                 )
             }
+            // Mostrar barra de carga cuando isLoading es verdadero
             if (isLoading) {
                 item {
                     LoadingBar()
                 }
             }
 
-            if (propertiesPreview.isNotEmpty()) {
+            // Mostrar mensaje de "No hay resultados" si la lista está vacía y no está cargando
+            if (!isLoading && propertiesPreview.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(Color(0xFFFFEEDB)) // Color de fondo del box
+                        ) {
+                            Column(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.empty_property_list),
+                                    contentDescription = "No se han encontrado propiedades",
+                                    contentScale = ContentScale.Crop, // Ajusta la imagen sin dejar espacios
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)) // Asegura que respete el clippeo del box
+                                )
+
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp)
+                                ) {
+                                    Column {
+                                        Text(
+                                            text = "Ahora no hay anuncios con tus criterios",
+                                            fontSize = 18.sp,
+                                            color = Negro,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.Start
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Text(
+                                            text = "Si tienes flexibilidad, puedes ver habitaciones con tus filtros alrededor " +
+                                                    "de tu zona de búsqueda.",
+                                            fontSize = 16.sp,
+                                            color = Negro,
+                                            textAlign = TextAlign.Start
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Text(
+                                            text = "Ir al mapa",
+                                            fontSize = 18.sp,
+                                            color = Violeta,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.Start,
+                                            modifier = Modifier.clickable(onClick = {})
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Mostrar información sobre la cantidad de resultados cuando la lista no está vacía
+            if (propertiesPreview.isNotEmpty() && !isLoading) {
                 item {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            //.padding(6.dp)
                             .background(Color.Transparent),
                         contentAlignment = Alignment.TopCenter
                     ) {
                         Text(
                             text = "Viendo ${propertiesPreview.size} viviendas de ${propertiesPreview.size}",
                             fontSize = 18.sp,
-                            color = NegroClaro
+                            color = Color.DarkGray
                         )
                     }
                 }
             }
 
+            // Mostrar los items de la lista de propiedades
             items(propertiesPreview) { property ->
                 PropertyCard(
                     user_id = property.user_id ?: "Usuario desconocido",
@@ -186,7 +263,7 @@ fun PropertyListScreen(
                     garaje = property.garaje,
                     onPropertyClick = { navHostController.navigate("propertyDetail/${property.id}") }
                 )
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(30.dp)) // Espacio entre los items
             }
         }
     }

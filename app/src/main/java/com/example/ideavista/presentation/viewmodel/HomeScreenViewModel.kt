@@ -41,8 +41,32 @@ class HomeScreenViewModel(
     fun fetchPropertiesPreview(tipoPropiedad: String, dropdownDbValue: String) {
         Log.d("Firestore", "Buscando propiedades de tipo: $tipoPropiedad")
         viewModelScope.launch {
-            _properties_Preview.value = fetchPropertiesPreviewUseCase(tipoPropiedad, dropdownDbValue)
+            // Se marca como cargando
+            _isLoading.value = true
+
+            // Llamamos al caso de uso y obtenemos los resultados
+            val result = fetchPropertiesPreviewUseCase(tipoPropiedad, dropdownDbValue)
+
+            // Asignamos los resultados a _properties_Preview
+            _properties_Preview.value = result
+
+            // Actualizamos el estado de _isLoading a false una vez terminada la carga
+            _isLoading.value = false
+
+            // Verificamos si el resultado está vacío y actualizamos el estado de _isEmpty
+            _isEmpty.value = result.isEmpty()
         }
     }
+
+    //Estados para PropertyListScreen, isLoading, data y isEmpty
+
+    //Loading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    //Empty call
+    private val _isEmpty = MutableStateFlow(false)
+    val isEmpty: StateFlow<Boolean> = _isEmpty
+
 
 }
