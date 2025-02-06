@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ideavista.presentation.view.theme.Violeta
 
-
 @Composable
 fun CustomSwitch(
     label: String,
@@ -29,7 +28,7 @@ fun CustomSwitch(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp), // Sin clickable en el Row
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -69,7 +68,7 @@ fun CustomSwitch(
                     .clip(CircleShape) // Mantiene el thumb con bordes redondeados
                     .background(if (isChecked) Violeta else Color.Gray)
                     .clickable(
-                        onClick = { onCheckedChange(!isChecked) },
+                        onClick = { onCheckedChange(!isChecked) }, // Solo cambia el estado
                         indication = rememberRipple(
                             bounded = false, // El ripple se extiende fuera del contenedor
                             color = if (isChecked) Color.Gray else Violeta, // Cambiar el color según el estado
@@ -77,19 +76,11 @@ fun CustomSwitch(
                         ),
                         interactionSource = remember { MutableInteractionSource() }
                     )
-            ){
-                // Aquí sigue el Box con el tamaño del thumb
-                Box(
-                    modifier = Modifier
-                        .size(20.dp) // Tamaño del thumb
-                        .offset(x = thumbOffset) // Movimiento suave del thumb
-                        .clip(CircleShape)
-                        .background(if (isChecked) Violeta else Color.Gray)
-                )
-            }
+            )
         }
     }
 }
+
 
 @Preview
 @Composable

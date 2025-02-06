@@ -45,6 +45,7 @@ import com.example.ideavista.presentation.state.PropertyType
 import com.example.ideavista.presentation.view.composable.generalComposables.CustomRadioButton
 import com.example.ideavista.presentation.view.composable.generalComposables.CustomSimpleCheckbox
 import com.example.ideavista.presentation.view.composable.generalComposables.CustomSwitch
+import com.example.ideavista.presentation.view.composable.generalComposables.ExpandableCheckboxGroup
 import com.example.ideavista.presentation.view.composable.home.BuyRentShareButtons
 import com.example.ideavista.presentation.view.composable.home.MainDropdown
 import com.example.ideavista.presentation.view.composable.propertyComposables.InputDropdownMenu
@@ -72,6 +73,16 @@ fun FilterScreen(
 
 
     //Lista de items sin logica todavia
+
+
+    val pisosChecked = remember { mutableStateOf(false) }
+    val aticosChecked = remember { mutableStateOf(false) }
+    val duplexChecked = remember { mutableStateOf(false) }
+
+    val independientesChecked = remember { mutableStateOf(false) }
+    val pareadosChecked = remember { mutableStateOf(false) }
+    val adosadosChecked = remember { mutableStateOf(false) }
+    val casasRusticasChecked = remember { mutableStateOf(false) }
 
     var banos1 by remember { mutableStateOf(false) }
     var banos2 by remember { mutableStateOf(false) }
@@ -243,8 +254,7 @@ fun FilterScreen(
                                 }
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
-
+                        Spacer(modifier = Modifier.height(18.dp))
                         Text(
                             text = "Precio",
                             fontWeight = FontWeight.Bold
@@ -288,7 +298,7 @@ fun FilterScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         Text(
                             text = "Tamaño",
                             fontWeight = FontWeight.Bold
@@ -332,10 +342,31 @@ fun FilterScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
-
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Text(
+                            text = "Tipo de vivienda",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
-
+                        ExpandableCheckboxGroup(
+                            title = "Pisos, Áticos, Dúplex",
+                            children = listOf(
+                                "Pisos" to pisosChecked,
+                                "Áticos" to aticosChecked,
+                                "Dúplex" to duplexChecked
+                            )
+                        )
+                        ExpandableCheckboxGroup(
+                            title = "Casas y Chalets",
+                            children = listOf(
+                                "Independientes" to independientesChecked,
+                                "Pareados" to pareadosChecked,
+                                "Adosados" to adosadosChecked,
+                                "Casas rústicas" to casasRusticasChecked
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(18.dp))
                         Column {
                             Text(
                                 text = "Habitaciones",
@@ -367,7 +398,7 @@ fun FilterScreen(
                                         habitacionesMas = true
                                     }
                                 },
-                                label = "1 habitación"
+                                label = "1"
                             )
                             CustomSimpleCheckbox(
                                 checked = habitaciones2,
@@ -379,7 +410,7 @@ fun FilterScreen(
                                         habitacionesMas = true
                                     }
                                 },
-                                label = "2 habitaciones"
+                                label = "2"
                             )
                             CustomSimpleCheckbox(
                                 checked = habitaciones3,
@@ -390,15 +421,15 @@ fun FilterScreen(
                                         habitacionesMas = true
                                     }
                                 },
-                                label = "3 habitaciones"
+                                label = "3"
                             )
                             CustomSimpleCheckbox(
                                 checked = habitacionesMas,
                                 onCheckedChange = { habitacionesMas = it },
-                                label = "4 o más habitaciones"
+                                label = "4 habitaciones o más"
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         Column {
                             Text(
                                 text = "Baños",
@@ -415,7 +446,7 @@ fun FilterScreen(
                                         banosMas = true
                                     }
                                 },
-                                label = "1 baño"
+                                label = "1"
                             )
                             CustomSimpleCheckbox(
                                 checked = banos2,
@@ -426,15 +457,15 @@ fun FilterScreen(
                                         banosMas = true
                                     }
                                 },
-                                label = "2 baños"
+                                label = "2"
                             )
                             CustomSimpleCheckbox(
                                 checked = banosMas,
                                 onCheckedChange = { banosMas = it },
-                                label = "3 o más baños"
+                                label = "3 baños o más"
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         //Columna Estado
                         Column {
                             Text(
@@ -458,7 +489,7 @@ fun FilterScreen(
                                 label = "A reformar"
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         //Columna de Características
                         Column {
                             Text(
@@ -526,7 +557,7 @@ fun FilterScreen(
                                 label = "Vivienda accesible"
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         //Columna de Características
                         Column {
                             Text(
@@ -550,7 +581,7 @@ fun FilterScreen(
                                 label = "Bajos"
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         Column {
                             Text(
                                 text = "Multimedia",
@@ -569,7 +600,7 @@ fun FilterScreen(
                             )
 
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         Text(
                             text = "Tipo de anuncio",
                             fontWeight = FontWeight.Bold,
@@ -580,7 +611,7 @@ fun FilterScreen(
                             onCheckedChange = { deBancos = it },
                             label = "De bancos"
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         Text(
                             text = "Fecha de publicación",
                             fontWeight = FontWeight.Bold,
@@ -596,13 +627,13 @@ fun FilterScreen(
                             selectedOption = selectedRadioButtonOption,
                             onOptionSelected = { selectedRadioButtonOption = it }
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         Text(
                             text = "Descartados",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         CustomSwitch(
                             label = "Ver descartados",
                             isChecked = isSwitchChecked,
