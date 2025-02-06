@@ -8,12 +8,20 @@ import kotlinx.coroutines.tasks.await
 
 class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : PropertyPreviewDataSource {
 
-    override suspend fun fetchPropertiesPreview(modoPropiedad: String,dropdownDbValue: String): List<PropertyPreview> {
-        val snapshot = db.collection("property")
+    override suspend fun fetchPropertiesPreview(
+        modoPropiedad: String,
+        dropdownDbValue: String,
+        garaje: Boolean?
+    ): List<PropertyPreview> {
+        // Construcción de la consulta dinámica
+        var query = db.collection("property")
             .whereEqualTo("modo_propiedad", modoPropiedad)
             .whereEqualTo("tipo_propiedad", dropdownDbValue)
-            .get()
-            .await()
+
+        // Agregar filtros opcionales si tienen valor
+        if (garaje != null) query = query.whereEqualTo("garaje", garaje)
+
+        val snapshot = query.get().await()
 
         val propertiesPreview = snapshot.documents.mapNotNull { document ->
             try {
@@ -41,11 +49,11 @@ class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : Propert
             }
         }
 
-        //Guardar en caché
+        // Guardar en caché
         Cache.listaDePropiedades = propertiesPreview
-
         Log.d("Firestore", "Datos guardados en companion object: ${Cache.listaDePropiedades}")
 
         return propertiesPreview
     }
+
 }

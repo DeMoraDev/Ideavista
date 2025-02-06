@@ -5,6 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ideavista.data.local.SearchPreferences
+import com.example.ideavista.domain.repository.PropertyPreviewRepository
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesPreviewUseCase
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesUseCase
 import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
@@ -22,7 +24,8 @@ import kotlinx.coroutines.tasks.await
 
 class HomeScreenViewModel(
     private val fetchPropertiesUseCase: FetchPropertiesUseCase,
-    private val fetchPropertiesPreviewUseCase: FetchPropertiesPreviewUseCase
+    private val fetchPropertiesPreviewUseCase: FetchPropertiesPreviewUseCase,
+    private val repository: PropertyPreviewRepository
 
 ) : ViewModel() {
 
@@ -38,25 +41,44 @@ class HomeScreenViewModel(
     private val _properties_Preview = MutableStateFlow<List<PropertyPreview>>(emptyList())
     val properties_Preview: StateFlow<List<PropertyPreview>> = _properties_Preview
 
-    fun fetchPropertiesPreview(tipoPropiedad: String, dropdownDbValue: String) {
-        Log.d("Firestore", "Buscando propiedades de tipo: $tipoPropiedad")
+    fun fetchPropertiesWithFilters() {
         viewModelScope.launch {
-            // Se marca como cargando
             _isLoading.value = true
 
-            // Llamamos al caso de uso y obtenemos los resultados
-            val result = fetchPropertiesPreviewUseCase(tipoPropiedad, dropdownDbValue)
+            val properties = repository.fetchPropertiesPreview(
+                modoPropiedad = SearchPreferences.getModoPropiedad(),
+                dropdownDbValue = SearchPreferences.getDropdownDbValue(),
+                garaje = SearchPreferences.getGarajeChecked()
+            )
+            _properties_Preview.value = properties
 
-            // Asignamos los resultados a _properties_Preview
-            _properties_Preview.value = result
-
-            // Actualizamos el estado de _isLoading a false una vez terminada la carga
             _isLoading.value = false
-
-            // Verificamos si el resultado está vacío y actualizamos el estado de _isEmpty
-            _isEmpty.value = result.isEmpty()
+            _isEmpty.value = properties.isEmpty()
         }
     }
+
+  /*  fun fetchPropertiesPreview(
+        tipoPropiedad: String,
+        dropdownDbValue: String,
+        garaje: Boolean? = null
+    ) {
+        Log.d(
+            "Firestore",
+            "Buscando propiedades con filtros: tipoPropiedad=$tipoPropiedad, garaje=$garaje"
+        )
+
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            val result = fetchPropertiesPreviewUseCase(
+                tipoPropiedad, dropdownDbValue, garaje
+            )
+
+            _properties_Preview.value = result
+            _isLoading.value = false
+            _isEmpty.value = result.isEmpty()
+        }
+    } */
 
     //Estados para PropertyListScreen, isLoading, data y isEmpty
 

@@ -6,7 +6,11 @@ import com.example.ideavista.presentation.utils.Property
 import com.example.ideavista.presentation.utils.PropertyPreview
 
 class FetchPropertiesPreviewUseCase(private val repository: PropertyPreviewRepository) {
-    suspend operator fun invoke(tipoPropiedad: String,dropdownDbValue: String): List<PropertyPreview> {
-        return repository.fetchPropertiesPreview(tipoPropiedad,dropdownDbValue)
+    suspend operator fun invoke(
+        tipoPropiedad: String,
+        dropdownDbValue: String,
+        garaje: Boolean? = null
+    ): List<PropertyPreview> {
+        return repository.fetchPropertiesPreview(tipoPropiedad, dropdownDbValue, garaje)
     }
 }

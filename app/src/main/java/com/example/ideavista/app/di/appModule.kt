@@ -52,9 +52,9 @@ val appModule = module {
     viewModel { SplashScreenViewModel(get()) }
     viewModel { OnboardingViewModel(get(), get(), get()) }
     viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
-    viewModel { HomeScreenViewModel(get(), get()) }
+    viewModel { HomeScreenViewModel(get(), get(), get()) }
     viewModel { PropertyViewModel(get()) }
-    viewModel { FilterViewModel() }
+    viewModel { FilterViewModel(get()) }
 
 
 

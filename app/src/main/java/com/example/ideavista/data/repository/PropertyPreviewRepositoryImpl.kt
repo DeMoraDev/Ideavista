@@ -5,11 +5,14 @@ import com.example.ideavista.domain.repository.PropertyPreviewRepository
 import com.example.ideavista.presentation.utils.PropertyPreview
 
 class PropertyPreviewRepositoryImpl(
-    val dataSource: PropertyPreviewDataSource,
+    val dataSource: PropertyPreviewDataSource
 ) : PropertyPreviewRepository {
 
-    override suspend fun fetchPropertiesPreview(modoPropiedad: String, dropdownDbValue: String): List<PropertyPreview> {
-        return dataSource.fetchPropertiesPreview(modoPropiedad, dropdownDbValue)
+    override suspend fun fetchPropertiesPreview(
+        modoPropiedad: String,
+        dropdownDbValue: String,
+        garaje: Boolean?,
+    ): List<PropertyPreview> {
+        return dataSource.fetchPropertiesPreview(modoPropiedad, dropdownDbValue, garaje)
     }
-
 }

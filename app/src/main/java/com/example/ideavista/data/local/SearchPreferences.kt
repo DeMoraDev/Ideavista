@@ -39,5 +39,25 @@ class SearchPreferences {
         fun getDropdownDbValue(): String {
             return _selectedDropdownOption.value?.dbValue ?: ""
         }
+
+        // Filtros adicionales
+        private val _garajeChecked = MutableStateFlow<Boolean?>(null)
+        val garajeChecked: StateFlow<Boolean?> get() = _garajeChecked
+
+        fun setGarajeChecked(value: Boolean) {
+            _garajeChecked.value = if (value) true else null
+        }
+
+        fun getGarajeChecked(): Boolean? {
+            return _garajeChecked.value
+        }
+
+        // Aquí puedes agregar más filtros como precio, número de habitaciones, etc.
+
+        fun resetFilters() {
+            _garajeChecked.value = null
+        }
     }
+
 }
+

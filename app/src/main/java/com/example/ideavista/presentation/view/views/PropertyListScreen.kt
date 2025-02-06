@@ -72,7 +72,7 @@ fun PropertyListScreen(
 
 
     LaunchedEffect(Unit) {
-        homeScreenViewModel.fetchPropertiesPreview(modoPropiedad, dropdownDbValue)
+        homeScreenViewModel.fetchPropertiesWithFilters()
     }
 
     Scaffold(
@@ -122,7 +122,7 @@ fun PropertyListScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navHostController.popBackStack() }) {
+                    IconButton(onClick = { navHostController.navigate("main") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Atrás")
                     }
                 },
@@ -229,7 +229,8 @@ fun PropertyListScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.Transparent),
+                            .background(Color.Transparent)
+                            .padding(12.dp),
                         contentAlignment = Alignment.TopCenter
                     ) {
                         Text(

@@ -40,11 +40,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
 import com.example.ideavista.data.local.SearchPreferences
+import com.example.ideavista.presentation.view.composable.generalComposables.CustomRadioButton
 import com.example.ideavista.presentation.view.composable.propertyComposables.InputDropdownMenu
 import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.BottomBarColor
-import com.example.ideavista.presentation.view.theme.Gris
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -55,8 +55,9 @@ fun FilterScreen(
     navHostController: NavHostController,
     filterViewModel: FilterViewModel = koinViewModel()
 ) {
+    var selectedOption by remember { mutableStateOf("Indiferente") } //RadioButton temporal, en futuro manejar en ViewModel
 
-    var villasChecked by remember { mutableStateOf(false) }
+    val garajeChecked by filterViewModel.garajeChecked.collectAsState()
 
     val modoPropiedad = SearchPreferences.getModoPropiedad()
     val dropdownDbValue = SearchPreferences.getDropdownDbValue()
@@ -68,9 +69,8 @@ fun FilterScreen(
     val isLoading by filterViewModel.isCountLoading.collectAsState()
 
     LaunchedEffect(Unit) {
-        filterViewModel.fetchPropertyCount(modoPropiedad, dropdownDbValue)
+        filterViewModel.fetchFilteredPropertyCount()
     }
-
 
     Scaffold(
         topBar = {
@@ -83,7 +83,16 @@ fun FilterScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navHostController.popBackStack() }) {
+                    IconButton(onClick = {
+                        if (filterViewModel.searchPerformed.value) {
+                            // Si se realizó la búsqueda, mantenemos los filtros
+                            navHostController.popBackStack()
+                        } else {
+                            // Si no se ha realizado la búsqueda, reseteamos los filtros
+                            filterViewModel.resetFilters()
+                            navHostController.popBackStack()
+                        }
+                    }) {
                         Icon(
                             painter = painterResource(id = R.drawable.x_icon),
                             contentDescription = "",
@@ -116,7 +125,10 @@ fun FilterScreen(
                         .fillMaxWidth()
                 ) {
                     Button(
-                        onClick = { navHostController.navigate("property") },
+                        onClick = {
+                            filterViewModel.setSearchPerformed()
+                            navHostController.navigate("property")
+                        },
                         shape = RoundedCornerShape(4.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -158,21 +170,6 @@ fun FilterScreen(
                     }
                 } else {
                     item {
-                        /*   BuyRentShareButtons(
-                               buyOnClick = {
-                                  // homeScreenViewModel.onBuyRentButtonClicked(BuyRentShareButtonOptions.COMPRAR)
-                                   navHostController.navigate("property")
-                               },
-                               rentOnClick = {
-                                  // homeScreenViewModel.onBuyRentButtonClicked( BuyRentShareButtonOptions.ALQUILAR )
-                                   navHostController.navigate("property")
-                               },
-                               shareOnClick = {
-                                  // homeScreenViewModel.onBuyRentButtonClicked( BuyRentShareButtonOptions.COMPARTIR )
-                                   navHostController.navigate("property")
-                               },
-                               buttonState = buyRentShareState.selectedOption
-                        )*/
 
                         Text(
                             text = "Precio",
@@ -268,14 +265,32 @@ fun FilterScreen(
                         Text(text = "Otras denominaciones")
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(
-                                checked = villasChecked,
-                                onCheckedChange = { villasChecked = it },
-
-                                )
-                            Text(text = "Villas")
+                                checked = garajeChecked,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateGarajeFilter(isChecked)
+                                }
+                            )
+                            Text(text = "Garaje")
                         }
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "Habitaciones")
+
+                        Text(
+                            text = "Fecha de publicación",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                        CustomRadioButton(
+                            options = listOf(
+                                "Indiferente",
+                                "Últimas 48 horas",
+                                "La última semana",
+                                "El último mes"
+                            ),
+                            selectedOption = selectedOption,
+                            onOptionSelected = { selectedOption = it }
+                        )
+
+
                     }
                 }
             }
