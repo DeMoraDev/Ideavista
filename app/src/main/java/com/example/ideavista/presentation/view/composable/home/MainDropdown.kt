@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ideavista.presentation.state.PropertyType
+import com.example.ideavista.presentation.view.theme.NegroClaro
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +54,7 @@ fun MainDropdown(
             value = selectedOption.displayName,
             onValueChange = {},
             readOnly = true,
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),
             trailingIcon = {
                 IconButton(onClick = { expanded = !expanded }) {
                     Icon(imageVector = Icons.Filled.KeyboardArrowDown, contentDescription = null)
@@ -61,8 +63,14 @@ fun MainDropdown(
             modifier = Modifier
                 .fillMaxWidth()
                 .menuAnchor()
-                .border(BorderStroke(1.dp, Color.Gray))
-                .background(Blanco)
+                .border(
+                    BorderStroke(1.dp, Color.Gray),
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)
+                ) // Borde redondeado
+                .background(
+                    Blanco,
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)
+                ) // Fondo con esquinas redondeadas
         )
 
         ExposedDropdownMenu(
@@ -72,7 +80,14 @@ fun MainDropdown(
         ) {
             PropertyType.entries.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(text = option.displayName, fontSize = 18.sp, fontWeight = FontWeight.Normal) },
+                    text = {
+                        Text(
+                            text = option.displayName,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = NegroClaro
+                        )
+                    },
                     onClick = {
                         onOptionSelected(option)
                         expanded = false

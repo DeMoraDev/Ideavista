@@ -40,7 +40,10 @@ fun BuyRentShareButtons(
             .fillMaxWidth()
             .padding(start = 4.dp, end = 4.dp)
             .height(54.dp)
-            .background(color = Color.White)
+            .background(
+                color = Color.White,
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)
+            )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -110,7 +113,7 @@ fun BuyRentShareButtons(
                         Violeta.copy(alpha = 0.1f) else Color.White
                 ),
                 border = BorderStroke(
-                    2.dp,
+                    1.dp,
                     if (selectedOption == BuyRentShareButtonOptions.COMPARTIR) Violeta else Color.Gray
                 ),
                 elevation = ButtonDefaults.buttonElevation(0.dp),

@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,7 +28,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -41,11 +40,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
 import com.example.ideavista.data.local.SearchPreferences
+import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
+import com.example.ideavista.presentation.state.PropertyType
 import com.example.ideavista.presentation.view.composable.generalComposables.CustomRadioButton
 import com.example.ideavista.presentation.view.composable.generalComposables.CustomSimpleCheckbox
+import com.example.ideavista.presentation.view.composable.generalComposables.CustomSwitch
+import com.example.ideavista.presentation.view.composable.home.BuyRentShareButtons
+import com.example.ideavista.presentation.view.composable.home.MainDropdown
 import com.example.ideavista.presentation.view.composable.propertyComposables.InputDropdownMenu
 import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.Amarillo
+import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.BottomBarColor
 import com.example.ideavista.presentation.view.theme.Violeta
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
@@ -57,9 +62,13 @@ fun FilterScreen(
     navHostController: NavHostController,
     filterViewModel: FilterViewModel = koinViewModel()
 ) {
-    var selectedOption by remember { mutableStateOf("Indiferente") } //RadioButton temporal, en futuro manejar en ViewModel
+    var selectedRadioButtonOption by remember { mutableStateOf("Indiferente") } //RadioButton temporal, en futuro manejar en ViewModel
 
     val garajeChecked by filterViewModel.garajeChecked.collectAsState()
+
+    //Filtros principales
+    var modoPropiedadselectedOption by remember { mutableStateOf(BuyRentShareButtonOptions.COMPRAR) }
+    var selectedDropdownOption by remember { mutableStateOf(PropertyType.VIVIENDAS) }
 
 
     //Lista de items sin logica todavia
@@ -98,6 +107,8 @@ fun FilterScreen(
 
     var deBancos by remember { mutableStateOf(false) }
 
+    var isSwitchChecked by remember { mutableStateOf(false) }
+
 
     val modoPropiedad = SearchPreferences.getModoPropiedad()
     val dropdownDbValue = SearchPreferences.getDropdownDbValue()
@@ -108,7 +119,7 @@ fun FilterScreen(
 
     val isLoading by filterViewModel.isCountLoading.collectAsState()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(modoPropiedadselectedOption, selectedDropdownOption) {
         filterViewModel.fetchFilteredPropertyCount()
     }
 
@@ -201,8 +212,8 @@ fun FilterScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
-                    .background(color = Color.LightGray.copy(alpha = 0.2f)),
-                contentPadding = PaddingValues(16.dp)
+                    .background(Blanco),
+                contentPadding = PaddingValues(16.dp, vertical = 28.dp)
             ) {
                 if (isLoading) {
                     item {
@@ -210,6 +221,29 @@ fun FilterScreen(
                     }
                 } else {
                     item {
+
+                        //Columna filtros principales
+                        Column {
+                            BuyRentShareButtons(
+                                selectedOption = modoPropiedadselectedOption,
+                                onOptionSelected = { option ->
+                                    // 2. Guarda en SearchPreferences
+                                    SearchPreferences.setSelectedOption(option)
+                                    modoPropiedadselectedOption = option
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                            // Dropdown y botones
+                            MainDropdown(
+                                selectedOption = selectedDropdownOption,
+                                onOptionSelected = { option ->
+                                    // 2. Guarda en SearchPreferences
+                                    SearchPreferences.setSelectedDropdownOption(option)
+                                    selectedDropdownOption = option
+                                }
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
 
                         Text(
                             text = "Precio",
@@ -254,7 +288,7 @@ fun FilterScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Text(
                             text = "Tamaño",
                             fontWeight = FontWeight.Bold
@@ -298,8 +332,7 @@ fun FilterScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "Tipo de vivienda")
+                        Spacer(modifier = Modifier.height(12.dp))
 
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -365,7 +398,7 @@ fun FilterScreen(
                                 label = "4 o más habitaciones"
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Column {
                             Text(
                                 text = "Baños",
@@ -401,7 +434,7 @@ fun FilterScreen(
                                 label = "3 o más baños"
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         //Columna Estado
                         Column {
                             Text(
@@ -425,6 +458,7 @@ fun FilterScreen(
                                 label = "A reformar"
                             )
                         }
+                        Spacer(modifier = Modifier.height(12.dp))
                         //Columna de Características
                         Column {
                             Text(
@@ -492,7 +526,7 @@ fun FilterScreen(
                                 label = "Vivienda accesible"
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         //Columna de Características
                         Column {
                             Text(
@@ -516,7 +550,7 @@ fun FilterScreen(
                                 label = "Bajos"
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Column {
                             Text(
                                 text = "Multimedia",
@@ -535,7 +569,7 @@ fun FilterScreen(
                             )
 
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Text(
                             text = "Tipo de anuncio",
                             fontWeight = FontWeight.Bold,
@@ -546,7 +580,7 @@ fun FilterScreen(
                             onCheckedChange = { deBancos = it },
                             label = "De bancos"
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Text(
                             text = "Fecha de publicación",
                             fontWeight = FontWeight.Bold,
@@ -559,11 +593,21 @@ fun FilterScreen(
                                 "La última semana",
                                 "El último mes"
                             ),
-                            selectedOption = selectedOption,
-                            onOptionSelected = { selectedOption = it }
+                            selectedOption = selectedRadioButtonOption,
+                            onOptionSelected = { selectedRadioButtonOption = it }
                         )
-
-
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Descartados",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        CustomSwitch(
+                            label = "Ver descartados",
+                            isChecked = isSwitchChecked,
+                            onCheckedChange = { isSwitchChecked = it }
+                        )
                     }
                 }
             }
