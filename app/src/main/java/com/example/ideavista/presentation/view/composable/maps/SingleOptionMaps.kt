@@ -50,7 +50,7 @@ fun SingleOptionMaps(
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = "Imagen",
-                modifier = Modifier.size(80.dp)
+                modifier = Modifier.size(82.dp)
             )
 
             // Columna que tiene el borde y envuelve otra columna con padding

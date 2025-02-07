@@ -112,7 +112,7 @@ fun PropertyListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f)
-                                .padding(6.dp),  // Añadiendo paddings sin el `clip`
+                                .padding(6.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Violeta),
                             elevation = ButtonDefaults.buttonElevation(0.dp),
                             contentPadding = PaddingValues(8.dp)
