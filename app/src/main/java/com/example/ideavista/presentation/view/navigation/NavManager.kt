@@ -8,8 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.ideavista.presentation.view.views.DetailScreen
+import com.example.ideavista.presentation.view.views.DrawingMapScreen
 import com.example.ideavista.presentation.view.views.FilterScreen
 import com.example.ideavista.presentation.view.views.HomeScreen
+import com.example.ideavista.presentation.view.views.MapsOptionScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.PropertyListScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
@@ -72,6 +74,18 @@ fun NavManager(navHostController: NavHostController) {
             FilterScreen(
                 navHostController = navHostController,
                 filterViewModel = filterViewModel
+            )
+        }
+
+        //Maps
+        composable(NavigationRoutes.MapOptions) {
+            MapsOptionScreen(
+                navHostController = navHostController,
+            )
+        }
+        composable(NavigationRoutes.Drawing) {
+            DrawingMapScreen(
+                navHostController = navHostController,
             )
         }
     }

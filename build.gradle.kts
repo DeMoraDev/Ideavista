@@ -11,4 +11,12 @@ plugins {
 
 dependencies {
     // Agrega otras dependencias comunes si es necesario
+
+}
+
+//GradleSecret
+buildscript {
+    dependencies {
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
+    }
 }

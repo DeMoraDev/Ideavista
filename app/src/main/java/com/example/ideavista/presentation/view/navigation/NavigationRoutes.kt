@@ -20,4 +20,8 @@ object NavigationRoutes {
     const val Property = "property"
     const val DetailScreen = "detail"
     const val FilterScreen = "filter"
+
+    //Maps
+    const val MapOptions = "mapOptions"
+    const val Drawing = "drawing"
 }

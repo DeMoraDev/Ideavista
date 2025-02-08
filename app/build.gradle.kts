@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    //gradleSecret
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -18,6 +20,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Agregar la clave API desde gradle.properties
+        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = project.findProperty("GOOGLE_MAPS_API_KEY") ?: ""
+
     }
 
     buildTypes {
@@ -117,4 +123,10 @@ dependencies {
 
     //Separators composables
     implementation("com.composables:core:1.20.0")
+
+    //Dependencias para GoogleMaps
+    implementation ("com.google.android.gms:play-services-maps:19.0.0")
+    implementation ("com.google.maps.android:maps-compose:2.14.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
 }
+

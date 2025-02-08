@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,8 +40,8 @@ fun HomeContent(
     selectedOption: BuyRentShareButtonOptions,
     onOptionSelected: (BuyRentShareButtonOptions) -> Unit,
     selectedDropdownOption: PropertyType,
-    onDropdownOptionSelected: (PropertyType) -> Unit
-
+    onDropdownOptionSelected: (PropertyType) -> Unit,
+    onMapOptionsClick: () ->  Unit
 ) {
 
     Column(
@@ -57,7 +58,8 @@ fun HomeContent(
             Image(
                 painter = painterResource(id = R.drawable.livingroom1),
                 contentDescription = "Imagen Home",
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(200.dp),
                 contentScale = ContentScale.Crop
             )
@@ -87,16 +89,17 @@ fun HomeContent(
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
                     modifier = Modifier
+                        .clickable { onMapOptionsClick() }
                         .fillMaxWidth()
                         .padding(start = 4.dp, end = 4.dp)
                         .height(52.dp)
-                        .clip(RoundedCornerShape(4.dp)) // Recorta las esquinas del Row
-                        .background(color = Color.White) // Fondo blanco dentro del recorte
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(color = Color.White)
                         .border(
                             BorderStroke(1.5.dp, color = Color.Gray),
                             shape = RoundedCornerShape(4.dp)
                         ) // Borde redondeado
-                        .padding(horizontal = 12.dp), // Asegura espacio interno para el contenido
+                        .padding(horizontal = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
