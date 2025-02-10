@@ -1,5 +1,6 @@
 package com.example.ideavista.presentation.view.views
 
+import android.graphics.Point
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,30 +17,26 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
-import com.example.ideavista.presentation.view.composable.maps.GoogleMapScreen
+import com.example.ideavista.presentation.view.composable.maps.MapDrawer
+import com.example.ideavista.presentation.view.composable.maps.MyMap
+import com.example.ideavista.presentation.view.composable.maps.RequestLocationPermission
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.Negro
 import com.example.ideavista.presentation.view.theme.Violeta
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.rememberCameraPositionState
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import com.example.ideavista.presentation.view.composable.maps.RequestLocationPermission
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,18 +45,10 @@ fun DrawingMapScreen(
     navHostController: NavHostController
 ) {
 
+    var points by remember { mutableStateOf(listOf<Point>()) }
+
     var permissionGranted by remember { mutableStateOf(false) }
 
-    var isSatelliteView by remember { mutableStateOf(false) }
-    var moveToUserLocation by remember { mutableStateOf(false) }
-
-    val context = LocalContext.current
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(
-            LatLng(40.7128, -74.0060),
-            20f
-        )
-    }
 
     Scaffold(
         topBar = {
@@ -111,7 +100,7 @@ fun DrawingMapScreen(
             ) {
                 // Botón grande centrado en la parte inferior
                 FloatingActionButton(
-                    onClick = { /* Acción de dibujar */ },
+                    onClick = { },
                     shape = RoundedCornerShape(4.dp),
                     containerColor = Blanco,
                     contentColor = Violeta,
@@ -145,7 +134,7 @@ fun DrawingMapScreen(
                     horizontalAlignment = Alignment.End
                 ) {
                     FloatingActionButton(
-                        onClick = { isSatelliteView = !isSatelliteView },
+                        onClick = {  },
                         shape = RoundedCornerShape(4.dp),
                         containerColor = Blanco,
                         contentColor = Violeta,
@@ -160,7 +149,7 @@ fun DrawingMapScreen(
                     }
 
                     FloatingActionButton(
-                        onClick = { moveToUserLocation = true },
+                        onClick = { },
                         shape = RoundedCornerShape(4.dp),
                         containerColor = Blanco,
                         contentColor = Violeta,
@@ -195,13 +184,17 @@ fun DrawingMapScreen(
 
             // Si los permisos fueron concedidos, mostramos el mapa
             if (permissionGranted) {
-                GoogleMapScreen(
-                    context = LocalContext.current,
-                    isSatelliteView = isSatelliteView,
-                    moveToUserLocation = moveToUserLocation
-                )
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    MyMap(points = points)
+                    MapDrawer(
+                        onDrawingEnd = {
+                            points = it
+                        }
+                    )
+                }
+
             } else {
-                // Puedes mostrar un mensaje o alguna interfaz indicando que el permiso es necesario
                 Text(text = "Por favor, concede los permisos para acceder a la ubicación.")
             }
         }
