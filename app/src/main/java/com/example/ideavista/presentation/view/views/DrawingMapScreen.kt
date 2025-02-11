@@ -1,6 +1,6 @@
 package com.example.ideavista.presentation.view.views
 
-import android.graphics.Point
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -37,18 +40,27 @@ import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.Negro
 import com.example.ideavista.presentation.view.theme.Violeta
+import com.example.ideavista.presentation.viewmodel.MapsViewModel
+import com.google.android.gms.maps.Projection
+import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrawingMapScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: MapsViewModel = koinViewModel()
 ) {
 
-    var points by remember { mutableStateOf(listOf<Point>()) }
+    var projection by remember { mutableStateOf<Projection?>(null) }
+    val firstPointLatLng = viewModel.getFirstPointLatLng(projection)
 
-    var permissionGranted by remember { mutableStateOf(false) }
 
+    val propertyCount by viewModel.propertyCount.collectAsState()
+    val points by viewModel.points.collectAsState()
+    val isDrawingMode by viewModel.isDrawingMode.collectAsState()
+    val permissionGranted by viewModel.permissionGranted.collectAsState()
+    val polygonComplete by viewModel.polygonComplete.collectAsState()
 
     Scaffold(
         topBar = {
@@ -60,7 +72,7 @@ fun DrawingMapScreen(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
-                                text = "Tu propia zona", //TODO CAMBIAR  a "Dibuja tu zona" cuando se este dibujando y en el estado isLoading -> Column{Text= Cargando, Text= "Tu zona dibujada"}
+                                text = "Tu propia zona",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Negro,
@@ -69,7 +81,7 @@ fun DrawingMapScreen(
                             Button(
                                 onClick = { },
                                 shape = RoundedCornerShape(4.dp),
-                                modifier = Modifier.padding(start = 8.dp),  // Añadiendo paddings sin el `clip`
+                                modifier = Modifier.padding(start = 8.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = Violeta),
                                 elevation = ButtonDefaults.buttonElevation(0.dp),
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp)
@@ -98,34 +110,54 @@ fun DrawingMapScreen(
                     .padding(bottom = 16.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                // Botón grande centrado en la parte inferior
-                FloatingActionButton(
-                    onClick = { },
-                    shape = RoundedCornerShape(4.dp),
-                    containerColor = Blanco,
-                    contentColor = Violeta,
-                    modifier = Modifier.border(2.dp, Violeta, shape = RoundedCornerShape(4.dp))
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                if (!isDrawingMode) {
+                    FloatingActionButton(
+                        onClick = {
+                            if (!polygonComplete) {
+                                viewModel.setDrawingMode(true)
+                            } else {
+                                navHostController.navigate("property")
+                            }
+                        },
+                        shape = RoundedCornerShape(4.dp),
+                        containerColor = if (polygonComplete) Violeta else Blanco,
+                        contentColor = Blanco,
+                        modifier = Modifier
+                            .border(
+                                width = if (!polygonComplete) 2.dp else 0.dp,
+                                color = Violeta,
+                                shape = RoundedCornerShape(4.dp)
+                            )
                     ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.draw_map_icon),
-                            contentDescription = "Dibujar zona",
-                            tint = Violeta,
-                            modifier = Modifier.size(38.dp)
-                        )
-                        Text(
-                            text = "Dibujar tu zona",
-                            color = Violeta,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
+                        if (!polygonComplete) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.draw_map_icon),
+                                    contentDescription = "Dibujar zona",
+                                    tint = Violeta,
+                                    modifier = Modifier.size(38.dp)
+                                )
+                                Text(
+                                    text = "Dibujar tu zona",
+                                    color = Violeta,
+                                    fontSize = 18.sp,
+                                    modifier = Modifier.padding(start = 8.dp)
+                                )
+                            }
+                        } else {
+                            Text(
+                                text = "Ver $propertyCount inmuebles",
+                                color = Blanco,
+                                fontSize = 18.sp,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            )
+                        }
                     }
                 }
 
-                // Botones pequeños alineados a la derecha
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -134,7 +166,7 @@ fun DrawingMapScreen(
                     horizontalAlignment = Alignment.End
                 ) {
                     FloatingActionButton(
-                        onClick = {  },
+                        onClick = { },
                         shape = RoundedCornerShape(4.dp),
                         containerColor = Blanco,
                         contentColor = Violeta,
@@ -171,33 +203,48 @@ fun DrawingMapScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            // Llamamos a la función RequestLocationPermission y pasamos el manejo de los permisos
             RequestLocationPermission(
-                onPermissionGranted = {
-                    permissionGranted = true // Si el permiso es concedido, podemos mostrar el mapa
-                },
-                onPermissionDenied = {
-                    // Muestra un mensaje o acción si el permiso fue denegado
-                    permissionGranted = false
-                }
+                onPermissionGranted = { viewModel.setPermissionGranted(true) },
+                onPermissionDenied = { viewModel.setPermissionGranted(false) }
             )
 
-            // Si los permisos fueron concedidos, mostramos el mapa
             if (permissionGranted) {
-
                 Box(modifier = Modifier.fillMaxSize()) {
-                    MyMap(points = points)
-                    MapDrawer(
-                        onDrawingEnd = {
-                            points = it
-                        }
-                    )
-                }
+                    MyMap(points = points, isDrawingMode = isDrawingMode)
+                    if (isDrawingMode && !polygonComplete) {
+                        MapDrawer(
+                            state = viewModel.state,
+                            polygonCompleted = viewModel.polygonCompleted,
+                            onUpdatePosition = viewModel::updatePosition,
 
+                            onDrawingEnd = { drawnPoints ->
+                                viewModel.setPoints(drawnPoints)
+                                viewModel.setPolygonComplete(true)
+                                viewModel.setDrawingMode(false)
+                                viewModel.fetchFilteredPropertyCount()
+                            }
+                        )
+                    }
+                    if (viewModel.polygonCompleted && viewModel.firstPoint != null) {
+                        val firstPointOffset = viewModel.firstPoint!!
+                        points.firstOrNull()?.let { firstPoint ->
+                            IconButton(
+                                onClick = { viewModel.resetPolygon() },
+                                modifier = Modifier.offset { IntOffset(firstPointOffset.x.toInt(), firstPointOffset.y.toInt()) }
+
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.cancel_icon),
+                                    contentDescription = "Cancelar polígono",
+                                    modifier = Modifier.size(25.dp)
+                                )
+                            }
+                        }
+                    }
+                }
             } else {
                 Text(text = "Por favor, concede los permisos para acceder a la ubicación.")
             }
         }
     }
 }
-

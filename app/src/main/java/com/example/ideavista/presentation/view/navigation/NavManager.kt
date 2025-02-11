@@ -18,6 +18,7 @@ import com.example.ideavista.presentation.view.views.SplashScreen
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
+import com.example.ideavista.presentation.viewmodel.MapsViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -84,8 +85,10 @@ fun NavManager(navHostController: NavHostController) {
             )
         }
         composable(NavigationRoutes.Drawing) {
+            val drawingViewModel: MapsViewModel = koinViewModel()
             DrawingMapScreen(
                 navHostController = navHostController,
+                viewModel = drawingViewModel
             )
         }
     }

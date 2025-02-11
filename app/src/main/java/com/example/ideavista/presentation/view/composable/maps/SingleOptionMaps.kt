@@ -44,13 +44,13 @@ fun SingleOptionMaps(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp) // Mantiene el mismo alto que la imagen
+                .height(90.dp) // Mantiene el mismo alto que la imagen
         ) {
             // Imagen a la izquierda
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = "Imagen",
-                modifier = Modifier.size(82.dp)
+                modifier = Modifier.size(90.dp)
             )
 
             // Columna que tiene el borde y envuelve otra columna con padding
@@ -88,17 +88,18 @@ fun SingleOptionMaps(
             ) {
                 // Columna interna que contiene los textos con su padding
                 Column(
+                    verticalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     Text(
                         text = title,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 16.sp
+                        fontSize = 14.sp
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
                         text = subtitle,
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
                 }
             }

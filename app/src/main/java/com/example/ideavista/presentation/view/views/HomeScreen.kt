@@ -200,7 +200,11 @@ fun HomeScreen(
                     },
                     selectedDropdownOption = selectedDropdownOption,
                     onDropdownOptionSelected = { newOption -> selectedDropdownOption = newOption },
-                    onMapOptionsClick = { navHostController.navigate("mapOptions")}
+                    onMapOptionsClick = {
+                        SearchPreferences.setSelectedOption(modoPropiedadselectedOption)
+                        SearchPreferences.setSelectedDropdownOption(selectedDropdownOption)
+                        navHostController.navigate("mapOptions")
+                    }
                 )
 
                 HomeContentStep.Search -> SearchContent()

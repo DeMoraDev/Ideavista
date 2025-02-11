@@ -12,7 +12,7 @@ import com.google.maps.android.compose.*
 
 @OptIn(MapsComposeExperimentalApi::class)
 @Composable
-fun MyMap(points: List<Point>) {
+fun MyMap(points: List<Point>,isDrawingMode: Boolean) {
     val valencia = LatLng(39.4699, -0.3763) // 📍 Ubicación  Valencia
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(valencia, 12f)
@@ -22,27 +22,16 @@ fun MyMap(points: List<Point>) {
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState
+        cameraPositionState = cameraPositionState,
+        uiSettings = MapUiSettings(zoomControlsEnabled = true, scrollGesturesEnabled = !isDrawingMode)
     ) {
         cameraPositionState.projection?.let { projection ->
-            geoPoints = if (points.isEmpty()) {
-                emptyList()
-            } else {
-                val boundsBuilder = LatLngBounds.Builder()
-                points.map {
-                    val latLng = projection.fromScreenLocation(Point(it.x, it.y))
-                    boundsBuilder.include(latLng)
-                    latLng
-                }
-            }
+            geoPoints = points.map { projection.fromScreenLocation(it) }
         }
-
         if (geoPoints.isNotEmpty()) {
             Polygon(
                 points = geoPoints,
-                fillColor = Color.Black.copy(alpha = 0.4f),
-                strokeColor = Color.Blue,
-                strokeWidth = 5f
+                fillColor = Color.Blue.copy(alpha = 0.4f)
             )
         }
     }

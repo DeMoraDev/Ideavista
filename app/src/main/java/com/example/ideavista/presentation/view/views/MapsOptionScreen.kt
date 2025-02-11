@@ -86,49 +86,57 @@ fun MapsOptionScreen(
                     .background(Amarillo)
                     .height(50.dp) // Asegurar altura adecuada
             ) {
-                SearchBar(
-                    query = searchText,
-                    onQueryChange = { searchText = it },
-                    onSearch = { isSearchActive = false },
-                    active = isSearchActive,
-                    onActiveChange = { isSearchActive = it },
-                    placeholder = {
-                        Text(
-                            "Municipio, barrio, metro o una dirección",
-                            fontSize = 12.sp
-                        )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Filled.Search,
-                            contentDescription = "Buscar",
-                            tint = Color.Gray,
-                        )
-                    },
-                    trailingIcon = {
-                        if (searchText.isNotEmpty()) {
-                            IconButton(
-                                onClick = { searchText = "" },
-                            ) {
-                                Icon(
-                                    Icons.Filled.Clear,
-                                    contentDescription = "Borrar",
-                                    tint = Color.Gray
-                                )
-                            }
-                        }
-                    },
-                    colors = SearchBarDefaults.colors(
-                        containerColor = Color.White,
-                        dividerColor = Color.Transparent
-                    ),
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(4.dp) // Agregar un pequeño padding
                         .border(1.dp, Negro, shape = RoundedCornerShape(4.dp))
                         .background(Blanco, shape = RoundedCornerShape(4.dp)),
-                    content = {}
-                )
+                ){
+                    SearchBar(
+                        query = searchText,
+                        onQueryChange = { searchText = it },
+                        onSearch = { isSearchActive = false },
+                        active = isSearchActive,
+                        onActiveChange = { isSearchActive = it },
+                        placeholder = {
+                            Text(
+                                "Municipio, barrio, metro o una dirección",
+                                fontSize = 12.sp
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Filled.Search,
+                                contentDescription = "Buscar",
+                                tint = Color.Gray,
+                            )
+                        },
+                        trailingIcon = {
+                            if (searchText.isNotEmpty()) {
+                                IconButton(
+                                    onClick = { searchText = "" },
+                                ) {
+                                    Icon(
+                                        Icons.Filled.Clear,
+                                        contentDescription = "Borrar",
+                                        tint = Color.Gray
+                                    )
+                                }
+                            }
+                        },
+                        colors = SearchBarDefaults.colors(
+                            containerColor = Color.White,
+                            dividerColor = Color.Transparent
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp) // Agregar un pequeño padding
+                            .border(1.dp, Negro, shape = RoundedCornerShape(4.dp))
+                            .background(Blanco, shape = RoundedCornerShape(4.dp)),
+                        content = {}
+                    )
+                }
+
             }
 
             Column(

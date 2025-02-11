@@ -26,6 +26,7 @@ import com.example.ideavista.domain.usecase.properties.GetPropertyDetailsUseCase
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
+import com.example.ideavista.presentation.viewmodel.MapsViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.PropertyViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
@@ -55,6 +56,8 @@ val appModule = module {
     viewModel { HomeScreenViewModel(get(), get(), get()) }
     viewModel { PropertyViewModel(get()) }
     viewModel { FilterViewModel(get()) }
+    viewModel { MapsViewModel(get()) }
+
 
 
 
