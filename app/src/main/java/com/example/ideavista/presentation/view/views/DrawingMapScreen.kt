@@ -1,6 +1,7 @@
 package com.example.ideavista.presentation.view.views
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
@@ -36,6 +39,7 @@ import com.example.ideavista.R
 import com.example.ideavista.presentation.view.composable.maps.MapDrawer
 import com.example.ideavista.presentation.view.composable.maps.MyMap
 import com.example.ideavista.presentation.view.composable.maps.RequestLocationPermission
+import com.example.ideavista.presentation.view.composable.propertyComposables.LoadingBar
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Blanco
 import com.example.ideavista.presentation.view.theme.Negro
@@ -51,6 +55,12 @@ fun DrawingMapScreen(
     navHostController: NavHostController,
     viewModel: MapsViewModel = koinViewModel()
 ) {
+
+    LaunchedEffect(Unit) {
+        viewModel.checkPermissions()  // Verificar si ya tiene permisos
+    }
+
+    val isLoading by viewModel.isLoading.collectAsState()
 
     var projection by remember { mutableStateOf<Projection?>(null) }
     val firstPointLatLng = viewModel.getFirstPointLatLng(projection)
@@ -203,47 +213,61 @@ fun DrawingMapScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            RequestLocationPermission(
-                onPermissionGranted = { viewModel.setPermissionGranted(true) },
-                onPermissionDenied = { viewModel.setPermissionGranted(false) }
-            )
+            if (isLoading) {
+                LoadingBar()
+                Image(
+                    painter = painterResource(id = R.drawable.mapa_de_carga),
+                    contentDescription = "Mapa de fondo",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+                RequestLocationPermission(
+                    onPermissionGranted = { viewModel.setPermissionGranted(true) },
+                    onPermissionDenied = { viewModel.setPermissionGranted(false) }
+                )
+            }else{
+                if (permissionGranted){
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        MyMap(points = points, isDrawingMode = isDrawingMode)
+                        if (isDrawingMode && !polygonComplete) {
+                            MapDrawer(
+                                state = viewModel.state,
+                                polygonCompleted = viewModel.polygonCompleted,
+                                onUpdatePosition = viewModel::updatePosition,
 
-            if (permissionGranted) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    MyMap(points = points, isDrawingMode = isDrawingMode)
-                    if (isDrawingMode && !polygonComplete) {
-                        MapDrawer(
-                            state = viewModel.state,
-                            polygonCompleted = viewModel.polygonCompleted,
-                            onUpdatePosition = viewModel::updatePosition,
+                                onDrawingEnd = { drawnPoints ->
+                                    viewModel.setPoints(drawnPoints)
+                                    viewModel.setPolygonComplete(true)
+                                    viewModel.setDrawingMode(false)
+                                    viewModel.fetchFilteredPropertyCount()
+                                }
+                            )
+                        }
+                        if (viewModel.polygonCompleted && viewModel.firstPoint != null) {
+                            val firstPointOffset = viewModel.firstPoint!!
+                            points.firstOrNull()?.let { firstPoint ->
+                                IconButton(
+                                    onClick = { viewModel.resetPolygon() },
+                                    modifier = Modifier.offset {
+                                        IntOffset(
+                                            firstPointOffset.x.toInt(),
+                                            firstPointOffset.y.toInt()
+                                        )
+                                    }
 
-                            onDrawingEnd = { drawnPoints ->
-                                viewModel.setPoints(drawnPoints)
-                                viewModel.setPolygonComplete(true)
-                                viewModel.setDrawingMode(false)
-                                viewModel.fetchFilteredPropertyCount()
-                            }
-                        )
-                    }
-                    if (viewModel.polygonCompleted && viewModel.firstPoint != null) {
-                        val firstPointOffset = viewModel.firstPoint!!
-                        points.firstOrNull()?.let { firstPoint ->
-                            IconButton(
-                                onClick = { viewModel.resetPolygon() },
-                                modifier = Modifier.offset { IntOffset(firstPointOffset.x.toInt(), firstPointOffset.y.toInt()) }
-
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.cancel_icon),
-                                    contentDescription = "Cancelar polígono",
-                                    modifier = Modifier.size(25.dp)
-                                )
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.cancel_icon),
+                                        contentDescription = "Cancelar polígono",
+                                        modifier = Modifier.size(25.dp)
+                                    )
+                                }
                             }
                         }
                     }
+                }else{
+                    Text(text = "maricon")
                 }
-            } else {
-                Text(text = "Por favor, concede los permisos para acceder a la ubicación.")
             }
         }
     }

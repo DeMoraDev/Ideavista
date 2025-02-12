@@ -24,6 +24,28 @@ class MapsViewModel(
     private val fetchPropertiesPreviewUseCase: FetchPropertiesPreviewUseCase
 ) : ViewModel() {
 
+    fun checkPermissions() {
+        if (_permissionGranted.value) {
+            _isLoading.value = false  // Si ya está concedido, dejar de cargar
+        } else {
+            _isLoading.value = true  // Si no, mantener la pantalla de carga hasta que el usuario responda
+        }
+    }
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    init {
+        _isLoading.value = true
+    }
+
+    fun setPermissionGranted(granted: Boolean) {
+        _permissionGranted.value = granted
+        if (granted) {
+            _isLoading.value = false
+        }
+    }
+
     var state by mutableStateOf(MapPolygonState())
         private set
 
@@ -80,10 +102,6 @@ class MapsViewModel(
 
     fun setDrawingMode(isDrawing: Boolean) {
         _isDrawingMode.value = isDrawing
-    }
-
-    fun setPermissionGranted(granted: Boolean) {
-        _permissionGranted.value = granted
     }
 
     fun setPoints(newPoints: List<Point>) {
