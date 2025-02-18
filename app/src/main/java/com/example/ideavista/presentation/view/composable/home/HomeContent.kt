@@ -31,6 +31,7 @@ import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
 import com.example.ideavista.presentation.state.PropertyType
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Blanco
+import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
 
 
@@ -41,7 +42,7 @@ fun HomeContent(
     onOptionSelected: (BuyRentShareButtonOptions) -> Unit,
     selectedDropdownOption: PropertyType,
     onDropdownOptionSelected: (PropertyType) -> Unit,
-    onMapOptionsClick: () ->  Unit
+    onMapOptionsClick: () -> Unit
 ) {
 
     Column(
@@ -86,7 +87,7 @@ fun HomeContent(
                     selectedOption = selectedDropdownOption,
                     onOptionSelected = onDropdownOptionSelected
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(15.dp))
                 Row(
                     modifier = Modifier
                         .clickable { onMapOptionsClick() }
@@ -105,9 +106,8 @@ fun HomeContent(
                 ) {
                     Text(
                         text = "¿Dónde quieres buscar?",
-                        fontSize = 18.sp,
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Medium
+                        fontSize = 16.sp,
+                        color = NegroClaro,
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
@@ -117,7 +117,7 @@ fun HomeContent(
                         modifier = Modifier.size(22.dp)
                     )
                 }
-
+                Spacer(modifier = Modifier.height(7.dp))
                 Button(
                     onClick = { onSearchClick() },
                     shape = RoundedCornerShape(4.dp),  // Define los bordes redondeados
@@ -126,13 +126,17 @@ fun HomeContent(
                         .padding(4.dp),  // Añadiendo paddings sin el `clip`
                     colors = ButtonDefaults.buttonColors(containerColor = Violeta),
                     elevation = ButtonDefaults.buttonElevation(0.dp),
-                    contentPadding = PaddingValues(8.dp)
+                    //contentPadding = PaddingValues(8.dp)
                 ) {
-                    Text(text = "Buscar", color = Blanco)
+                    Text(
+                        text = "Buscar",
+                        color = Blanco,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
                 }
             }
         }
-
         // Segundo Box
         Box(
             modifier = Modifier

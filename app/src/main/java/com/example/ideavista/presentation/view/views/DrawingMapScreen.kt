@@ -215,12 +215,6 @@ fun DrawingMapScreen(
         ) {
             if (isLoading) {
                 LoadingBar()
-                Image(
-                    painter = painterResource(id = R.drawable.mapa_de_carga),
-                    contentDescription = "Mapa de fondo",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                )
                 RequestLocationPermission(
                     onPermissionGranted = { viewModel.setPermissionGranted(true) },
                     onPermissionDenied = { viewModel.setPermissionGranted(false) }

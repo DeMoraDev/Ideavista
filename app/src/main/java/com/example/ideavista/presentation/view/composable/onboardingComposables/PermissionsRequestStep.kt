@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun PermissionsRequestStep() {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(10.dp),
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "Gracias por descargar nuestra aplicación",
+            text = "Gracias por descargarte nuestra aplicación",
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
@@ -27,7 +27,7 @@ fun PermissionsRequestStep() {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "A continuación, necesitamos tu permiso para personalizar tu experiencia según el uso que hagas de nuestra app. Agradecemos tu colaboración.",
+            text = "A continuación, necesitamos tu permiso para personalizar tu experiencia según el uso que hagas de nuestra app y de la web. Te agradecemos si lo aceptas.",
             style = MaterialTheme.typography.bodyMedium,
             fontSize = 18.sp,
             textAlign = TextAlign.Start

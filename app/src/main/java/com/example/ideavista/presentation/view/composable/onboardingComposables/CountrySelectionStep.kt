@@ -22,7 +22,7 @@ fun CountrySelectionStep(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(8.dp),
         horizontalAlignment = Alignment.Start
     ) {
         val countryData = listOf(
@@ -52,6 +52,7 @@ fun CountrySelectionStep(
                     isSelected = isSelected,
                     onClick = { onCountrySelected(country) }
                 )
+                Spacer(modifier = Modifier.height(18.dp))
             }
         }
     }

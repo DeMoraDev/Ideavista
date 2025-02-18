@@ -26,16 +26,17 @@ import com.example.ideavista.presentation.view.theme.Violeta
 @Composable
 fun LanguageSelectionStep(
     selectedLanguage: String?,
+    translations: Map<String, String>,
     onLanguageSelected: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(8.dp),
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "Elige el idioma de la aplicación",
+            text = translations["choose_language"] ?: "Choose the application language",
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
@@ -95,9 +96,9 @@ fun LanguageSelectionStep(
 
 // Lista de idiomas
 val languageList = listOf(
-    "Español", "Italiano", "Portugués", "English",
-    "Catalá", "Dansk", "Deutsch", "Français",
+    "Español", "Italiano", "Português", "English",
+    "Català", "Dansk", "Deutsch", "Français",
     "Nederlands", "Norsk", "Polski", "Românâ",
     "Suomi", "Svenska", "Eλληνικά", "Русский",
-    "українська", "Japones"
+    "Українська", "日本語"
 )

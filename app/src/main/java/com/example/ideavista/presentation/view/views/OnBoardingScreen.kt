@@ -32,6 +32,8 @@ fun OnboardingScreen(
     navHostController: NavHostController,
     viewModel: OnboardingViewModel = koinViewModel()
 ) {
+    val translatedTexts by viewModel.translatedTexts.collectAsState()
+
     val selectedLanguage by viewModel.selectedLanguage.collectAsState()
     val selectedCountry by viewModel.selectedCountry.collectAsState()
 
@@ -60,13 +62,14 @@ fun OnboardingScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.25f), // Ocupa 1/4 de la pantalla
+                .fillMaxHeight(0.25f)
+                .padding(horizontal = 16.dp),
             contentAlignment = Alignment.Center // Centrar el contenido dentro de este Box
         ) {
             Text(
                 text = "ideavista",
                 fontFamily = pixelFont,
-                fontSize = 60.sp,
+                fontSize = 55.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -102,6 +105,7 @@ fun OnboardingScreen(
                     when (onboardingStep) {
                         1 -> LanguageSelectionStep(
                             selectedLanguage = selectedLanguage,
+                            translations = translatedTexts,
                             onLanguageSelected = { viewModel.selectLanguage(it) }
                         )
 
@@ -129,7 +133,7 @@ fun OnboardingScreen(
                     shape = RoundedCornerShape(4.dp)
                 ) {
                     Text(
-                        text = "Continuar",
+                        text = translatedTexts["continue"] ?: "Continuar",
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold

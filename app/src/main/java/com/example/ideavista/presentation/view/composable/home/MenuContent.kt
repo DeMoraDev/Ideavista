@@ -95,25 +95,30 @@ fun MenuContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Column(verticalArrangement = Arrangement.SpaceEvenly) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Text(
                         text = "Tus inmuebles",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { } // Hacer clic en toda la fila
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.Start,
+                            .clickable { }
+                            .padding(vertical = 8.dp), // Padding reducido dentro del Row
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "Valorar tu casa gratis",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f) // Ocupa todo el espacio posible
                         )
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowRight,
@@ -122,17 +127,15 @@ fun MenuContent(
                             modifier = Modifier.size(38.dp)
                         )
                     }
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                            .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
+                        Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = "Buscar agencias para vender",
                                 fontSize = 19.sp,
@@ -152,17 +155,15 @@ fun MenuContent(
                             modifier = Modifier.size(38.dp)
                         )
                     }
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                            .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
+                        Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = "Publica tu inmueble",
                                 fontSize = 19.sp,
@@ -193,7 +194,12 @@ fun MenuContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Column(verticalArrangement = Arrangement.SpaceEvenly) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Text(
                         text = "Ajustes",
                         fontSize = 24.sp,
@@ -203,7 +209,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -224,7 +230,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -245,7 +251,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -271,7 +277,12 @@ fun MenuContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Column(verticalArrangement = Arrangement.SpaceEvenly) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Text(
                         text = "Servicios para ti",
                         fontSize = 24.sp,
@@ -281,7 +292,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -311,7 +322,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -341,7 +352,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -376,12 +387,17 @@ fun MenuContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Column(verticalArrangement = Arrangement.SpaceEvenly) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -413,7 +429,7 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { } // Hacer clic en toda la fila
-                            .padding(16.dp),
+                            .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
