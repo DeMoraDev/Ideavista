@@ -27,10 +27,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.ideavista.R
 import com.example.ideavista.app.utils.LocaleUtils
 import com.example.ideavista.presentation.view.theme.Amarillo
 import com.example.ideavista.presentation.view.theme.Negro
@@ -63,7 +65,7 @@ fun LanguageScreen(
                             .padding(horizontal = 8.dp)
                     ) {
                         Text(
-                            text = "Idioma",
+                            text = stringResource(id = R.string.LanguageScreenScaffoldTitle),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Negro
@@ -95,7 +97,7 @@ fun LanguageScreen(
             Spacer(modifier = Modifier.height(12.dp))
             LanguageSelectionStep(
                 selectedLanguage = selectedLanguage,
-                translations = translatedTexts,
+                translatedTexts = translatedTexts,
                 onLanguageSelected = { viewModel.selectLanguage(context, it) }
             )
         }

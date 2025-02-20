@@ -12,6 +12,7 @@ import com.example.ideavista.domain.usecase.SaveLanguageUseCase
 import com.example.ideavista.domain.usecase.SetUserAsReturningUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -29,10 +30,12 @@ class OnboardingViewModel(
 
     init {
         viewModelScope.launch {
-            getLanguageUseCase().collect { language ->
-                _selectedLanguage.value = language ?: Locale.getDefault().language
+            getLanguageUseCase().firstOrNull()?.let { language ->
+                _selectedLanguage.value = language
+                updateTranslations(language)
             }
         }
+
     }
 
     fun selectLanguage(context: Context, language: String) {
@@ -70,6 +73,11 @@ class OnboardingViewModel(
     private val _translatedTexts = MutableStateFlow<Map<String, String>>(emptyMap())
     val translatedTexts: StateFlow<Map<String, String>> = _translatedTexts
 
+    //Porque si no, no actualiza el mensaje observable dependiendo del lenguaje, solo actualiza al seleccionar
+    private fun updateTranslations(language: String) {
+        val newTranslations = translations[language] ?: translations["English"] ?: emptyMap()
+        _translatedTexts.value = newTranslations
+    }
 
     val translations = mapOf(
         "Español" to mapOf(

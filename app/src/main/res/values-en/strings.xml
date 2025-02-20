@@ -101,4 +101,7 @@
     <string name="propertyListScreen_content_contact">Contact</string>
     <string name="propertyListScreen_content_call">Call</string>
 
+    <!--LanguageScreen Section-->
+    <string name="LanguageScreenScaffoldTitle">Language</string>
+
 </resources>

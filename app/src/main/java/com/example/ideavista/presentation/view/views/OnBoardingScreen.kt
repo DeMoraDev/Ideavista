@@ -108,7 +108,7 @@ fun OnboardingScreen(
                     when (onboardingStep) {
                         1 -> LanguageSelectionStep(
                             selectedLanguage = selectedLanguage,
-                            translations = translatedTexts,
+                            translatedTexts = translatedTexts,
                             onLanguageSelected = { viewModel.selectLanguage(context, it) }
                         )
 

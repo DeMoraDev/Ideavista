@@ -104,6 +104,8 @@
     <string name="propertyListScreen_content_contact">Contestar</string>
     <string name="propertyListScreen_content_call">Llamar</string>
 
+    <!--LanguageScreen Section-->
+    <string name="LanguageScreenScaffoldTitle">Idioma</string>
 
 
 </resources>
