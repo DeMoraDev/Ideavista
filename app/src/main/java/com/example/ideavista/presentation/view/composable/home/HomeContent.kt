@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -105,7 +106,7 @@ fun HomeContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "¿Dónde quieres buscar?",
+                        text = stringResource(id = R.string.home_maps_options),
                         fontSize = 16.sp,
                         color = NegroClaro,
                     )
@@ -129,7 +130,7 @@ fun HomeContent(
                     //contentPadding = PaddingValues(8.dp)
                 ) {
                     Text(
-                        text = "Buscar",
+                        text = stringResource(id = R.string.home_search_button),
                         color = Blanco,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
@@ -155,7 +156,7 @@ fun HomeContent(
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
-                    text = "Publica tu anuncio",
+                    text = stringResource(id = R.string.home_publish_button),
                     color = Violeta,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold

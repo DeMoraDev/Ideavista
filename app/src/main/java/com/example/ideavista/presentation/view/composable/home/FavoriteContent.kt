@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,7 +46,7 @@ fun FavoriteContent() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.favoritos_light),
-                contentDescription = "Carrito vacío",
+                contentDescription = "Imagen favoritos",
                 modifier = Modifier
                     .size(200.dp)
                     .align(Alignment.Center)
@@ -62,22 +63,16 @@ fun FavoriteContent() {
                 .padding(horizontal = 16.dp)
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = "Tus favoritos en un solo lugar",
+                    text = stringResource(id = R.string.fav_no_account_title),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Desde aquí te avisamos si baja de precio o si suben fotos nuevas.",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = "Entra en tu cuenta para verlos en todos tus dispositivos.",
+                    text = stringResource(id = R.string.fav_explanation),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                 )
@@ -104,7 +99,7 @@ fun FavoriteContent() {
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                Text(text = "Entrar en tu cuenta", color = Blanco)
+                Text(text = stringResource(id = R.string.fav_button), color = Blanco)
             }
         }
     }

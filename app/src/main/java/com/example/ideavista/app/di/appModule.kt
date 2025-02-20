@@ -15,6 +15,7 @@ import com.example.ideavista.domain.repository.PreferencesRepository
 import com.example.ideavista.domain.repository.PropertyPreviewRepository
 import com.example.ideavista.domain.repository.PropertyRepository
 import com.example.ideavista.domain.usecase.CheckUserStatusUseCase
+import com.example.ideavista.domain.usecase.GetLanguageUseCase
 import com.example.ideavista.domain.usecase.SaveCountryUseCase
 import com.example.ideavista.domain.usecase.SaveLanguageUseCase
 import com.example.ideavista.domain.usecase.SetUserAsReturningUseCase
@@ -48,11 +49,12 @@ val appModule = module {
     single { SetUserAsReturningUseCase(get()) }
     single { SaveLanguageUseCase(get()) }
     single { SaveCountryUseCase(get()) }
+    single { GetLanguageUseCase(get()) }
 
     // ViewModels
     viewModel { SplashScreenViewModel(get()) }
-    viewModel { OnboardingViewModel(get(), get(), get()) }
-    viewModel { LoginScreenViewModel(get(), get()) } //ViewModel
+    viewModel { OnboardingViewModel(get(), get(), get(),get()) }
+    viewModel { LoginScreenViewModel(get(), get()) }
     viewModel { HomeScreenViewModel(get(), get(), get()) }
     viewModel { PropertyViewModel(get()) }
     viewModel { FilterViewModel(get()) }

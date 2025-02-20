@@ -11,6 +11,7 @@ import com.example.ideavista.presentation.view.views.DetailScreen
 import com.example.ideavista.presentation.view.views.DrawingMapScreen
 import com.example.ideavista.presentation.view.views.FilterScreen
 import com.example.ideavista.presentation.view.views.HomeScreen
+import com.example.ideavista.presentation.view.views.LanguageScreen
 import com.example.ideavista.presentation.view.views.MapsOptionScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.PropertyListScreen
@@ -89,6 +90,14 @@ fun NavManager(navHostController: NavHostController) {
             DrawingMapScreen(
                 navHostController = navHostController,
                 viewModel = drawingViewModel
+            )
+        }
+
+        composable(NavigationRoutes.Language) {
+            val onboardingViewModel: OnboardingViewModel = koinViewModel()
+            LanguageScreen(
+                navHostController = navHostController,
+                viewModel = onboardingViewModel
             )
         }
     }

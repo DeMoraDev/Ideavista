@@ -17,12 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.core.VerticalSeparator
+import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Negro
 
 @Composable
@@ -58,7 +60,7 @@ fun FiltroBar(
                 )
                 Spacer(modifier = Modifier.width(4.dp)) // Espaciado entre ícono y texto
                 Text(
-                    text = "Filtrar",
+                    text = stringResource(id = R.string.propertyListScreen_stickyMenu_filter),
                     fontSize = 12.sp,
                     color = Negro
                 )
@@ -88,7 +90,7 @@ fun FiltroBar(
                 )
                 Spacer(modifier = Modifier.width(4.dp)) // Espaciado entre ícono y texto
                 Text(
-                    text = "Ordenar",
+                    text = stringResource(id = R.string.propertyListScreen_stickyMenu_sort),
                     fontSize = 12.sp,
                     color = Negro
                 )
@@ -118,7 +120,7 @@ fun FiltroBar(
                 )
                 Spacer(modifier = Modifier.width(4.dp)) // Espaciado entre ícono y texto
                 Text(
-                    text = "Mapa",
+                    text = stringResource(id = R.string.propertyListScreen_stickyMenu_map),
                     fontSize = 12.sp,
                     color = Negro
                 )

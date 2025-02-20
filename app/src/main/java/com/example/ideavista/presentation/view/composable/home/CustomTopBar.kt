@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +47,7 @@ fun CustomTopBar(step: HomeContentStep) {
 
                 HomeContentStep.Search ->
                     Text(
-                        text = "Tus búsquedas",
+                        text = stringResource(id = R.string.searches_scaffold_title),
                         fontSize = 18.sp,
                         color = Color.Black, // color texto
                         fontWeight = FontWeight.Bold,
@@ -57,7 +58,7 @@ fun CustomTopBar(step: HomeContentStep) {
 
                 HomeContentStep.Favorites ->
                     Text(
-                        text = "Tus favoritos",
+                        text = stringResource(id = R.string.fav_scaffold_title),
                         fontSize = 18.sp,
                         color = Color.Black, // color texto
                         fontWeight = FontWeight.Bold,
@@ -68,7 +69,7 @@ fun CustomTopBar(step: HomeContentStep) {
 
                 HomeContentStep.Chat ->
                     Text(
-                        text = "Tus conversaciones",
+                        text = stringResource(id = R.string.chat_scaffold_title),
                         fontSize = 18.sp,
                         color = Color.Black, // color texto
                         fontWeight = FontWeight.Bold,
@@ -79,7 +80,7 @@ fun CustomTopBar(step: HomeContentStep) {
 
                 HomeContentStep.Menu ->
                     Text(
-                        text = "Menú",
+                        text = stringResource(id = R.string.menu_scaffold_title),
                         fontSize = 18.sp,
                         color = Color.Black, // color texto
                         fontWeight = FontWeight.Bold,

@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,7 +50,7 @@ fun SearchContent() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.busqueda_light),
-                contentDescription = "Carrito vacío",
+                contentDescription = "Searches image",
                 modifier = Modifier
                     .size(200.dp)
                     .align(Alignment.Center)
@@ -69,20 +70,19 @@ fun SearchContent() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Tus búsquedas guardadas en un solo lugar",
+                    text = stringResource(id = R.string.searches_content_title),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Guarda aquí búsquedas más habituales para lanzarlas cómodamente. " +
-                            "También te avisaremos cuando haya anuncios nuevos que coinciden con tus búsquedas.",
+                    text = stringResource(id = R.string.searches_explanation),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Entra en tu cuenta para ver las búsquedas en todos tus dispositivos.",
+                    text = stringResource(id = R.string.searches_login_message),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                 )
@@ -109,7 +109,7 @@ fun SearchContent() {
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                Text(text = "Entrar en tu cuenta", color = Blanco)
+                Text(text = stringResource(id = R.string.searches_button), color = Blanco)
             }
         }
     }

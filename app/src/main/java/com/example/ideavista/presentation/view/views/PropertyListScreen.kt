@@ -45,6 +45,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.ideavista.R
 import com.example.ideavista.data.local.SearchPreferences
@@ -117,7 +118,7 @@ fun PropertyListScreen(
                             elevation = ButtonDefaults.buttonElevation(0.dp),
                             contentPadding = PaddingValues(8.dp)
                         ) {
-                            Text(text = "Guardar búsqueda", color = Blanco)
+                            Text(text = stringResource(id = R.string.propertyListScreen_scaffold_button), color = Blanco)
                         }
                     }
                 },
@@ -234,7 +235,7 @@ fun PropertyListScreen(
                         contentAlignment = Alignment.TopCenter
                     ) {
                         Text(
-                            text = "Viendo ${propertiesPreview.size} viviendas de ${propertiesPreview.size}",
+                            text = "${stringResource(id = R.string.propertyListScreen_looking_result)} ${propertiesPreview.size} viviendas de ${propertiesPreview.size}",
                             fontSize = 18.sp,
                             color = Color.DarkGray
                         )
@@ -262,7 +263,7 @@ fun PropertyListScreen(
                     garaje = property.garaje,
                     onPropertyClick = { navHostController.navigate("propertyDetail/${property.id}") }
                 )
-                Spacer(modifier = Modifier.height(30.dp)) // Espacio entre los items
+                Spacer(modifier = Modifier.height(30.dp))
             }
         }
     }

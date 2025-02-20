@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import com.example.ideavista.R
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -36,7 +38,10 @@ import com.example.ideavista.presentation.view.theme.Violeta
 @Composable
 fun MenuContent(
     onClickLogInMenu: () -> Unit,
+    onLangageClick: () -> Unit
 ) {
+
+    val currentVersion = "12.16.0"
 
     //TODO Refactorizar todo esto con composables reutilizables + Mejorar la apariencia(No exactamente como la original)
 
@@ -60,14 +65,14 @@ fun MenuContent(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Entra en tu cuenta",
+                            text = stringResource(id = R.string.menu_login_title),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = "Une los favoritos y las búsquedas de tu ordenador, tablet y móvil.",
+                        text = stringResource(id = R.string.menu_login_message),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium
                     )
@@ -80,9 +85,14 @@ fun MenuContent(
                         shape = RoundedCornerShape(4.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Violeta),
                         elevation = ButtonDefaults.buttonElevation(0.dp),
-                        contentPadding = PaddingValues(8.dp)
+                        //contentPadding = PaddingValues(8.dp)
                     ) {
-                        Text(text = "Entrar en tu cuenta", color = Blanco)
+                        Text(
+                            text = stringResource(id = R.string.menu_login_button),
+                            color = Blanco,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }
@@ -102,7 +112,7 @@ fun MenuContent(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "Tus inmuebles",
+                        text = stringResource(id = R.string.menu_properties_title),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -111,14 +121,14 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(vertical = 8.dp), // Padding reducido dentro del Row
+                            .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Valorar tu casa gratis",
+                            text = stringResource(id = R.string.menu_properties_value_your_house_message),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
-                            modifier = Modifier.weight(1f) // Ocupa todo el espacio posible
+                            modifier = Modifier.weight(1f)
                         )
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowRight,
@@ -137,12 +147,12 @@ fun MenuContent(
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Buscar agencias para vender",
+                                text = stringResource(id = R.string.menu_properties_search_agencies),
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Encuentra la más adecuada para vender tu casa",
+                                text = stringResource(id = R.string.menu_properties_find_the_best),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = NegroClaro
@@ -165,12 +175,12 @@ fun MenuContent(
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Publica tu inmueble",
+                                text = stringResource(id = R.string.menu_properties_post_property),
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Tus 2 primeros anuncios son gratis",
+                                text = stringResource(id = R.string.menu_properties_first_two_free),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = NegroClaro
@@ -201,7 +211,7 @@ fun MenuContent(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "Ajustes",
+                        text = stringResource(id = R.string.menu_config),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -214,7 +224,7 @@ fun MenuContent(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "País de búsqueda",
+                            text = stringResource(id = R.string.menu_config_country),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.weight(1f)
@@ -230,12 +240,13 @@ fun MenuContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { }
-                            .padding(vertical = 8.dp),
+                            .padding(vertical = 8.dp)
+                            .clickable(onClick = { onLangageClick() }),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Idioma",
+                            text = stringResource(id = R.string.menu_config_language),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.weight(1f)
@@ -256,7 +267,7 @@ fun MenuContent(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Apariencia",
+                            text = stringResource(id = R.string.menu_config_theme),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.weight(1f)
@@ -284,7 +295,7 @@ fun MenuContent(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "Servicios para ti",
+                        text = stringResource(id = R.string.menu_services),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -300,12 +311,12 @@ fun MenuContent(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Hipotecas",
+                                text = stringResource(id = R.string.menu_services_morgage),
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Te conseguimos la mejor hipoteca gratuitamente",
+                                text = stringResource(id = R.string.menu_services_morgage_message),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = NegroClaro
@@ -330,12 +341,12 @@ fun MenuContent(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Seguro de impago",
+                                text = stringResource(id = R.string.menu_services_insurance),
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Protege el alquiler de tu vivienda",
+                                text = stringResource(id = R.string.menu_services_insurance_message),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = NegroClaro
@@ -360,12 +371,12 @@ fun MenuContent(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "News",
+                                text = stringResource(id = R.string.menu_services_news),
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Noticias sobre el mercado inmobiliario",
+                                text = stringResource(id = R.string.menu_services_news_message),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = NegroClaro
@@ -405,12 +416,12 @@ fun MenuContent(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Sobre ideavista",
+                                text = stringResource(id = R.string.menu_about_ideavista),
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Política de privacidad, condiciones de servicios, condiciones generales",
+                                text = stringResource(id = R.string.menu_policies_and_cookies),
                                 fontSize = 13.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -434,7 +445,7 @@ fun MenuContent(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Versión actual 12.14.0",
+                            text = "${stringResource(id = R.string.menu_version)} $currentVersion",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.weight(1f)

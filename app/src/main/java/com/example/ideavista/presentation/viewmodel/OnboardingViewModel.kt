@@ -1,23 +1,50 @@
 package com.example.ideavista.presentation.viewmodel
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ideavista.app.utils.LocaleUtils
+import com.example.ideavista.data.local.DataStore.UserPreferences
+import com.example.ideavista.domain.usecase.GetLanguageUseCase
 import com.example.ideavista.domain.usecase.SaveCountryUseCase
 import com.example.ideavista.domain.usecase.SaveLanguageUseCase
 import com.example.ideavista.domain.usecase.SetUserAsReturningUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class OnboardingViewModel(
     private val saveLanguageUseCase: SaveLanguageUseCase,
     private val saveCountryUseCase: SaveCountryUseCase,
-    private val setUserAsReturningUseCase: SetUserAsReturningUseCase
+    private val setUserAsReturningUseCase: SetUserAsReturningUseCase,
+    private val getLanguageUseCase: GetLanguageUseCase
 ) : ViewModel() {
 
+
     // Estado para el idioma seleccionado
-    private val _selectedLanguage = MutableStateFlow<String?>("Español")
+    private val _selectedLanguage = MutableStateFlow<String?>(null)
     val selectedLanguage: StateFlow<String?> = _selectedLanguage
+
+    init {
+        viewModelScope.launch {
+            getLanguageUseCase().collect { language ->
+                _selectedLanguage.value = language ?: Locale.getDefault().language
+            }
+        }
+    }
+
+    fun selectLanguage(context: Context, language: String) {
+        viewModelScope.launch {
+            _selectedLanguage.value = language
+            saveLanguageUseCase.execute(language)
+            LocaleUtils.changeAppLanguage(context, language)
+            _translatedTexts.value = (translations[language] ?: translations["Español"])!!
+        }
+    }
+
+
 
     // Estado para el país seleccionado
     private val _selectedCountry = MutableStateFlow<String?>("España y Andorra")
@@ -43,13 +70,6 @@ class OnboardingViewModel(
     private val _translatedTexts = MutableStateFlow<Map<String, String>>(emptyMap())
     val translatedTexts: StateFlow<Map<String, String>> = _translatedTexts
 
-    fun selectLanguage(language: String) {
-        viewModelScope.launch {
-            _selectedLanguage.value = language
-            saveLanguageUseCase.execute(language)
-            _translatedTexts.value = translations[language] ?: translations["English"]!! // Fallback a inglés
-        }
-    }
 
     val translations = mapOf(
         "Español" to mapOf(

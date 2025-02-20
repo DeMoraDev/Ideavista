@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,7 +46,7 @@ fun ChatContent(){
         ) {
             Image(
                 painter = painterResource(id = R.drawable.chat_light),
-                contentDescription = "Carrito vacío",
+                contentDescription = "Imagen chat",
                 modifier = Modifier
                     .size(200.dp)
                     .align(Alignment.Center)
@@ -65,14 +66,13 @@ fun ChatContent(){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Entra en tu cuenta para ver tus conversaciones",
+                    text = stringResource(id = R.string.chat_no_account_message),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Desde aquí podrás conversar con los anunciantes y responder los mensajes neuvos que te lleguen." +
-                            " Todo sin salir de ideavista.",
+                    text = stringResource(id = R.string.chat_explanation),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                 )
@@ -99,7 +99,7 @@ fun ChatContent(){
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                Text(text = "Entrar en tu cuenta", color = Blanco)
+                Text(text = stringResource(id = R.string.chat_button), color = Blanco)
             }
         }
     }

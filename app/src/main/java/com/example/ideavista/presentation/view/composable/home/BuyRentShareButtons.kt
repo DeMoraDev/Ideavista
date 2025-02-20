@@ -22,9 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.state.BuyRentShareButtonOptions
 import com.example.ideavista.presentation.view.theme.Violeta
 
@@ -68,7 +70,7 @@ fun BuyRentShareButtons(
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
-                    text = "Comprar",
+                    text = stringResource(id = R.string.home_buy_option),
                     color = if (selectedOption == BuyRentShareButtonOptions.COMPRAR) Violeta else Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
@@ -94,7 +96,7 @@ fun BuyRentShareButtons(
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
-                    text = "Alquilar",
+                    text = stringResource(id = R.string.home_rent_option),
                     color = if (selectedOption == BuyRentShareButtonOptions.ALQUILAR) Violeta else Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
@@ -120,7 +122,7 @@ fun BuyRentShareButtons(
                 contentPadding = PaddingValues(8.dp)
             ) {
                 Text(
-                    text = "Compartir",
+                    text = stringResource(id = R.string.home_share_option),
                     color = if (selectedOption == BuyRentShareButtonOptions.COMPARTIR) Violeta else Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp

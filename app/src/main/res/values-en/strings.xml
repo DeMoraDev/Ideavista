@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">Ideavista</string>
+
+    <!--Menu Section-->
+
+    <string name="menu_scaffold_title">Menu</string>
+
+    <string name="menu_login_title">Log into your account</string>
+    <string name="menu_login_message">Bring together your favourite properties and searches from your computer, tablet and mobile.</string>
+    <string name="menu_login_button">Log in to your account</string>
+
+    <string name="menu_properties_title">Your properties</string>
+    <string name="menu_properties_value_your_house_message">Value your house for free</string>
+    <string name="menu_properties_search_agencies">Search for agencies to sell</string>
+    <string name="menu_properties_find_the_best">Find the best one to sell your property</string>
+    <string name="menu_properties_post_property">Post your property</string>
+    <string name="menu_properties_first_two_free">Your first 2 listings are free</string>
+
+    <string name="menu_config">Settings</string>
+    <string name="menu_config_country">Search country</string>
+    <string name="menu_config_language">Language</string>
+    <string name="menu_config_theme">Appearance</string>
+
+    <string name="menu_services">Services for you</string>
+    <string name="menu_services_morgage">Mortgages</string>
+    <string name="menu_services_morgage_message">We find you the best mortgage for free</string>
+    <string name="menu_services_insurance">Tenant default insurance</string>
+    <string name="menu_services_insurance_message">Protect your rental property</string>
+    <string name="menu_services_news">News</string>
+    <string name="menu_services_news_message">News about the real estate market</string>
+
+    <string name="menu_about_ideavista">About ideavista</string>
+    <string name="menu_policies_and_cookies">Privacy policy, terms of service, general conditions, and cookie policy</string>
+    <string name="menu_version">Current version</string>
+
+    <!--Chat Section-->
+
+    <string name="chat_scaffold_title">Your conversations</string>
+    <string name="chat_no_account_message">Log into your account so you can see your conversations</string>
+    <string name="chat_explanation">This is where you can chat with listers and answer new messages that you receive. All without leaving ideavista.</string>
+    <string name="chat_button">Log in to your account</string>
+
+    <!--Favourites Section-->
+
+    <string name="fav_scaffold_title">Favorites and lists</string>
+    <string name="fav_no_account_title">You don\'t have any favourites</string>
+    <string name="fav_explanation">Save your favorite listings to your account to view them from your mobile, tablet, or computer.</string>
+    <string name="fav_button">Sign in</string>
+
+    <!--Searches Section-->
+
+    <string name="searches_scaffold_title">Your searches</string>
+    <string name="searches_content_title">All of your searches saved in the same place</string>
+    <string name="searches_explanation">Save your most common searches so you can easily reuse them. We’ll also let you know when there are new listings that match your searches.</string>
+    <string name="searches_login_message">Log into your account to see the searches on all of your devices.</string>
+    <string name="searches_button">Log in to your account</string>
+
+    <!--Main Section-->
+
+    <string name="home_buy_option">Buy</string>
+    <string name="home_rent_option">Rent</string>
+    <string name="home_share_option">Share</string>
+
+    <string name="home_dropdown_new_home">New development</string>
+    <string name="home_dropdown_homes">Homes</string>
+    <string name="home_dropdown_rooms">Rooms</string>
+    <string name="home_dropdown_offices">Offices</string>
+    <string name="home_dropdown_commercial_property">Commercial properties</string>
+    <string name="home_dropdown_transfers">Transfers</string>
+    <string name="home_dropdown_garages">Garages</string>
+    <string name="home_dropdown_land">Land</string>
+    <string name="home_dropdown_storage_rooms">Storage rooms</string>
+    <string name="home_dropdown_buildings">Buildings</string>
+
+    <string name="home_maps_options">Your drawn area</string>
+    <string name="home_search_button">Search</string>
+    <string name="home_publish_button">Post your listing</string>
+
+    <!--BottomBar items Section-->
+
+    <string name="bottom_bar_home">Home</string>
+    <string name="bottom_bar_search">Searches</string>
+    <string name="bottom_bar_fav">Favorites</string>
+    <string name="bottom_bar_chat">Chat</string>
+    <string name="bottom_bar_menu">Menu</string>
+
+
+    <!--PropertyListScreen Section-->
+
+    <string name="propertyListScreen_scaffold_button">Save search</string>
+
+    <string name="propertyListScreen_stickyMenu_filter">Filter</string>
+    <string name="propertyListScreen_stickyMenu_sort">Sort</string>
+    <string name="propertyListScreen_stickyMenu_map">Map</string>
+
+    <string name="propertyListScreen_looking_result">Seeing</string>
+    <string name="propertyListScreen_looking_result_of">of</string>
+
+    <string name="propertyListScreen_content_distance">away</string>
+    <string name="propertyListScreen_content_bedrooms">bedrooms</string>
+    <string name="propertyListScreen_content_contact">Contact</string>
+    <string name="propertyListScreen_content_call">Call</string>
+
+</resources>

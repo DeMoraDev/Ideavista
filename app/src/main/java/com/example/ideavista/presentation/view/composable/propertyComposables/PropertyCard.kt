@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -411,7 +412,7 @@ fun PropertyCard(
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
-                        text = "Contactar",
+                        text = stringResource(id = R.string.propertyListScreen_content_contact),
                         color = Violeta, fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
                     )
@@ -427,7 +428,7 @@ fun PropertyCard(
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
-                        text = "Llamar",
+                        text = stringResource(id = R.string.propertyListScreen_content_call),
                         color = Violeta, fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
                     )

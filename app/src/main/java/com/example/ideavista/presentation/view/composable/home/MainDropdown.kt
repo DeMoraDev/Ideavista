@@ -1,5 +1,6 @@
 package com.example.ideavista.presentation.view.composable.home
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,6 +30,7 @@ import androidx.compose.material3.MenuItemColors
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,13 +47,20 @@ fun MainDropdown(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
+    val propertyTypes = PropertyType.entries
+    val context = LocalContext.current
+
+    fun PropertyType.getDisplayName(context: Context): String {
+        return context.getString(this.displayNameRes)
+    }
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
         modifier = Modifier.padding(start = 4.dp, end = 4.dp)
     ) {
         OutlinedTextField(
-            value = selectedOption.displayName,
+            value = selectedOption.getDisplayName(context),
             onValueChange = {},
             readOnly = true,
             shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),
@@ -82,7 +91,7 @@ fun MainDropdown(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = option.displayName,
+                            text = option.getDisplayName(context),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Normal,
                             color = NegroClaro

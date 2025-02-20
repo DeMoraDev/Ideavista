@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +33,8 @@ fun OnboardingScreen(
     navHostController: NavHostController,
     viewModel: OnboardingViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
+
     val translatedTexts by viewModel.translatedTexts.collectAsState()
 
     val selectedLanguage by viewModel.selectedLanguage.collectAsState()
@@ -106,7 +109,7 @@ fun OnboardingScreen(
                         1 -> LanguageSelectionStep(
                             selectedLanguage = selectedLanguage,
                             translations = translatedTexts,
-                            onLanguageSelected = { viewModel.selectLanguage(it) }
+                            onLanguageSelected = { viewModel.selectLanguage(context, it) }
                         )
 
                         2 -> CountrySelectionStep(

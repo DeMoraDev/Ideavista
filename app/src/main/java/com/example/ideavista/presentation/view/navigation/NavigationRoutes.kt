@@ -24,4 +24,7 @@ object NavigationRoutes {
     //Maps
     const val MapOptions = "mapOptions"
     const val Drawing = "drawing"
+
+    //Language
+    const val Language = "lang"
 }

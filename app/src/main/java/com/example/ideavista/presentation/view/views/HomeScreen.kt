@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.ideavista.R
@@ -90,7 +91,7 @@ fun HomeScreen(
                             )
                         }
                     },
-                    label = { Text("Home") },
+                    label = { Text(stringResource(id = R.string.bottom_bar_home)) },
                     selected = state.value.step == HomeContentStep.Home,
                     onClick = { viewModel.updateStep(HomeContentStep.Home) }
                 )
@@ -112,7 +113,7 @@ fun HomeScreen(
                             )
                         }
                     },
-                    label = { Text("Search") },
+                    label = { Text(stringResource(id = R.string.bottom_bar_search)) },
                     selected = state.value.step == HomeContentStep.Search,
                     onClick = { viewModel.updateStep(HomeContentStep.Search) }
                 )
@@ -132,7 +133,7 @@ fun HomeScreen(
                             )
                         }
                     },
-                    label = { Text("Favorites") },
+                    label = { Text(stringResource(id = R.string.bottom_bar_fav)) },
                     selected = state.value.step == HomeContentStep.Favorites,
                     onClick = { viewModel.updateStep(HomeContentStep.Favorites) }
                 )
@@ -154,7 +155,7 @@ fun HomeScreen(
                             )
                         }
                     },
-                    label = { Text("Chat") },
+                    label = { Text(stringResource(id = R.string.bottom_bar_chat)) },
                     selected = state.value.step == HomeContentStep.Chat,
                     onClick = { viewModel.updateStep(HomeContentStep.Chat) }
                 )
@@ -175,7 +176,7 @@ fun HomeScreen(
                             )
                         }
                     },
-                    label = { Text("Menu") },
+                    label = { Text(stringResource(id = R.string.bottom_bar_menu)) },
                     selected = state.value.step == HomeContentStep.Menu,
                     onClick = { viewModel.updateStep(HomeContentStep.Menu) }
                 )
@@ -211,7 +212,8 @@ fun HomeScreen(
                 HomeContentStep.Favorites -> FavoriteContent()
                 HomeContentStep.Chat -> ChatContent()
                 HomeContentStep.Menu -> MenuContent(
-                    onClickLogInMenu = { navHostController.navigate("login") }
+                    onClickLogInMenu = { navHostController.navigate("login") },
+                    onLangageClick = {navHostController.navigate("lang")}
                 )
             }
         }
