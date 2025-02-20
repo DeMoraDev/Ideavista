@@ -31,11 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Marron
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
@@ -57,10 +59,10 @@ fun RegisterContent(
 
     //TODO Hay que migrar esta logica fuera del composable
     val passwordConditions = listOf(
-        "Una mayúscula" to { password.any { it.isUpperCase() } },
-        "Un número" to { password.any { it.isDigit() } },
-        "Un carácter especial" to { password.any { ".,!#$%&*()-_+?<>".contains(it) } },
-        "Al menos 8 caracteres" to { password.length >= 8 }
+        stringResource(id = R.string.registerContent_password_error_caps) to { password.any { it.isUpperCase() } },
+        stringResource(id = R.string.registerContent_password_error_numbers) to { password.any { it.isDigit() } },
+        stringResource(id = R.string.registerContent_password_error_special_character) to { password.any { ".,!#$%&*()-_+?<>".contains(it) } },
+        stringResource(id = R.string.registerContent_password_error_at_least_eight_characters) to { password.length >= 8 }
     )
 
 
@@ -72,7 +74,7 @@ fun RegisterContent(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "Tu email",
+            text = stringResource(id = R.string.registerContent_email_input),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 30.dp)
@@ -105,7 +107,7 @@ fun RegisterContent(
                 )
                 Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el icono y el texto
                 Text(
-                    text = "Los emails no coinciden",
+                    text = stringResource(id = R.string.registerContent_email_error),
                     color = Marron,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
@@ -114,7 +116,7 @@ fun RegisterContent(
         }
 
         Text(
-            text = "Repite tu email",
+            text = stringResource(id = R.string.registerContent_password_error_caps),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 20.dp)
@@ -161,7 +163,7 @@ fun RegisterContent(
                 )
                 Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el icono y el texto
                 Text(
-                    text = "Los emails no coinciden",
+                    text = stringResource(id = R.string.registerContent_password_error_caps),
                     color = Marron,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
@@ -170,7 +172,7 @@ fun RegisterContent(
         }
 
         Text(
-            text = "Elige una contraseña",
+            text = stringResource(id = R.string.registerContent_password_input),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 20.dp)
@@ -230,7 +232,7 @@ fun RegisterContent(
                     )
                     Spacer(modifier = Modifier.width(9.dp))
                     Text(
-                        text = "Tu contraseña debe incluir:",
+                        text = stringResource(id = R.string.registerContent_password_error_message),
                         color = Marron,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
@@ -265,8 +267,7 @@ fun RegisterContent(
             }
         } else {
             Text(
-                text = "Incluye al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter" +
-                        " especial"
+                text = stringResource(id = R.string.registerContent_password_conditions)
             )
         }
 
@@ -287,7 +288,7 @@ fun RegisterContent(
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
         ) {
             Text(
-                text = "Continuar",
+                text = stringResource(id = R.string.registerContent_button_continue),
                 fontSize = 19.sp
             )
         }
@@ -299,7 +300,7 @@ fun RegisterContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "¿Ya tienes cuenta?",
+                text = stringResource(id = R.string.registerContent_already_account),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
@@ -307,7 +308,7 @@ fun RegisterContent(
                 onClick = goToLoginOnClick
             ) {
                 Text(
-                    text = "Iniciar sesión",
+                    text = stringResource(id = R.string.registerContent_login_button),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Violeta

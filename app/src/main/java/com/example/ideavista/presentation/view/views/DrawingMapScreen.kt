@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -82,7 +83,7 @@ fun DrawingMapScreen(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
-                                text = "Tu propia zona",
+                                text = stringResource(id = R.string.drawmapScreen_scaffold_title),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Negro,
@@ -96,7 +97,7 @@ fun DrawingMapScreen(
                                 elevation = ButtonDefaults.buttonElevation(0.dp),
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 2.dp)
                             ) {
-                                Text(text = "Guardar búsqueda", color = Blanco)
+                                Text(text = stringResource(id = R.string.drawmapScreen_scaffold_button), color = Blanco)
                             }
                         }
                     },
@@ -151,7 +152,7 @@ fun DrawingMapScreen(
                                     modifier = Modifier.size(38.dp)
                                 )
                                 Text(
-                                    text = "Dibujar tu zona",
+                                    text = stringResource(id = R.string.drawmapScreen_draw_button),
                                     color = Violeta,
                                     fontSize = 18.sp,
                                     modifier = Modifier.padding(start = 8.dp)
@@ -159,7 +160,7 @@ fun DrawingMapScreen(
                             }
                         } else {
                             Text(
-                                text = "Ver $propertyCount inmuebles",
+                                text = "${stringResource(id = R.string.drawmapScreen_see)} $propertyCount ${stringResource(id = R.string.drawmapScreen_properties)}",
                                 color = Blanco,
                                 fontSize = 18.sp,
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -260,7 +261,7 @@ fun DrawingMapScreen(
                         }
                     }
                 }else{
-                    Text(text = "maricon")
+                    Text(text = "No hay contenido")
                 }
             }
         }

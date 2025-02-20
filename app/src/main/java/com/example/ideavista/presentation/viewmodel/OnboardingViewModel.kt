@@ -75,7 +75,7 @@ class OnboardingViewModel(
 
     //Porque si no, no actualiza el mensaje observable dependiendo del lenguaje, solo actualiza al seleccionar
     private fun updateTranslations(language: String) {
-        val newTranslations = translations[language] ?: translations["English"] ?: emptyMap()
+        val newTranslations = translations[language] ?: translations["Español"] ?: emptyMap()
         _translatedTexts.value = newTranslations
     }
 

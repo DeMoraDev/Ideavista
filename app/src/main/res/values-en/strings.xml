@@ -104,4 +104,177 @@
     <!--LanguageScreen Section-->
     <string name="LanguageScreenScaffoldTitle">Language</string>
 
+    <!--LanguageScreen Section-->
+    <string name="mapsOptionScreen_scaffold_title">Search in Spain and Andorra</string>
+    <string name="mapsOptionScreen_scaffold_button">Change country</string>
+    <string name="mapsOptionScreen_scaffold_searchbar">Town, district, metro station, address</string>
+
+    <string name="mapsOptionScreen_draw_title">Draw your area</string>
+    <string name="mapsOptionScreen_draw_message">Draw your search area on the map</string>
+
+    <string name="mapsOptionScreen_search_title">Search on the map</string>
+    <string name="mapsOptionScreen_search_message">Move on the map to see available properties</string>
+
+    <string name="mapsOptionScreen_around_title">Around you</string>
+    <string name="mapsOptionScreen_around_message">View available properties near you</string>
+
+    <string name="mapsOptionScreen_phone_title">Search by phone</string>
+    <string name="mapsOptionScreen_phone_message">Insert a phone number to see the property it corresponds to</string>
+
+    <!--LanguageScreen Section-->
+
+    <string name="drawmapScreen_scaffold_title">Your custom area</string>
+    <string name="drawmapScreen_scaffold_button">Save search</string>
+    <string name="drawmapScreen_draw_button">Draw your area</string>
+
+    <string name="drawmapScreen_see">See</string>
+    <string name="drawmapScreen_properties">properties</string>
+
+    <!--FilterScreen Section-->
+    <string name="filterScreen_scaffold_title">Filters</string>
+
+    <string name="filterScreen_price">Price</string>
+    <string name="filterScreen_size">Size</string>
+
+    <string name="filterScreen_type_property">Property Type</string>
+
+    <string name="filterScreen_type_property_building_title">Flats, penthouses, duplexes</string>
+    <string name="filterScreen_type_property_buildings">Flats</string>
+    <string name="filterScreen_type_property_atics">Penthouses</string>
+    <string name="filterScreen_type_property_duplex">Duplex partment</string>
+
+    <string name="filterScreen_type_property_house_title">Houses</string>
+    <string name="filterScreen_type_property_independent">Detached</string>
+    <string name="filterScreen_type_property_couplet">Semi-detached</string>
+    <string name="filterScreen_type_property_rowhouse">Terraced</string>
+    <string name="filterScreen_type_property_rustic">Country homes</string>
+
+    <string name="filterScreen_rooms">Rooms</string>
+    <string name="filterScreen_rooms_zero">0 rooms (Studio)</string>
+    <string name="filterScreen_rooms_four_or_more">4 rooms or more</string>
+
+    <string name="filterScreen_bathrooms">Bathrooms</string>
+    <string name="filterScreen_bathrooms_three_or_more">3 bathrooms or more</string>
+
+    <string name="filterScreen_condition">Condition</string>
+    <string name="filterScreen_condition_new">New construction</string>
+    <string name="filterScreen_condition_good">Good condition</string>
+    <string name="filterScreen_condition_renovate">To renovate</string>
+
+    <string name="filterScreen_features">Features</string>
+    <string name="filterScreen_features_air_conditioner">Air conditioning</string>
+    <string name="filterScreen_features_wardrobe_built_in">Built-in wardrobes</string>
+    <string name="filterScreen_features_elevator">Elevator</string>
+    <string name="filterScreen_features_balcony">Balcony</string>
+    <string name="filterScreen_features_terrace">Terrace</string>
+    <string name="filterScreen_features_exterior">Exterior</string>
+    <string name="filterScreen_features_garage">Garage</string>
+    <string name="filterScreen_features_garden">Garden</string>
+    <string name="filterScreen_features_pool">Swimming pool</string>
+    <string name="filterScreen_features_storage_room">Storage room</string>
+    <string name="filterScreen_features_accesible">Accessible home</string>
+
+    <string name="filterScreen_floor">Floor</string>
+    <string name="filterScreen_floor_last">Top floor</string>
+    <string name="filterScreen_floor_mid">Middle floors</string>
+    <string name="filterScreen_floor_bottom">Ground floor</string>
+
+    <string name="filterScreen_media">Multimedia</string>
+    <string name="filterScreen_media_planes">With floor plan</string>
+    <string name="filterScreen_media_virtual">With virtual tour</string>
+
+    <string name="filterScreen_ads">Ad Type</string>
+    <string name="filterScreen_ads_banks">From banks</string>
+
+    <string name="filterScreen_date_published">Publication Date</string>
+    <string name="filterScreen_date_published_indiferent">Indifferent</string>
+    <string name="filterScreen_date_published_last_48_hours">Last 48 hours</string>
+    <string name="filterScreen_date_published_last_week">Last week</string>
+    <string name="filterScreen_date_published_last_month">Last month</string>
+
+    <string name="filterScreen_discarded">Discarded</string>
+    <string name="filterScreen_discarded_deploy">View discarded</string>
+
+    <string name="filterScreen_button_see">See</string>
+    <string name="filterScreen_button_results">results</string>
+    <string name="filterScreen_button_no_results">There\'re no</string>
+
+                                <!--LoginScreen Section-->
+
+    <string name="loginScreen_scaffold_title">Log in or register</string>
+    <string name="loginScreen_scaffold_skip_login">Not now</string>
+    <string name="loginScreen_log_register_title">Log in or register</string>
+
+    <string name="loginScreen_email">Your email</string>
+    <string name="loginScreen_button_continue">Continue</string>
+
+    <string name="loginScreen_options_message">You can also</string>
+    <string name="loginScreen_google_login">Continue with Google</string>
+
+    <string name="loginScreen_policies_message">You can check</string>
+    <string name="loginScreen_policies_button">Privacy Policy</string>
+    <string name="loginScreen_conditions_button">General terms and conditions</string>
+
+                                <!--Login step Section-->
+    <string name="loginScreen_email_blank_error">Enter your email address</string>
+    <string name="loginScreen_email_invalid_error">Check your email address, there seems to be a mistake</string>
+
+                <!--AlreadyUser step Section-->
+
+    <string name="alreadyUser_scaffold_title">Log in</string>
+    <string name="alreadyUser_welcome_back_message">Hello again ;-)</string>
+    <string name="alreadyUser_password_message">Password</string>
+    <string name="alreadyUser_password_forgot">Forgot your password?</string>
+    <string name="alreadyUser_password_blank">Enter the password</string>
+    <string name="alreadyUser_password_error">The password does not match the email address. Check that it is correct</string>
+    <string name="alreadyUser_button_login">Log in</string>
+
+
+                        <!--Name step Section-->
+    <string name="nameContent_scaffold_title">Create account</string>
+
+    <string name="nameContent_name_title">We just need your name</string>
+    <string name="nameContent_name_input_title">Enter your name</string>
+    <string name="nameContent_name_error_title">Your name must meet the following conditions:</string>
+    <string name="nameContent_name_error_two_characters">Must have at least 2 characters</string>
+    <string name="nameContent_name_error_no_numbers">Must not contain numbers</string>
+    <string name="nameContent_name_error_no_blank">Must not start or end with a space</string>
+    <string name="nameContent_name_error_fifty_max">Must not exceed 50 characters</string>
+
+
+    <string name="nameContent_name_message">We recommend using your real name. You will share it with advertisers when making contact with them</string>
+    <string name="nameContent_accept_policies_message">Accept the privacy policy and the general terms and conditions</string>
+    <string name="nameContent_policies_error">You must accept the privacy policy and the general terms and conditions</string>
+
+    <string name="nameContent_policies_privacy">Privacy policy</string>
+    <string name="nameContent_policies_conditions">General terms and conditions</string>
+
+    <string name="nameContent_news_and_info">Receive commercial information about properties, news and service offers from Ideavista, id/mortgages, id/insurance, Avaibook; BDMI; Rentalio.</string>
+
+    <string name="nameContent_button_create_account">Create new account</string>
+
+
+    <!--Register step Section-->
+    <string name="registerContent_scaffold_title">Create Account</string>
+
+    <string name="registerContent_email_input">Your email</string>
+
+    <string name="registerContent_email_repeat_input">Repeat your email</string>
+    <string name="registerContent_email_error">Emails do not match</string>
+
+    <string name="registerContent_password_input">Choose a password</string>
+    <string name="registerContent_password_conditions">Include at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character</string>
+    <string name="registerContent_password_error_message">Your password must include:</string>
+    <string name="registerContent_password_error_caps">An uppercase letter</string>
+    <string name="registerContent_password_error_numbers">A number</string>
+    <string name="registerContent_password_error_special_character">A special character</string>
+    <string name="registerContent_password_error_at_least_eight_characters">At least 8 characters</string>
+
+    <string name="registerContent_button_continue">Continue</string>
+
+    <string name="registerContent_already_account">Already have an account?</string>
+    <string name="registerContent_login_button">Log in</string>
+
+
+
 </resources>

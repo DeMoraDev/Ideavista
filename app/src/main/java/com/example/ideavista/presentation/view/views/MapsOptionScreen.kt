@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,13 +52,13 @@ fun MapsOptionScreen(
                             .padding(horizontal = 8.dp)
                     ) {
                         Text(
-                            text = "Buscar en España y Andorra",
+                            text = stringResource(id = R.string.mapsOptionScreen_scaffold_title),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Negro
                         )
                         Text(
-                            text = "Cambiar país",
+                            text = stringResource(id = R.string.mapsOptionScreen_scaffold_button),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Violeta,
@@ -106,7 +107,7 @@ fun MapsOptionScreen(
                             onActiveChange = { isSearchActive = it },
                             placeholder = {
                                 Text(
-                                    "Municipio, barrio, metro o una dirección",
+                                    stringResource(id = R.string.mapsOptionScreen_scaffold_searchbar),
                                     fontSize = 14.sp
                                 )
                             },
@@ -147,26 +148,26 @@ fun MapsOptionScreen(
                 ) {
                     SingleOptionMaps(
                         imageRes = R.drawable.option_maps_1,
-                        title = "Dibujar tu zona",
-                        subtitle = "Dibuja en el mapa la zona en la que quieres buscar",
+                        title = stringResource(id = R.string.mapsOptionScreen_draw_title),
+                        subtitle = stringResource(id = R.string.mapsOptionScreen_draw_message),
                         onClickOptionMaps = { navHostController.navigate("drawing") }
                     )
                     SingleOptionMaps(
                         imageRes = R.drawable.option_maps_2,
-                        title = "Explora en el mapa",
-                        subtitle = "Muévete en el mapa para ver los inmuebles disponibles",
+                        title = stringResource(id = R.string.mapsOptionScreen_search_title),
+                        subtitle = stringResource(id = R.string.mapsOptionScreen_search_message),
                         onClickOptionMaps = { }
                     )
                     SingleOptionMaps(
                         imageRes = R.drawable.option_maps_3,
-                        title = "Alrededor de ti",
-                        subtitle = "Visualiza los inmuebles disponibles cerca de ti",
+                        title = stringResource(id = R.string.mapsOptionScreen_around_title),
+                        subtitle = stringResource(id = R.string.mapsOptionScreen_around_message),
                         onClickOptionMaps = { }
                     )
                     SingleOptionMaps(
                         imageRes = R.drawable.option_maps_4,
-                        title = "Busca por teléfono",
-                        subtitle = "Introduce un teléfono para ver el inmueble al que corresponde",
+                        title = stringResource(id = R.string.mapsOptionScreen_phone_title),
+                        subtitle = stringResource(id = R.string.mapsOptionScreen_phone_message),
                         onClickOptionMaps = { }
                     )
                 }

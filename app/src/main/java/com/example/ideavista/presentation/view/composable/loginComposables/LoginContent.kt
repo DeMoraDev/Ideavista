@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -58,8 +59,6 @@ fun LoginContent(
     val pixelFont = FontFamily(
         Font(R.font.ideavista)
     )
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -79,7 +78,7 @@ fun LoginContent(
         )
 
         Text(
-            text = "Inicia sesión o regístrate",
+            text = stringResource(id = R.string.loginScreen_log_register_title),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             modifier = Modifier
@@ -88,7 +87,7 @@ fun LoginContent(
         )
 
         Text(
-            text = "Tu email",
+            text = stringResource(id = R.string.loginScreen_email),
             fontWeight = FontWeight.SemiBold,
             color = NegroClaro,
             modifier = Modifier
@@ -160,13 +159,13 @@ fun LoginContent(
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
         ) {
             Text(
-                text = "Continuar",
+                text = stringResource(id = R.string.loginScreen_button_continue),
                 fontSize = 19.sp
             )
         }
 
         Text(
-            text = "También puedes",
+            text = stringResource(id = R.string.loginScreen_options_message),
             modifier = Modifier.padding(top = 24.dp)
         )
 
@@ -193,7 +192,7 @@ fun LoginContent(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Continuar con Google",
+                    text = stringResource(id = R.string.loginScreen_google_login),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black
@@ -208,7 +207,7 @@ fun LoginContent(
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Text(
-                text = "Puedes consultar:",
+                text = stringResource(id = R.string.loginScreen_policies_message),
                 fontWeight = FontWeight.Medium,
                 fontSize = 15.sp
             )
@@ -217,7 +216,7 @@ fun LoginContent(
                 modifier = Modifier.padding(0.dp) // Elimina padding adicional
             ) {
                 Text(
-                    text = "Política de privacidad",
+                    text = stringResource(id = R.string.loginScreen_policies_button),
                     fontSize = 15.sp,
                     color = Azul,
                     fontWeight = FontWeight.SemiBold
@@ -228,7 +227,7 @@ fun LoginContent(
                 modifier = Modifier.padding(0.dp) // Elimina padding adicional
             ) {
                 Text(
-                    text = "Términos y condiciones generales",
+                    text = stringResource(id = R.string.loginScreen_conditions_button),
                     fontSize = 15.sp,
                     color = Azul,
                     fontWeight = FontWeight.SemiBold

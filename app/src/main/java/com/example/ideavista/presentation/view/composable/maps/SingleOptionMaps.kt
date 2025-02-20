@@ -89,7 +89,9 @@ fun SingleOptionMaps(
                 // Columna interna que contiene los textos con su padding
                 Column(
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .fillMaxWidth()
                 ) {
                     Text(
                         text = title,

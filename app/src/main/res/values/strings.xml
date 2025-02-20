@@ -104,8 +104,184 @@
     <string name="propertyListScreen_content_contact">Contestar</string>
     <string name="propertyListScreen_content_call">Llamar</string>
 
-    <!--LanguageScreen Section-->
+                            <!--LanguageScreen Section-->
     <string name="LanguageScreenScaffoldTitle">Idioma</string>
 
+                             <!--LanguageScreen Section-->
+    <string name="mapsOptionScreen_scaffold_title">Buscar en España y Andorra</string>
+    <string name="mapsOptionScreen_scaffold_button">Cambiar país</string>
+    <string name="mapsOptionScreen_scaffold_searchbar">Municipio, barrio, metro o una dirección</string>
+
+    <string name="mapsOptionScreen_draw_title">Dibujar tu zona</string>
+    <string name="mapsOptionScreen_draw_message">Dibuja en el mapa la zona en la que quieres buscar</string>
+
+    <string name="mapsOptionScreen_search_title">Explorar en el mapa</string>
+    <string name="mapsOptionScreen_search_message">Muévete en el mapa para ver los inmuebles disponibles</string>
+
+    <string name="mapsOptionScreen_around_title">Alrededor de ti</string>
+    <string name="mapsOptionScreen_around_message">Visualiza los inmuebles disponibles cerca de ti</string>
+
+    <string name="mapsOptionScreen_phone_title">Buscar por teléfono</string>
+    <string name="mapsOptionScreen_phone_message">Introduce un teléfono para ver el inmueble al que corresponde</string>
+
+                    <!--LanguageScreen Section-->
+
+    <string name="drawmapScreen_scaffold_title">Tu propia zona</string>
+    <string name="drawmapScreen_scaffold_button">Guardar búsqueda</string>
+    <string name="drawmapScreen_draw_button">Dibujar tu zona</string>
+
+    <string name="drawmapScreen_see">Ver</string>
+    <string name="drawmapScreen_properties">inmuebles</string>
+
+                     <!--FilterScreen Section-->
+    <string name="filterScreen_scaffold_title">Filtros</string>
+
+    <string name="filterScreen_price">Precio</string>
+    <string name="filterScreen_size">Tamaño</string>
+
+
+    <string name="filterScreen_type_property">Tipo de vivienda</string>
+
+    <string name="filterScreen_type_property_building_title">Pisos, Áticos, Dúplex</string>
+    <string name="filterScreen_type_property_buildings">Pisos</string>
+    <string name="filterScreen_type_property_atics">Áticos</string>
+    <string name="filterScreen_type_property_duplex">Dúplex</string>
+
+    <string name="filterScreen_type_property_house_title">Casas y Chalets</string>
+    <string name="filterScreen_type_property_independent">Independientes</string>
+    <string name="filterScreen_type_property_couplet">Pareados</string>
+    <string name="filterScreen_type_property_rowhouse">Adosados</string>
+    <string name="filterScreen_type_property_rustic">Casas rústicas</string>
+
+
+
+    <string name="filterScreen_rooms">Habitaciones</string>
+    <string name="filterScreen_rooms_zero">0 habitaciones (Estudio)</string>
+    <string name="filterScreen_rooms_four_or_more">4 habitaciones o más</string>
+
+
+    <string name="filterScreen_bathrooms">Baños</string>
+    <string name="filterScreen_bathrooms_three_or_more">3 baños o más</string>
+
+
+    <string name="filterScreen_condition">Estado</string>
+    <string name="filterScreen_condition_new">Obra nueva</string>
+    <string name="filterScreen_condition_good">Buen estado</string>
+    <string name="filterScreen_condition_renovate">A reformar</string>
+
+
+    <string name="filterScreen_features">Características</string>
+    <string name="filterScreen_features_air_conditioner">Aire acondicionado</string>
+    <string name="filterScreen_features_wardrobe_built_in">Armarios empotrados</string>
+    <string name="filterScreen_features_elevator">Ascensor</string>
+    <string name="filterScreen_features_balcony">Balcón</string>
+    <string name="filterScreen_features_terrace">Terraza</string>
+    <string name="filterScreen_features_exterior">Exterior</string>
+    <string name="filterScreen_features_garage">Garaje</string>
+    <string name="filterScreen_features_garden">Jardín</string>
+    <string name="filterScreen_features_pool">Piscina</string>
+    <string name="filterScreen_features_storage_room">Trastero</string>
+    <string name="filterScreen_features_accesible">Vivienda accesible</string>
+
+
+    <string name="filterScreen_floor">Planta</string>
+    <string name="filterScreen_floor_last">Última planta</string>
+    <string name="filterScreen_floor_mid">Plantas intermedias</string>
+    <string name="filterScreen_floor_bottom">Bajos</string>
+
+    <string name="filterScreen_media">Multimedia</string>
+    <string name="filterScreen_media_planes">Con plano</string>
+    <string name="filterScreen_media_virtual">Con visita virtual</string>
+
+    <string name="filterScreen_ads">Tipo de anuncio</string>
+    <string name="filterScreen_ads_banks">De bancos</string>
+
+    <string name="filterScreen_date_published">Fecha de publicación</string>
+    <string name="filterScreen_date_published_indiferent">Indiferente</string>
+    <string name="filterScreen_date_published_last_48_hours">Últimas 48 horas</string>
+    <string name="filterScreen_date_published_last_week">La última semana</string>
+    <string name="filterScreen_date_published_last_month">El último mes</string>
+
+    <string name="filterScreen_discarded">Descartados</string>
+    <string name="filterScreen_discarded_deploy">Ver descartados</string>
+
+    <string name="filterScreen_button_see">Ver</string>
+    <string name="filterScreen_button_results">resultados</string>
+    <string name="filterScreen_button_no_results">No hay</string>
+
+
+                            <!--Login step Section-->
+
+    <string name="loginScreen_scaffold_title">Inicia sesión o regístrate</string>
+    <string name="loginScreen_scaffold_skip_login">Ahora no</string>
+    <string name="loginScreen_log_register_title">Inicia sesión o regístrate</string>
+
+    <string name="loginScreen_email">Tu email</string>
+    <string name="loginScreen_button_continue">Continuar</string>
+
+    <string name="loginScreen_options_message">También puedes</string>
+    <string name="loginScreen_google_login">Continuar con Google</string>
+
+    <string name="loginScreen_policies_message">Puedes consultar</string>
+    <string name="loginScreen_policies_button">Política de privacidad</string>
+    <string name="loginScreen_conditions_button">Términos y condiciones generales</string>
+
+                                <!--Login step Section-->
+    <string name="loginScreen_email_blank_error">El campo de correo no puede estar vacío.</string>
+    <string name="loginScreen_email_invalid_error">Revisa el email, parece que hay un error</string>
+
+
+                    <!--AlreadyUser step Section-->
+
+    <string name="alreadyUser_scaffold_title">Iniciar sesión</string>
+    <string name="alreadyUser_welcome_back_message">Hola de nuevo ;-)</string>
+    <string name="alreadyUser_password_message">Contraseña</string>
+    <string name="alreadyUser_password_forgot">¿Has olvidado tu contraseña?</string>
+    <string name="alreadyUser_password_blank">Introduce tu contraseña</string>
+    <string name="alreadyUser_password_error">La contraseña no coincide con el email. Comprueba que es correcta</string>
+    <string name="alreadyUser_button_login">Iniciar sesión</string>
+
+                    <!--Name step Section-->
+    <string name="nameContent_scaffold_title">Crear cuenta</string>
+
+    <string name="nameContent_name_title">Solo nos falta tu nombre</string>
+    <string name="nameContent_name_input_title">Escribe tu nombre</string>
+    <string name="nameContent_name_error_title">Tu nombre debe cumplir las siguientes condiciones:</string>
+    <string name="nameContent_name_error_two_characters">Debe tener al menos 2 caracteres</string>
+    <string name="nameContent_name_error_no_numbers">No debe contener números</string>
+    <string name="nameContent_name_error_no_blank">No debe empezar ni terminar con un espacio</string>
+    <string name="nameContent_name_error_fifty_max">No debe superar los 50 caracteres</string>
+
+    <string name="nameContent_name_message">Te recomendamos que uses tu nombre real. Lo compartirás con los anunciantes al contactar</string>
+    <string name="nameContent_accept_policies_message">Aceptar la política de privacidad y los términos y condiciones generales</string>
+    <string name="nameContent_policies_error">Tienes que acpetar las políticas de privacidad y los términos generales y condiciones</string>
+
+    <string name="nameContent_policies_privacy">Política de privacidad</string>
+    <string name="nameContent_policies_conditions">Términos y condiciones generales</string>
+
+    <string name="nameContent_news_and_info">Recibir información comercial de inmuebles, noticias y ofertas de servicios desde ideavista, id/hipotecas, id/seguros, Avaibook; BDMI; Rentalio.</string>
+
+    <string name="nameContent_button_create_account">Crear nueva cuenta</string>
+
+                        <!--Register step Section-->
+    <string name="registerContent_scaffold_title">Crear cuenta</string>
+
+    <string name="registerContent_email_input">Tu email</string>
+
+    <string name="registerContent_email_repeat_input">Repite tu email</string>
+    <string name="registerContent_email_error">Los emails no coinciden</string>
+
+    <string name="registerContent_password_input">Elige una contraseña</string>
+    <string name="registerContent_password_conditions">Incluye al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial</string>
+    <string name="registerContent_password_error_message">Tu contraseña debe incluir:</string>
+    <string name="registerContent_password_error_caps">Una mayúscula</string>
+    <string name="registerContent_password_error_numbers">Un número</string>
+    <string name="registerContent_password_error_special_character">Un carácter especial</string>
+    <string name="registerContent_password_error_at_least_eight_characters">Al menos 8 caracteres</string>
+
+    <string name="registerContent_button_continue">Continuar</string>
+
+    <string name="registerContent_already_account">¿Ya tienes cuenta?</string>
+    <string name="registerContent_login_button">Iniciar sesión</string>
 
 </resources>

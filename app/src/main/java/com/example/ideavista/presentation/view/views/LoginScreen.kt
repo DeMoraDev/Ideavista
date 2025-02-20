@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -74,10 +75,10 @@ fun LoginScreen(
                 title = {
                     Text(
                         when (state.step) {
-                            LoginStep.Login -> "Inicia sesión o regístrate"
-                            LoginStep.AlreadyUser -> "Iniciar sesión"
-                            LoginStep.Register -> "Crear cuenta"
-                            LoginStep.Name -> "Crear cuenta"
+                            LoginStep.Login -> stringResource(id = R.string.loginScreen_scaffold_title)
+                            LoginStep.AlreadyUser -> stringResource(id = R.string.alreadyUser_scaffold_title)
+                            LoginStep.Register -> stringResource(id = R.string.registerContent_scaffold_title)
+                            LoginStep.Name -> stringResource(id = R.string.registerContent_scaffold_title)
                         },
                         fontWeight = FontWeight.Bold,
                         fontSize = 19.sp
@@ -98,7 +99,7 @@ fun LoginScreen(
                 actions = {
                     TextButton(onClick = { navHostController.navigate("main") }) {
                         Text(
-                            "Ahora no",
+                            stringResource(id = R.string.loginScreen_scaffold_skip_login),
                             color = Violeta,
                             fontSize = 19.sp,
                             fontWeight = FontWeight.SemiBold

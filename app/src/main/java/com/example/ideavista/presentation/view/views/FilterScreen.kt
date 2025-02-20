@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -139,7 +140,7 @@ fun FilterScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Filtros",
+                        text = stringResource(id = R.string.filterScreen_scaffold_title),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -203,12 +204,11 @@ fun FilterScreen(
                         elevation = ButtonDefaults.buttonElevation(0.dp),
                         contentPadding = PaddingValues(8.dp)
                     ) {
-
                         Text(
                             text = if (propertyCount != 0) {
-                                "Ver $propertyCount resultados"
+                                "${stringResource(id = R.string.filterScreen_button_see)} $propertyCount ${stringResource(id = R.string.filterScreen_button_results)}"
                             } else {
-                                "No hay $dropdownDbValue"
+                                "${stringResource(id = R.string.filterScreen_button_no_results)} $dropdownDbValue"
                             },
                             fontSize = 20.sp,
                             modifier = Modifier.padding(start = 4.dp)
@@ -256,7 +256,7 @@ fun FilterScreen(
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         Text(
-                            text = "Precio",
+                            text = stringResource(id = R.string.filterScreen_price),
                             fontWeight = FontWeight.Bold
                         )
                         Row(
@@ -300,7 +300,7 @@ fun FilterScreen(
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         Text(
-                            text = "Tamaño",
+                            text = stringResource(id = R.string.filterScreen_size),
                             fontWeight = FontWeight.Bold
                         )
                         Row(
@@ -344,32 +344,32 @@ fun FilterScreen(
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         Text(
-                            text = "Tipo de vivienda",
+                            text = stringResource(id = R.string.filterScreen_type_property),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         ExpandableCheckboxGroup(
-                            title = "Pisos, Áticos, Dúplex",
+                            title = stringResource(id = R.string.filterScreen_type_property_building_title),
                             children = listOf(
-                                "Pisos" to pisosChecked,
-                                "Áticos" to aticosChecked,
-                                "Dúplex" to duplexChecked
+                                stringResource(id = R.string.filterScreen_type_property_buildings) to pisosChecked,
+                                stringResource(id = R.string.filterScreen_type_property_atics) to aticosChecked,
+                                stringResource(id = R.string.filterScreen_type_property_duplex) to duplexChecked
                             )
                         )
                         ExpandableCheckboxGroup(
-                            title = "Casas y Chalets",
+                            title = stringResource(id = R.string.filterScreen_type_property_house_title),
                             children = listOf(
-                                "Independientes" to independientesChecked,
-                                "Pareados" to pareadosChecked,
-                                "Adosados" to adosadosChecked,
-                                "Casas rústicas" to casasRusticasChecked
+                                stringResource(id = R.string.filterScreen_type_property_independent) to independientesChecked,
+                                stringResource(id = R.string.filterScreen_type_property_couplet) to pareadosChecked,
+                                stringResource(id = R.string.filterScreen_type_property_rowhouse) to pareadosChecked,
+                                stringResource(id = R.string.filterScreen_type_property_rustic) to casasRusticasChecked
                             )
                         )
                         Spacer(modifier = Modifier.height(18.dp))
                         Column {
                             Text(
-                                text = "Habitaciones",
+                                text = stringResource(id = R.string.filterScreen_rooms),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
@@ -385,7 +385,7 @@ fun FilterScreen(
                                         habitacionesMas = true
                                     }
                                 },
-                                label = "0 habitaciones (Estudio)"
+                                label = stringResource(id = R.string.filterScreen_rooms_zero)
                             )
                             CustomSimpleCheckbox(
                                 checked = habitaciones1,
@@ -426,13 +426,13 @@ fun FilterScreen(
                             CustomSimpleCheckbox(
                                 checked = habitacionesMas,
                                 onCheckedChange = { habitacionesMas = it },
-                                label = "4 habitaciones o más"
+                                label = stringResource(id = R.string.filterScreen_rooms_four_or_more)
                             )
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         Column {
                             Text(
-                                text = "Baños",
+                                text = stringResource(id = R.string.filterScreen_bathrooms),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
@@ -462,38 +462,38 @@ fun FilterScreen(
                             CustomSimpleCheckbox(
                                 checked = banosMas,
                                 onCheckedChange = { banosMas = it },
-                                label = "3 baños o más"
+                                label = stringResource(id = R.string.filterScreen_bathrooms_three_or_more)
                             )
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         //Columna Estado
                         Column {
                             Text(
-                                text = "Estado",
+                                text = stringResource(id = R.string.filterScreen_condition),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
                             CustomSimpleCheckbox(
                                 checked = obraNueva,
                                 onCheckedChange = { obraNueva = it },
-                                label = "Obra nueva"
+                                label = stringResource(id = R.string.filterScreen_condition_new)
                             )
                             CustomSimpleCheckbox(
                                 checked = buenEstado,
                                 onCheckedChange = { buenEstado = it },
-                                label = "Buen estado"
+                                label = stringResource(id = R.string.filterScreen_condition_good)
                             )
                             CustomSimpleCheckbox(
                                 checked = aReformar,
                                 onCheckedChange = { aReformar = it },
-                                label = "A reformar"
+                                label = stringResource(id = R.string.filterScreen_condition_renovate)
                             )
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         //Columna de Características
                         Column {
                             Text(
-                                text = "Características",
+                                text = stringResource(id = R.string.filterScreen_features),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
@@ -502,140 +502,140 @@ fun FilterScreen(
                                 onCheckedChange = {
                                     aireAcondicionadoChecked = it
                                 },
-                                label = "Aire acondicionado"
+                                label = stringResource(id = R.string.filterScreen_features_air_conditioner)
                             )
                             CustomSimpleCheckbox(
                                 checked = armariosEmpotrados,
                                 onCheckedChange = { armariosEmpotrados = it },
-                                label = "Armarios empotrados"
+                                label = stringResource(id = R.string.filterScreen_features_wardrobe_built_in)
                             )
                             CustomSimpleCheckbox(
                                 checked = ascensor,
                                 onCheckedChange = { ascensor = it },
-                                label = "Ascensor"
+                                label = stringResource(id = R.string.filterScreen_features_elevator)
                             )
                             CustomSimpleCheckbox(
                                 checked = balcon,
                                 onCheckedChange = { balcon = it },
-                                label = "Balcón"
+                                label = stringResource(id = R.string.filterScreen_features_balcony)
                             )
                             CustomSimpleCheckbox(
                                 checked = terraza,
                                 onCheckedChange = { terraza = it },
-                                label = "Terraza"
+                                label = stringResource(id = R.string.filterScreen_features_terrace)
                             )
                             CustomSimpleCheckbox(
                                 checked = exterior,
                                 onCheckedChange = { exterior = it },
-                                label = "Exterior"
+                                label = stringResource(id = R.string.filterScreen_features_exterior)
                             )
                             CustomSimpleCheckbox(
                                 checked = garajeChecked,
                                 onCheckedChange = { isChecked ->
                                     filterViewModel.updateGarajeFilter(isChecked)
                                 },
-                                label = "Garaje"
+                                label = stringResource(id = R.string.filterScreen_features_garage)
                             )
                             CustomSimpleCheckbox(
                                 checked = jardin,
                                 onCheckedChange = { jardin = it },
-                                label = "Jardín"
+                                label = stringResource(id = R.string.filterScreen_features_garden)
                             )
                             CustomSimpleCheckbox(
                                 checked = piscina,
                                 onCheckedChange = { piscina = it },
-                                label = "Piscina"
+                                label = stringResource(id = R.string.filterScreen_features_pool)
                             )
                             CustomSimpleCheckbox(
                                 checked = trastero,
                                 onCheckedChange = { trastero = it },
-                                label = "Trastero"
+                                label = stringResource(id = R.string.filterScreen_features_storage_room)
                             )
                             CustomSimpleCheckbox(
                                 checked = viviendaAccesible,
                                 onCheckedChange = { viviendaAccesible = it },
-                                label = "Vivienda accesible"
+                                label = stringResource(id = R.string.filterScreen_features_accesible)
                             )
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         //Columna de Características
                         Column {
                             Text(
-                                text = "Planta",
+                                text = stringResource(id = R.string.filterScreen_floor),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
                             CustomSimpleCheckbox(
                                 checked = ultimaPlanta,
                                 onCheckedChange = { ultimaPlanta = it },
-                                label = "Última planta"
+                                label = stringResource(id = R.string.filterScreen_floor_last)
                             )
                             CustomSimpleCheckbox(
                                 checked = plantasIntermedias,
                                 onCheckedChange = { plantasIntermedias = it },
-                                label = "Plantas intermedias"
+                                label = stringResource(id = R.string.filterScreen_floor_mid)
                             )
                             CustomSimpleCheckbox(
                                 checked = bajos,
                                 onCheckedChange = { bajos = it },
-                                label = "Bajos"
+                                label = stringResource(id = R.string.filterScreen_floor_bottom)
                             )
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         Column {
                             Text(
-                                text = "Multimedia",
+                                text = stringResource(id = R.string.filterScreen_media),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
                             CustomSimpleCheckbox(
                                 checked = conPlano,
                                 onCheckedChange = { conPlano = it },
-                                label = "Con plano"
+                                label = stringResource(id = R.string.filterScreen_media_planes)
                             )
                             CustomSimpleCheckbox(
                                 checked = conVisitaVirtual,
                                 onCheckedChange = { conVisitaVirtual = it },
-                                label = "Con visita virtual"
+                                label = stringResource(id = R.string.filterScreen_media_virtual)
                             )
 
                         }
                         Spacer(modifier = Modifier.height(18.dp))
                         Text(
-                            text = "Tipo de anuncio",
+                            text = stringResource(id = R.string.filterScreen_ads),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
                         CustomSimpleCheckbox(
                             checked = deBancos,
                             onCheckedChange = { deBancos = it },
-                            label = "De bancos"
+                            label = stringResource(id = R.string.filterScreen_ads_banks)
                         )
                         Spacer(modifier = Modifier.height(18.dp))
                         Text(
-                            text = "Fecha de publicación",
+                            text = stringResource(id = R.string.filterScreen_date_published),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
                         CustomRadioButton(
                             options = listOf(
-                                "Indiferente",
-                                "Últimas 48 horas",
-                                "La última semana",
-                                "El último mes"
+                                stringResource(id = R.string.filterScreen_date_published_indiferent),
+                                stringResource(id = R.string.filterScreen_date_published_last_48_hours),
+                                stringResource(id = R.string.filterScreen_date_published_last_week),
+                                stringResource(id = R.string.filterScreen_date_published_last_month)
                             ),
                             selectedOption = selectedRadioButtonOption,
                             onOptionSelected = { selectedRadioButtonOption = it }
                         )
                         Spacer(modifier = Modifier.height(18.dp))
                         Text(
-                            text = "Descartados",
+                            text = stringResource(id = R.string.filterScreen_discarded),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
                         Spacer(modifier = Modifier.height(18.dp))
                         CustomSwitch(
-                            label = "Ver descartados",
+                            label = stringResource(id = R.string.filterScreen_discarded_deploy),
                             isChecked = isSwitchChecked,
                             onCheckedChange = { isSwitchChecked = it }
                         )

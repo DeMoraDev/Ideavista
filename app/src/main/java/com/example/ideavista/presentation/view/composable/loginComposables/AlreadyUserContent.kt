@@ -25,11 +25,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.NegroClaro
 import com.example.ideavista.presentation.view.theme.Violeta
 
@@ -49,7 +51,7 @@ fun AlreadyUserContent(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "Hola de nuevo ;-)",
+            text = stringResource(id = R.string.alreadyUser_welcome_back_message),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 35.dp)
@@ -61,7 +63,7 @@ fun AlreadyUserContent(
             modifier = Modifier.padding(top = 8.dp)
         )
         Text(
-            text = "Contraseña",
+            text = stringResource(id = R.string.alreadyUser_password_message),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 20.dp)
@@ -102,7 +104,7 @@ fun AlreadyUserContent(
         TextButton(
             onClick = onForgotPassword
         ) {
-            Text(text = "¿Has olvidado tu contraseña?", color = Violeta)
+            Text(text = stringResource(id = R.string.alreadyUser_password_forgot), color = Violeta)
         }
 
         Button(
@@ -118,7 +120,7 @@ fun AlreadyUserContent(
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
         ) {
             Text(
-                text = "Iniciar sesión",
+                text = stringResource(id = R.string.alreadyUser_button_login),
                 fontSize = 19.sp
             )
         }

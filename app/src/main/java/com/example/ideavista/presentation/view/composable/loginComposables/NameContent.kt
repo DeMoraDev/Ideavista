@@ -28,9 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ideavista.R
 import com.example.ideavista.presentation.view.theme.Azul
 import com.example.ideavista.presentation.view.theme.Gris
 import com.example.ideavista.presentation.view.theme.Marron
@@ -57,10 +59,10 @@ fun NameContent(
 
     // Condiciones para validar el nombre
     val nameConditions = listOf(
-        "Debe tener al menos 2 caracteres" to { currentName.length >= 2 },
-        "No debe contener números" to { currentName.all { it.isLetter() || it.isWhitespace() || it in "'-" } },
-        "No debe empezar ni terminar con un espacio" to { currentName.trim() == currentName },
-        "No debe superar los 50 caracteres" to { currentName.length <= 50 }
+        stringResource(id = R.string.nameContent_name_error_two_characters) to { currentName.length >= 2 },
+        stringResource(id = R.string.nameContent_name_error_no_numbers) to { currentName.all { it.isLetter() || it.isWhitespace() || it in "'-" } },
+        stringResource(id = R.string.nameContent_name_error_no_blank) to { currentName.trim() == currentName },
+        stringResource(id = R.string.nameContent_name_error_fifty_max) to { currentName.length <= 50 }
     )
 
     Column(
@@ -70,14 +72,14 @@ fun NameContent(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "Solo nos falta tu nombre",
+            text = stringResource(id = R.string.nameContent_name_title),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             color = NegroClaro,
             modifier = Modifier.padding(top = 30.dp)
         )
         Text(
-            text = "Escribe tu nombre",
+            text = stringResource(id = R.string.nameContent_name_input_title),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 30.dp)
@@ -134,7 +136,7 @@ fun NameContent(
                     )
                     Spacer(modifier = Modifier.width(9.dp))
                     Text(
-                        text = "Tu nombre debe cumplir las siguientes condiciones:",
+                        text = stringResource(id = R.string.nameContent_name_error_title),
                         color = Marron,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
@@ -169,8 +171,7 @@ fun NameContent(
             }
         }
         Text(
-            text = "Te recomendamos que uses tu nombre real. Lo compartirás " +
-                    "con los anunciantes al contactar",
+            text = stringResource(id = R.string.nameContent_name_message),
             fontWeight = FontWeight.Medium,
             color = Gris,
             modifier = Modifier.padding(top = 4.dp)
@@ -181,7 +182,7 @@ fun NameContent(
                 .fillMaxWidth(),
             checked = checkedPrivacy,
             onCheckedChange = { checkedPrivacy = it },
-            text = "Aceptar la política de privacidad y los términos y condiciones generales",
+            text = stringResource(id = R.string.nameContent_accept_policies_message),
         )
         Column(
             modifier = Modifier
@@ -193,7 +194,7 @@ fun NameContent(
                 modifier = Modifier.padding(0.dp) // Elimina padding adicional
             ) {
                 Text(
-                    text = "Política de privacidad",
+                    text = stringResource(id = R.string.nameContent_policies_privacy),
                     fontSize = 15.sp,
                     color = Azul,
                     fontWeight = FontWeight.SemiBold
@@ -204,7 +205,7 @@ fun NameContent(
                 modifier = Modifier.padding(0.dp) // Elimina padding adicional
             ) {
                 Text(
-                    text = "Términos y condiciones generales",
+                    text = stringResource(id = R.string.nameContent_policies_conditions),
                     fontSize = 15.sp,
                     color = Azul,
                     fontWeight = FontWeight.SemiBold
@@ -217,8 +218,7 @@ fun NameContent(
                 .fillMaxWidth(),
             checked = checkedNews,
             onCheckedChange = { checkedNews = it },
-            text = "Recibir información comercial de inmuebles, noticias y ofertas de servicios desde " +
-                    "ideavista, id/hipotecas; id/seguros; Avaibook; BDMI; Rentalia.",
+            text = stringResource(id = R.string.nameContent_news_and_info),
         )
         Button(
             onClick = {
@@ -236,7 +236,7 @@ fun NameContent(
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
         ) {
             Text(
-                text = "Crear nueva cuenta",
+                text = stringResource(id = R.string.nameContent_button_create_account),
                 fontSize = 19.sp
             )
         }
