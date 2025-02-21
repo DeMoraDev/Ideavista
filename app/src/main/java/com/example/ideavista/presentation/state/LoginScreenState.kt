@@ -8,5 +8,5 @@ data class LoginScreenState(
     val confirmEmail: String = "",
     val password: String = "",
     val name: String = "",
-    val emailError: String? = null //Estado para los errores de correo
+    val emailError: String? = null
 )

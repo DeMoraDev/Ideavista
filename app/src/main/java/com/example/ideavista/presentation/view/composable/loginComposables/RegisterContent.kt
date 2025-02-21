@@ -116,7 +116,7 @@ fun RegisterContent(
         }
 
         Text(
-            text = stringResource(id = R.string.registerContent_password_error_caps),
+            text = stringResource(id = R.string.registerContent_email_repeat_input),
             fontWeight = FontWeight.Bold,
             color = NegroClaro,
             modifier = Modifier.padding(top = 20.dp)

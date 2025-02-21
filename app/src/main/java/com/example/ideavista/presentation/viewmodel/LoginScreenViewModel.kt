@@ -67,7 +67,6 @@ class LoginScreenViewModel(
         }
     }
 
-
     //Boton Continuar del Login
     fun onContinueClick() {
         val email = _uiState.value.email
@@ -82,6 +81,7 @@ class LoginScreenViewModel(
             _uiState.value = _uiState.value.copy(emailError = errorMessage)
             return
         }
+
         isRegisteredUser(email) { isRegistered ->
             when {
                 isRegistered -> {
@@ -152,7 +152,7 @@ class LoginScreenViewModel(
                     callback(querySnapshot?.documents?.isNotEmpty() == true)
                 } else {
                     Log.e(
-                        "FirestoreQuery",
+                        "Usuario registrado?",
                         "Error al verificar si el usuario está registrado.",
                         task.exception
                     )

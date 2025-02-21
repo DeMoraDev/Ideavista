@@ -128,7 +128,7 @@ fun LoginScreen(
                     email = state.email,
                     onPasswordEntered = { viewModel.onPasswordEntered(it) },
                     onForgotPassword = { viewModel.onForgotPassword() },
-                    onLogin = { viewModel.login(state.email, state.password) } // Llamando a `login`
+                    onLogin = { viewModel.login(state.email, state.password) }
                 )
 
                 LoginStep.Register -> RegisterContent(

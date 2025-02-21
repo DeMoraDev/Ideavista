@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ideavista</string>
+
+    <!--Menü Abschnitt-->
+    <string name="menu_scaffold_title">Menü</string>
+
+    <string name="menu_login_title">Melde dich in deinem Konto an</string>
+    <string name="menu_login_message">Verwalte deine Lieblingsimmobilien und Suchanfragen von deinem Computer, Tablet und Smartphone aus.</string>
+    <string name="menu_login_button">Melde dich in deinem Konto an</string>
+
+    <string name="menu_properties_title">Deine Immobilien</string>
+    <string name="menu_properties_value_your_house_message">Bewerte dein Haus kostenlos</string>
+    <string name="menu_properties_search_agencies">Finde Agenturen zum Verkaufen</string>
+    <string name="menu_properties_find_the_best">Finde die beste Agentur für den Verkauf deiner Immobilie</string>
+    <string name="menu_properties_post_property">Inseriere deine Immobilie</string>
+    <string name="menu_properties_first_two_free">Deine ersten 2 Inserate sind kostenlos</string>
+
+    <string name="menu_config">Einstellungen</string>
+    <string name="menu_config_country">Suchland</string>
+    <string name="menu_config_language">Sprache</string>
+    <string name="menu_config_theme">Erscheinungsbild</string>
+
+    <string name="menu_services">Dienstleistungen für dich</string>
+    <string name="menu_services_morgage">Hypotheken</string>
+    <string name="menu_services_morgage_message">Wir finden kostenlos die beste Hypothek für dich</string>
+    <string name="menu_services_insurance">Mietausfallversicherung</string>
+    <string name="menu_services_insurance_message">Schütze deine Mietimmobilie</string>
+    <string name="menu_services_news">Nachrichten</string>
+    <string name="menu_services_news_message">Neuigkeiten zum Immobilienmarkt</string>
+
+    <string name="menu_about_ideavista">Über Ideavista</string>
+    <string name="menu_policies_and_cookies">Datenschutzrichtlinie, Nutzungsbedingungen, allgemeine Geschäftsbedingungen und Cookie-Richtlinie</string>
+    <string name="menu_version">Aktuelle Version</string>
+
+    <!--Chat Abschnitt-->
+    <string name="chat_scaffold_title">Deine Unterhaltungen</string>
+    <string name="chat_no_account_message">Melde dich an, um deine Unterhaltungen zu sehen</string>
+    <string name="chat_explanation">Hier kannst du mit Inserenten chatten und neue Nachrichten beantworten – alles ohne Ideavista zu verlassen.</string>
+    <string name="chat_button">Melde dich in deinem Konto an</string>
+
+    <!--Favoriten Abschnitt-->
+    <string name="fav_scaffold_title">Favoriten und Listen</string>
+    <string name="fav_no_account_title">Du hast keine Favoriten</string>
+    <string name="fav_explanation">Speichere deine Lieblingsinserate in deinem Konto, um sie auf deinem Smartphone, Tablet oder Computer anzusehen.</string>
+    <string name="fav_button">Anmelden</string>
+
+    <!--Suchanfragen Abschnitt-->
+    <string name="searches_scaffold_title">Deine Suchanfragen</string>
+    <string name="searches_content_title">Alle deine gespeicherten Suchanfragen an einem Ort</string>
+    <string name="searches_explanation">Speichere deine häufigsten Suchanfragen zur einfachen Wiederverwendung. Wir benachrichtigen dich, wenn neue Inserate verfügbar sind, die zu deiner Suche passen.</string>
+    <string name="searches_login_message">Melde dich an, um deine Suchanfragen auf all deinen Geräten zu sehen.</string>
+    <string name="searches_button">Melde dich in deinem Konto an</string>
+
+    <!--Hauptbereich-->
+    <string name="home_buy_option">Kaufen</string>
+    <string name="home_rent_option">Mieten</string>
+    <string name="home_share_option">Teilen</string>
+
+    <string name="home_dropdown_new_home">Neubau</string>
+    <string name="home_dropdown_homes">Wohnungen</string>
+    <string name="home_dropdown_rooms">Zimmer</string>
+    <string name="home_dropdown_offices">Büros</string>
+    <string name="home_dropdown_commercial_property">Gewerbeimmobilien</string>
+    <string name="home_dropdown_transfers">Übertragungen</string>
+    <string name="home_dropdown_garages">Garagen</string>
+    <string name="home_dropdown_land">Grundstücke</string>
+    <string name="home_dropdown_storage_rooms">Lagerräume</string>
+    <string name="home_dropdown_buildings">Gebäude</string>
+
+    <string name="home_maps_options">Dein gezeichneter Bereich</string>
+    <string name="home_search_button">Suchen</string>
+    <string name="home_publish_button">Inseriere dein Angebot</string>
+
+    <!--BottomBar Elemente-->
+    <string name="bottom_bar_home">Startseite</string>
+    <string name="bottom_bar_search">Suchanfragen</string>
+    <string name="bottom_bar_fav">Favoriten</string>
+    <string name="bottom_bar_chat">Chat</string>
+    <string name="bottom_bar_menu">Menü</string>
+
+    <!--PropertyListScreen Abschnitt-->
+    <string name="propertyListScreen_scaffold_button">Suche speichern</string>
+    <string name="propertyListScreen_stickyMenu_filter">Filter</string>
+    <string name="propertyListScreen_stickyMenu_sort">Sortieren</string>
+    <string name="propertyListScreen_stickyMenu_map">Karte</string>
+
+    <string name="propertyListScreen_looking_result">Anzeigen</string>
+    <string name="propertyListScreen_looking_result_of">von</string>
+
+    <string name="propertyListScreen_content_distance">entfernt</string>
+    <string name="propertyListScreen_content_bedrooms">Schlafzimmer</string>
+    <string name="propertyListScreen_content_contact">Kontakt</string>
+    <string name="propertyListScreen_content_call">Anrufen</string>
+
+    <!--Sprachauswahl Abschnitt-->
+    <string name="LanguageScreenScaffoldTitle">Sprache</string>
+
+    <!--Kartenoptionen Abschnitt-->
+    <string name="mapsOptionScreen_scaffold_title">Suche in Spanien und Andorra</string>
+    <string name="mapsOptionScreen_scaffold_button">Land ändern</string>
+    <string name="mapsOptionScreen_scaffold_searchbar">Stadt, Bezirk, U-Bahn-Station, Adresse</string>
+
+    <string name="mapsOptionScreen_draw_title">Zeichne deinen Bereich</string>
+    <string name="mapsOptionScreen_draw_message">Zeichne deinen Suchbereich auf der Karte</string>
+
+    <string name="mapsOptionScreen_search_title">Auf der Karte suchen</string>
+    <string name="mapsOptionScreen_search_message">Bewege die Karte, um verfügbare Immobilien zu sehen</string>
+
+    <string name="mapsOptionScreen_around_title">In deiner Nähe</string>
+    <string name="mapsOptionScreen_around_message">Verfügbare Immobilien in deiner Nähe anzeigen</string>
+
+    <string name="mapsOptionScreen_phone_title">Suche nach Telefonnummer</string>
+    <string name="mapsOptionScreen_phone_message">Gib eine Telefonnummer ein, um die dazugehörige Immobilie zu finden</string>
+
+    <!--FilterScreen Abschnitt-->
+    <string name="filterScreen_scaffold_title">Filter</string>
+    <string name="filterScreen_price">Preis</string>
+    <string name="filterScreen_size">Größe</string>
+
+    <string name="filterScreen_type_property">Immobilientyp</string>
+    <string name="filterScreen_rooms">Zimmer</string>
+    <string name="filterScreen_bathrooms">Badezimmer</string>
+    <string name="filterScreen_condition">Zustand</string>
+    <string name="filterScreen_features">Ausstattung</string>
+    <string name="filterScreen_floor">Stockwerk</string>
+
+    <string name="filterScreen_button_see">Anzeigen</string>
+    <string name="filterScreen_button_results">Ergebnisse</string>
+
+</resources>
