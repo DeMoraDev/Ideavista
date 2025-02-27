@@ -47,6 +47,11 @@ Users can **sign up** using **Firebase Authentication** with email/password, Goo
   <img src="https://github.com/user-attachments/assets/1612129d-a5b2-4241-abad-71abb8c9e871" width="300" alt="register">
 </div>
 
+The app uses **Firebase Authentication** to manage user sign-ups and logins securely. In the image below, you can see the Firebase Authentication panel displaying a successfully registered user. This panel shows the user's email, unique ID, and the provider used for authentication. Firebase ensures secure storage and easy management of user credentials.v
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ccf89b52-7433-46b7-940f-b25269a3b9d2" width="600" alt="Firebase Authentication Panel">
+</p>
 
 ---
 
