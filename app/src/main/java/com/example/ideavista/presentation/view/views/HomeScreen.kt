@@ -213,7 +213,8 @@ fun HomeScreen(
                 HomeContentStep.Chat -> ChatContent()
                 HomeContentStep.Menu -> MenuContent(
                     onClickLogInMenu = { navHostController.navigate("login") },
-                    onLangageClick = {navHostController.navigate("lang")}
+                    onLangageClick = {navHostController.navigate("lang")},
+                    onThemeSelected = {navHostController.navigate("theme")}
                 )
             }
         }

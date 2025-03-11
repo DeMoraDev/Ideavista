@@ -31,6 +31,7 @@ import com.example.ideavista.presentation.viewmodel.MapsViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.PropertyViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
+import com.example.ideavista.presentation.viewmodel.ThemeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.android.ext.koin.androidContext
@@ -53,15 +54,13 @@ val appModule = module {
 
     // ViewModels
     viewModel { SplashScreenViewModel(get()) }
-    viewModel { OnboardingViewModel(get(), get(), get(),get()) }
+    viewModel { OnboardingViewModel(get(), get(), get(), get()) }
     viewModel { LoginScreenViewModel(get(), get()) }
     viewModel { HomeScreenViewModel(get(), get(), get()) }
     viewModel { PropertyViewModel(get()) }
     viewModel { FilterViewModel(get()) }
     viewModel { MapsViewModel(get()) }
-
-
-
+    viewModel { ThemeViewModel() }
 
 
     //Auth di
@@ -72,7 +71,7 @@ val appModule = module {
 
 
     //Properties di
-    single<PropertyDataSource>{
+    single<PropertyDataSource> {
         PropertyDataSourceImpl(FirebaseFirestore.getInstance())
     }
     single<PropertyRepository> {
@@ -86,7 +85,7 @@ val appModule = module {
     }
 
     //PropertyPreview di
-    single<PropertyPreviewDataSource>{
+    single<PropertyPreviewDataSource> {
         PropertyPreviewDataSourceImpl(FirebaseFirestore.getInstance())
     }
     single<PropertyPreviewRepository> {

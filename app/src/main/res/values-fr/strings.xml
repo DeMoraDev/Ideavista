@@ -30,7 +30,7 @@
     <string name="menu_services_news">Actualités</string>
     <string name="menu_services_news_message">Actualités sur le marché immobilier</string>
 
-    <string name="menu_about_ideavista">À propos d'Ideavista</string>
+    <string name="menu_about_ideavista">À propos d\'Ideavista</string>
     <string name="menu_policies_and_cookies">Politique de confidentialité, conditions générales et politique des cookies</string>
     <string name="menu_version">Version actuelle</string>
 
@@ -44,7 +44,7 @@
     <!--Section Favoris-->
 
     <string name="fav_scaffold_title">Favoris et listes</string>
-    <string name="fav_no_account_title">Vous n'avez aucun favori</string>
+    <string name="fav_no_account_title">Vous n\'avez aucun favori</string>
     <string name="fav_explanation">Enregistrez vos annonces préférées dans votre compte pour les consulter sur votre mobile, tablette ou ordinateur.</string>
     <string name="fav_button">Se connecter</string>
 

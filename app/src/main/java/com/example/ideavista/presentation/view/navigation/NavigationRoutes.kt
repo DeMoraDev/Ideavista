@@ -27,4 +27,7 @@ object NavigationRoutes {
 
     //Language
     const val Language = "lang"
+
+    //Theme
+    const val Theme = "theme"
 }

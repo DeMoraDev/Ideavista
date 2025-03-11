@@ -16,12 +16,14 @@ import com.example.ideavista.presentation.view.views.MapsOptionScreen
 import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.PropertyListScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
+import com.example.ideavista.presentation.view.views.ThemeScreen
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
 import com.example.ideavista.presentation.viewmodel.MapsViewModel
 import com.example.ideavista.presentation.viewmodel.OnboardingViewModel
 import com.example.ideavista.presentation.viewmodel.SplashScreenViewModel
+import com.example.ideavista.presentation.viewmodel.ThemeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -98,6 +100,14 @@ fun NavManager(navHostController: NavHostController) {
             LanguageScreen(
                 navHostController = navHostController,
                 viewModel = onboardingViewModel
+            )
+        }
+
+        composable(NavigationRoutes.Theme) {
+            val themeViewModel: ThemeViewModel = koinViewModel()
+            ThemeScreen(
+                navHostController = navHostController,
+                themeViewModel = themeViewModel,
             )
         }
     }

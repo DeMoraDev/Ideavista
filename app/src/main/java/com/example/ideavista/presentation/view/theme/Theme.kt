@@ -10,27 +10,26 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Amarillo,
-    secondary = Blanco,
-    tertiary = Negro
+// Light Theme Color Scheme
+private val LightColorScheme = lightColorScheme(
+    primary = PrimaryLight,
+    secondary = ButtonLight,
+    tertiary = LinksLight,
+    background = BackgroundLight,
+    onPrimary = TextLight1,
+    onBackground = TextLight2,
+    error = ErrorLight
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Amarillo,
-    secondary = NegroClaro,
-    tertiary = NegroMedio
-
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+// Dark Theme Color Scheme
+private val DarkColorScheme = darkColorScheme(
+    primary = PrimaryDark,
+    secondary = ButtonDark,
+    tertiary = LinksDark,
+    background = BackgroundDark,
+    onPrimary = TextDark1,
+    onBackground = TextDark2,
+    error = ErrorDark
 )
 
 @Composable

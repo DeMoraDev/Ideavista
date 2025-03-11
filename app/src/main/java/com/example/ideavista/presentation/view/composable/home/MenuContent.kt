@@ -38,7 +38,8 @@ import com.example.ideavista.presentation.view.theme.Violeta
 @Composable
 fun MenuContent(
     onClickLogInMenu: () -> Unit,
-    onLangageClick: () -> Unit
+    onLangageClick: () -> Unit,
+    onThemeSelected: () -> Unit
 ) {
 
     val currentVersion = "12.16.0"
@@ -261,7 +262,7 @@ fun MenuContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { }
+                            .clickable { onThemeSelected()}
                             .padding(vertical = 8.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
