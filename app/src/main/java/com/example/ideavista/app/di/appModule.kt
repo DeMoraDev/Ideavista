@@ -24,6 +24,7 @@ import com.example.ideavista.domain.usecase.auth.RegisterUseCase
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesPreviewUseCase
 import com.example.ideavista.domain.usecase.properties.FetchPropertiesUseCase
 import com.example.ideavista.domain.usecase.properties.GetPropertyDetailsUseCase
+import com.example.ideavista.presentation.viewmodel.AuthViewModel
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
@@ -68,7 +69,7 @@ val appModule = module {
     single<AuthRepository> { AuthRepositoryImpl(get()) } // Repositorio
     factory { RegisterUseCase(get()) } // UseCase
     factory { LoginUseCase(get()) }  //UseCase
-
+    viewModel { AuthViewModel(get()) }
 
     //Properties di
     single<PropertyDataSource> {

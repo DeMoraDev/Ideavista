@@ -17,6 +17,7 @@ import com.example.ideavista.presentation.view.views.OnboardingScreen
 import com.example.ideavista.presentation.view.views.PropertyListScreen
 import com.example.ideavista.presentation.view.views.SplashScreen
 import com.example.ideavista.presentation.view.views.ThemeScreen
+import com.example.ideavista.presentation.viewmodel.AuthViewModel
 import com.example.ideavista.presentation.viewmodel.FilterViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import com.example.ideavista.presentation.viewmodel.LoginScreenViewModel
@@ -28,6 +29,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NavManager(navHostController: NavHostController) {
+
+    val authViewModel: AuthViewModel = koinViewModel()
+
     NavHost(navController = navHostController, startDestination = NavigationRoutes.Splash) {
         // Splash Screen
         composable(NavigationRoutes.Splash) {

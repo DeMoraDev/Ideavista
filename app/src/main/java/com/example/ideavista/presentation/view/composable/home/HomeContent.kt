@@ -138,6 +138,7 @@ fun HomeContent(
                 }
             }
         }
+
         // Segundo Box
         Box(
             modifier = Modifier

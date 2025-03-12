@@ -40,6 +40,7 @@ import com.example.ideavista.presentation.view.composable.home.MenuContent
 import com.example.ideavista.presentation.view.composable.home.SearchContent
 import com.example.ideavista.presentation.view.theme.BottomBarColor
 import com.example.ideavista.presentation.view.theme.Violeta
+import com.example.ideavista.presentation.viewmodel.AuthViewModel
 import com.example.ideavista.presentation.viewmodel.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
