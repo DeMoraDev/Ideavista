@@ -11,7 +11,8 @@ class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : Propert
     override suspend fun fetchPropertiesPreview(
         modoPropiedad: String,
         dropdownDbValue: String,
-        garaje: Boolean?
+        garaje: Boolean?,
+        jardin: Boolean?
     ): List<PropertyPreview> {
         // Construcción de la consulta dinámica
         var query = db.collection("property")
@@ -20,6 +21,7 @@ class PropertyPreviewDataSourceImpl(private val db: FirebaseFirestore) : Propert
 
         // Agregar filtros opcionales si tienen valor
         if (garaje != null) query = query.whereEqualTo("garaje", garaje)
+        if (jardin != null) query = query.whereEqualTo("jardin", jardin)
 
         val snapshot = query.get().await()
 

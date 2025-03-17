@@ -6,6 +6,7 @@ interface PropertyPreviewDataSource {
     suspend fun fetchPropertiesPreview(
         modoPropiedad: String,
         dropdownDbValue: String,
-        garaje: Boolean?
+        garaje: Boolean?,
+        jardin: Boolean?
     ): List<PropertyPreview>
 }

@@ -9,8 +9,9 @@ class FetchPropertiesPreviewUseCase(private val repository: PropertyPreviewRepos
     suspend operator fun invoke(
         tipoPropiedad: String,
         dropdownDbValue: String,
-        garaje: Boolean? = null
+        garaje: Boolean? = null,
+        jardin: Boolean? = null
     ): List<PropertyPreview> {
-        return repository.fetchPropertiesPreview(tipoPropiedad, dropdownDbValue, garaje)
+        return repository.fetchPropertiesPreview(tipoPropiedad, dropdownDbValue, garaje, jardin)
     }
 }

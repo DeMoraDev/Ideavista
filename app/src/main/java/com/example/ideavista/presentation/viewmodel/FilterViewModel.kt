@@ -67,12 +67,27 @@ class FilterViewModel(private val fetchPropertiesPreviewUseCase: FetchProperties
         fetchFilteredPropertyCount()
     }
 
+    //TODO JARDIN
+
+    val jardinChecked: StateFlow<Boolean> = SearchPreferences.jardinChecked
+        .map { it ?: false } // Si es null, se establece como false
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    fun updateJardinFilter(isChecked: Boolean) {
+        SearchPreferences.setJardinChecked(isChecked)
+        fetchFilteredPropertyCount()
+    }
+
+
+    //TODO JARDIN FIN
+
     fun fetchFilteredPropertyCount() {
         viewModelScope.launch {
             val count = fetchPropertiesPreviewUseCase(
                 SearchPreferences.getModoPropiedad(),
                 SearchPreferences.getDropdownDbValue(),
-                SearchPreferences.getGarajeChecked()
+                SearchPreferences.getGarajeChecked(),
+                SearchPreferences.getJardinChecked()
             ).size
             _propertyCount.value = count
         }
@@ -80,6 +95,7 @@ class FilterViewModel(private val fetchPropertiesPreviewUseCase: FetchProperties
 
     fun resetFilters() {
         SearchPreferences.setGarajeChecked(false)
+        SearchPreferences.setJardinChecked(false)
         _searchPerformed.value = false // Resetear el estado de búsqueda
     }
 

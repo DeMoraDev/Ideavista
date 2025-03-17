@@ -12,7 +12,8 @@ class PropertyPreviewRepositoryImpl(
         modoPropiedad: String,
         dropdownDbValue: String,
         garaje: Boolean?,
+        jardin: Boolean?
     ): List<PropertyPreview> {
-        return dataSource.fetchPropertiesPreview(modoPropiedad, dropdownDbValue, garaje)
+        return dataSource.fetchPropertiesPreview(modoPropiedad, dropdownDbValue, garaje, jardin)
     }
 }

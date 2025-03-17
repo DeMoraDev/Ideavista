@@ -67,6 +67,7 @@ fun FilterScreen(
     var selectedRadioButtonOption by remember { mutableStateOf("Indiferente") } //RadioButton temporal, en futuro manejar en ViewModel
 
     val garajeChecked by filterViewModel.garajeChecked.collectAsState()
+    val jardinChecked by filterViewModel.jardinChecked.collectAsState()
 
     //Filtros principales
     var modoPropiedadselectedOption by remember { mutableStateOf(BuyRentShareButtonOptions.COMPRAR) }
@@ -105,7 +106,7 @@ fun FilterScreen(
     var balcon by remember { mutableStateOf(false) }
     var terraza by remember { mutableStateOf(false) }
     var exterior by remember { mutableStateOf(false) }
-    var jardin by remember { mutableStateOf(false) }
+
     var piscina by remember { mutableStateOf(false) }
     var trastero by remember { mutableStateOf(false) }
     var viviendaAccesible by remember { mutableStateOf(false) }
@@ -537,8 +538,10 @@ fun FilterScreen(
                                 label = stringResource(id = R.string.filterScreen_features_garage)
                             )
                             CustomSimpleCheckbox(
-                                checked = jardin,
-                                onCheckedChange = { jardin = it },
+                                checked = jardinChecked,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateJardinFilter(isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_garden)
                             )
                             CustomSimpleCheckbox(
