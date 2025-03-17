@@ -42,41 +42,22 @@ class SearchPreferences {
 
         // Filtros adicionales
 
-        //Almacena si el filtro garaje está true o false
-        private val _garajeChecked = MutableStateFlow<Boolean?>(null)
-        val garajeChecked: StateFlow<Boolean?> get() = _garajeChecked
+        private val _filters = MutableStateFlow<Map<String, Boolean?>>(emptyMap())
+        val filters: StateFlow<Map<String, Boolean?>> get() = _filters
 
-        //Establece el valor en true o null
-        fun setGarajeChecked(value: Boolean) {
-            _garajeChecked.value = if (value) true else null
+        fun setFilter(key: String, value: Boolean) {
+            _filters.value = _filters.value.toMutableMap().apply {
+                this[key] = if (value) true else null
+            }
         }
 
-        //Devuelve el valor de _garajeChecked
-        fun getGarajeChecked(): Boolean? {
-            return _garajeChecked.value
+        fun getFilters(): Map<String, Boolean?> {
+            return _filters.value
         }
 
-        //TODO Jardin
 
-        private val _jardinChecked = MutableStateFlow<Boolean?>(null)
-        val jardinChecked: StateFlow<Boolean?> get() = _jardinChecked
-
-        fun setJardinChecked(value: Boolean) {
-            _jardinChecked.value = if (value) true else null
-        }
-
-        fun getJardinChecked(): Boolean? {
-            return _jardinChecked.value
-        }
-
-        //TODO FIN
-
-
-
-        // Aquí puedes agregar más filtros como precio, número de habitaciones, etc.
-
-        fun resetFilters() {
-            _garajeChecked.value = null
+        fun clearFilters() {
+            _filters.value = emptyMap()
         }
     }
 

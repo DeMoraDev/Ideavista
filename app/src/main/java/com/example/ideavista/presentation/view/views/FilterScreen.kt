@@ -66,8 +66,7 @@ fun FilterScreen(
 ) {
     var selectedRadioButtonOption by remember { mutableStateOf("Indiferente") } //RadioButton temporal, en futuro manejar en ViewModel
 
-    val garajeChecked by filterViewModel.garajeChecked.collectAsState()
-    val jardinChecked by filterViewModel.jardinChecked.collectAsState()
+    val filters by filterViewModel.filters.collectAsState()
 
     //Filtros principales
     var modoPropiedadselectedOption by remember { mutableStateOf(BuyRentShareButtonOptions.COMPRAR) }
@@ -499,30 +498,38 @@ fun FilterScreen(
                                 fontSize = 18.sp
                             )
                             CustomSimpleCheckbox(
-                                checked = aireAcondicionadoChecked,
-                                onCheckedChange = {
-                                    aireAcondicionadoChecked = it
+                                checked = filters["aire_acondicionado"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("aire_acondicionado", isChecked)
                                 },
                                 label = stringResource(id = R.string.filterScreen_features_air_conditioner)
                             )
                             CustomSimpleCheckbox(
-                                checked = armariosEmpotrados,
-                                onCheckedChange = { armariosEmpotrados = it },
+                                checked = filters["armarios_empotrados"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("armarios_empotrados", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_wardrobe_built_in)
                             )
                             CustomSimpleCheckbox(
-                                checked = ascensor,
-                                onCheckedChange = { ascensor = it },
+                                checked = filters["ascensor"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("ascensor", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_elevator)
                             )
                             CustomSimpleCheckbox(
-                                checked = balcon,
-                                onCheckedChange = { balcon = it },
+                                checked = filters["balcon"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("balcon", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_balcony)
                             )
                             CustomSimpleCheckbox(
-                                checked = terraza,
-                                onCheckedChange = { terraza = it },
+                                checked = filters["terraza"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("terraza", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_terrace)
                             )
                             CustomSimpleCheckbox(
@@ -531,32 +538,38 @@ fun FilterScreen(
                                 label = stringResource(id = R.string.filterScreen_features_exterior)
                             )
                             CustomSimpleCheckbox(
-                                checked = garajeChecked,
+                                checked = filters["garaje"] ?: false,
                                 onCheckedChange = { isChecked ->
-                                    filterViewModel.updateGarajeFilter(isChecked)
+                                    filterViewModel.updateFilter("garaje", isChecked)
                                 },
                                 label = stringResource(id = R.string.filterScreen_features_garage)
                             )
                             CustomSimpleCheckbox(
-                                checked = jardinChecked,
+                                checked = filters["jardin"] ?: false,
                                 onCheckedChange = { isChecked ->
-                                    filterViewModel.updateJardinFilter(isChecked)
+                                    filterViewModel.updateFilter("jardin", isChecked)
                                 },
                                 label = stringResource(id = R.string.filterScreen_features_garden)
                             )
                             CustomSimpleCheckbox(
-                                checked = piscina,
-                                onCheckedChange = { piscina = it },
+                                checked = filters["piscina"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("piscina", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_pool)
                             )
                             CustomSimpleCheckbox(
-                                checked = trastero,
-                                onCheckedChange = { trastero = it },
+                                checked = filters["trastero"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("trastero", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_storage_room)
                             )
                             CustomSimpleCheckbox(
-                                checked = viviendaAccesible,
-                                onCheckedChange = { viviendaAccesible = it },
+                                checked = filters["accesible"] ?: false,
+                                onCheckedChange = { isChecked ->
+                                    filterViewModel.updateFilter("accesible", isChecked)
+                                },
                                 label = stringResource(id = R.string.filterScreen_features_accesible)
                             )
                         }

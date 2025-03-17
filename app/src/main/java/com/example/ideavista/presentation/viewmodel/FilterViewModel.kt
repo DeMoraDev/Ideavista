@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -20,6 +21,18 @@ import kotlinx.coroutines.tasks.await
 
 class FilterViewModel(private val fetchPropertiesPreviewUseCase: FetchPropertiesPreviewUseCase) :
     ViewModel() {
+
+
+        //Se ejecuta cada vez que filters cambia,
+        // evitando la necesidad de llamar manualmente a fetchFilteredPropertyCount()
+    init {
+        viewModelScope.launch {
+            SearchPreferences.filters.collectLatest {
+                fetchFilteredPropertyCount()
+            }
+        }
+    }
+
 
     //Llamada filterScreen
 
@@ -53,30 +66,22 @@ class FilterViewModel(private val fetchPropertiesPreviewUseCase: FetchProperties
         }
     }
 
-    // TODO GARAJE
 
     private val _propertiesPreview = MutableStateFlow<List<PropertyPreview>>(emptyList())
     val propertiesPreview: StateFlow<List<PropertyPreview>> = _propertiesPreview
 
-    val garajeChecked: StateFlow<Boolean> = SearchPreferences.garajeChecked
-        .map { it ?: false } // Si es null, se establece como false
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    fun updateGarajeFilter(isChecked: Boolean) {
-        SearchPreferences.setGarajeChecked(isChecked)
-        fetchFilteredPropertyCount()
+
+    // TODO GARAJE
+
+    val filters: StateFlow<Map<String, Boolean?>> = SearchPreferences.filters
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
+
+    fun updateFilter(key: String, isChecked: Boolean) {
+        SearchPreferences.setFilter(key, isChecked)
     }
 
-    //TODO JARDIN
 
-    val jardinChecked: StateFlow<Boolean> = SearchPreferences.jardinChecked
-        .map { it ?: false } // Si es null, se establece como false
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
-
-    fun updateJardinFilter(isChecked: Boolean) {
-        SearchPreferences.setJardinChecked(isChecked)
-        fetchFilteredPropertyCount()
-    }
 
 
     //TODO JARDIN FIN
@@ -86,17 +91,15 @@ class FilterViewModel(private val fetchPropertiesPreviewUseCase: FetchProperties
             val count = fetchPropertiesPreviewUseCase(
                 SearchPreferences.getModoPropiedad(),
                 SearchPreferences.getDropdownDbValue(),
-                SearchPreferences.getGarajeChecked(),
-                SearchPreferences.getJardinChecked()
+                SearchPreferences.getFilters()
             ).size
             _propertyCount.value = count
         }
     }
 
     fun resetFilters() {
-        SearchPreferences.setGarajeChecked(false)
-        SearchPreferences.setJardinChecked(false)
-        _searchPerformed.value = false // Resetear el estado de búsqueda
+        SearchPreferences.clearFilters()
+        _searchPerformed.value = false
     }
 
     // Estado para manejar si se ha realizado una busqueda con los filtros o no

@@ -48,8 +48,7 @@ class HomeScreenViewModel(
             val properties = repository.fetchPropertiesPreview(
                 modoPropiedad = SearchPreferences.getModoPropiedad(),
                 dropdownDbValue = SearchPreferences.getDropdownDbValue(),
-                garaje = SearchPreferences.getGarajeChecked(),
-                jardin = SearchPreferences.getJardinChecked()
+                filters = SearchPreferences.getFilters()
             )
             _properties_Preview.value = properties
 

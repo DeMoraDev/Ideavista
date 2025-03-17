@@ -118,7 +118,7 @@ class MapsViewModel(
             val count = fetchPropertiesPreviewUseCase(
                 SearchPreferences.getModoPropiedad(),
                 SearchPreferences.getDropdownDbValue(),
-                SearchPreferences.getGarajeChecked()
+                SearchPreferences.getFilters()
             ).size
             _propertyCount.value = count
         }
